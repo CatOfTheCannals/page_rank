@@ -1,10 +1,21 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "Matrix.hpp"
 
 using namespace std;
 
 int main(int argc, char** argv){
+	
+	Matrix  m = Matrix(3,3);
+	
+	cout << m.size() << endl;	
+
+	cout << m.getPosition(1,1) << endl;
+
+	cout << m << endl;
+
+	// m.printarray();
 
 	string line;
 

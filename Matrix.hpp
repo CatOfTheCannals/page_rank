@@ -1,8 +1,9 @@
-//
- // Created by juan on 24/03/18.
-//
+#ifndef __MATRIX_HPP__
+#define __MATRIX_HPP__
+
 #include <iostream>
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -13,7 +14,7 @@ public:
     int columnSize() const;
     int size() const;
     void printarray (int matrix[]);
-    double getPosition(int i, int j);
+    double getPosition(int i, int j) const;
     void setAt (Matrix matrix, int column, int row, double value); //fixme: completaro
     void addMatrix (Matrix matrix);
 
@@ -46,12 +47,27 @@ int Matrix::size() const {
     return _size;
 }
 
-
-void Matrix::printarray (int matrix[]) {
-    for (int i = 0; i < this->size(); ++i) {
-        cout << matrix[i] << " | ";
-        if (i % this->rowSize() == 0) {
-            cout << endl;
-        }
-    }
+std::ostream& operator<<(std::ostream& o, const Matrix& a)
+{
+	for (std::size_t i = 0; i < a.rowSize(); i++) {
+		for (std::size_t j = 0; j < a.columnSize(); j++) {
+			o << a.getPosition(i, j);
+		}
+		if( !(i / a.rowSize()) )
+		{
+			o << endl;
+		}
+	}
+	return o;
 }
+
+double Matrix::getPosition(int i, int j) const
+{ // TODO: pasar las condiciones del if a un assert
+        int position = this->_columns * i + j; 
+        if(i < this->_columns && j < this->_rows &&i*j < this->_size)
+        {
+                 return this->_matrix[i*j];
+        }
+}
+
+#endif //__DYN_MATRIX_HPP__}
