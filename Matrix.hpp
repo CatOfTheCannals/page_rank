@@ -49,8 +49,8 @@ int Matrix::size() const {
 
 std::ostream& operator<<(std::ostream& o, const Matrix& a)
 {
-    for (std::size_t i = 0; i < a.rowSize(); i++) {
-        for (std::size_t j = 0; j < a.columnSize(); j++) {
+    for (std::size_t i = 1; i <= a.rowSize(); i++) {
+        for (std::size_t j = 1; j <= a.columnSize(); j++) {
             o << a.getPosition(i, j);
         }
         if( !(i / a.rowSize()) )
@@ -61,9 +61,12 @@ std::ostream& operator<<(std::ostream& o, const Matrix& a)
     return o;
 }
 
+
 double Matrix::getPosition(int i, int j) const { // TODO: pasar las condiciones del if a un assert
-    int position = this->_columns * i + j;
-    if(i < this->_rows && j < this->_columns &&i*j < this->_size) //TODO: creo que no es necesario preguntar que i*j sea menor a size. Creo que es necesario que i y j sean menores o Iguales, esto cuando las matrices tengan como posicion inicial el (1,1).
+    int row = i - 1;
+    int column = j - 1;
+    int position = this->_columns * row + column; //TODO: esta función se va a usar muchas veces, considerar si tiene sentido hacer que sea un método.
+    if(i <= this->_rows && j <= this->_columns && i*j <= this->_size) //TODO: creo que no es necesario preguntar que i*j sea menor a size. Creo que es necesario que i y j sean menores o Iguales, esto cuando las matrices tengan como posicion inicial el (1,1).
     {
         return this->_matrix[position];
     } else {
@@ -73,8 +76,9 @@ double Matrix::getPosition(int i, int j) const { // TODO: pasar las condiciones 
 }
 
 void Matrix::setAt (int i, int j, double value){
-    if(i < this->_rows && j < this->_columns){
-        int position = this->_columns * i + j;
+    int row = i - 1;
+    if(0 < i < this->_rows && 0 < j < this->_columns){
+        int position = this->_columns * (row) + j;
         _matrix[position] = (int) value; //TODO: no deja agregar un float, creo que tiene que ver con el private _matrix.
     }
 }
