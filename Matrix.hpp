@@ -15,7 +15,7 @@ public:
     int size() const;
     void printarray (int matrix[]);
     double getPosition(int i, int j) const;
-    void setAt (Matrix matrix, int column, int row, double value); //fixme: completaro
+    void setAt (int i, int j, double value); //fixme: completaro
     void addMatrix (Matrix matrix);
 
 private:
@@ -49,25 +49,35 @@ int Matrix::size() const {
 
 std::ostream& operator<<(std::ostream& o, const Matrix& a)
 {
-	for (std::size_t i = 0; i < a.rowSize(); i++) {
-		for (std::size_t j = 0; j < a.columnSize(); j++) {
-			o << a.getPosition(i, j);
-		}
-		if( !(i / a.rowSize()) )
-		{
-			o << endl;
-		}
-	}
-	return o;
+    for (std::size_t i = 0; i < a.rowSize(); i++) {
+        for (std::size_t j = 0; j < a.columnSize(); j++) {
+            o << a.getPosition(i, j);
+        }
+        if( !(i / a.rowSize()) )
+        {
+            o << endl;
+        }
+    }
+    return o;
 }
 
-double Matrix::getPosition(int i, int j) const
-{ // TODO: pasar las condiciones del if a un assert
-        int position = this->_columns * i + j; 
-        if(i < this->_columns && j < this->_rows &&i*j < this->_size)
-        {
-                 return this->_matrix[i*j];
-        }
+double Matrix::getPosition(int i, int j) const { // TODO: pasar las condiciones del if a un assert
+    int position = this->_columns * i + j;
+    if(i < this->_rows && j < this->_columns &&i*j < this->_size) //TODO: creo que no es necesario preguntar que i*j sea menor a size. Creo que es necesario que i y j sean menores o Iguales, esto cuando las matrices tengan como posicion inicial el (1,1).
+    {
+        return this->_matrix[position];
+    } else {
+        cout << "position out of range" <<endl;
+        return 0; //TODO: este cero queda feo.
+    }
 }
+
+void Matrix::setAt (int i, int j, double value){
+    if(i < this->_rows && j < this->_columns){
+        int position = this->_columns * i + j;
+        _matrix[position] = (int) value; //TODO: no deja agregar un float, creo que tiene que ver con el private _matrix.
+    }
+}
+
 
 #endif //__DYN_MATRIX_HPP__}
