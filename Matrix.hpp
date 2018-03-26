@@ -13,7 +13,6 @@ public:
     int rowSize() const;  //fixme: chequear si los getters van en public, creo que si
     int columnSize() const;
     int size() const;
-    void printarray (int matrix[]);
     double getPosition(int i, int j) const;
     void setAt (int i, int j, double value); //fixme: completaro
     void addMatrix (Matrix matrix);
