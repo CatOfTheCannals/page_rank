@@ -13,15 +13,21 @@ public:
     int rowSize() const;  //fixme: chequear si los getters van en public, creo que si
     int columnSize() const;
     int size() const;
+    bool isTransposed() const;
     double getPosition(int i, int j) const;
     void setAt (int i, int j, double value); //fixme: completaro
-    void addMatrix (Matrix matrix);
+    void operator+(Matrix matrix);
+    //void operator=(Matrix matrix); //TODO: este operador es dificil de hacer porque las matrices están hechas con arrays y va a costar modificar los tamaños.
+    void transpose();
+
+
 
 private:
     int _rows;
     int _columns;
     int _size; //it's convenient to have the size stored appart for different operations.
     int *_matrix; //pointer of type int to the location of the matrix.
+    bool _transposed;
 };
 
 // Constructor of Matrix Class initallized with 0 on every position.
@@ -30,6 +36,7 @@ Matrix::Matrix(int rows, int columns) : _rows(rows), _columns(columns){ //fixme:
     _columns = columns;
     int size = rows * columns; //fixme: ver si se puede juntar todo en la siguiente línea.
     _size = size;
+    _transposed = false;
     _matrix = new int[size]();  // dynamically allocates memory using new
     for (int i= 0; i < size; ++i) {
         _matrix[i] = 0;
@@ -37,50 +44,107 @@ Matrix::Matrix(int rows, int columns) : _rows(rows), _columns(columns){ //fixme:
 }
 
 int Matrix::rowSize() const{
-    return _rows;
+    if (!this->_transposed) {
+        return _rows;
+    } else {
+        return _columns;
+    }
 }
 int Matrix::columnSize() const {
-    return _columns;
+    if (this->_transposed) {
+        return _rows;
+    } else {
+        return _columns;
+    }
 }
+
 int Matrix::size() const {
     return _size;
 }
 
+bool Matrix::isTransposed() const {
+    return _transposed;
+}
 std::ostream& operator<<(std::ostream& o, const Matrix& a)
 {
-    for (std::size_t i = 1; i <= a.rowSize(); i++) {
-        for (std::size_t j = 1; j <= a.columnSize(); j++) {
-            o << a.getPosition(i, j);
+    if (!a.isTransposed()) {
+        for (std::size_t i = 1; i <= a.rowSize(); i++) {
+            for (std::size_t j = 1; j <= a.columnSize(); j++) {
+                o << a.getPosition(i, j);
+            }
+            if (!(i / a.rowSize())) {
+                o << endl;
+            }
         }
-        if( !(i / a.rowSize()) )
-        {
-            o << endl;
+        return o;
+    } else {
+        for (std::size_t i = 1; i <= a.rowSize(); i++) {
+            for (std::size_t j = 1; j <= a.columnSize(); j++) {
+                o << a.getPosition(j, i);
+            }
+            if (!(i / a.columnSize())) {
+                o << endl;
+            }
         }
+        return o;
+
     }
-    return o;
 }
 
 
 double Matrix::getPosition(int i, int j) const { // TODO: pasar las condiciones del if a un assert
     int row = i - 1;
     int column = j - 1;
-    int position = this->_columns * row + column; //TODO: esta función se va a usar muchas veces, considerar si tiene sentido hacer que sea un método.
-    if(i <= this->_rows && j <= this->_columns && i*j <= this->_size) //TODO: creo que no es necesario preguntar que i*j sea menor a size. Creo que es necesario que i y j sean menores o Iguales, esto cuando las matrices tengan como posicion inicial el (1,1).
-    {
-        return this->_matrix[position];
-    } else {
-        cout << "position out of range" <<endl;
-        return 0; //TODO: este cero queda feo.
-    }
+//    if (this->_transposed) { //TODO: si veo la condición de transposed, tengo problemas con operator<<, si no la veo, no sé como hacer un getPosition de una matriz transpuesta.
+//        row = j - 1;
+//        column = i - 1;
+//    }
+        int position = this->_columns * row + column; //TODO: esta función se va a usar muchas veces, considerar si tiene sentido hacer que sea un método.
+        if (i <= this->_rows && j <= this->_columns && i * j <= this->_size) //TODO: creo que no es necesario preguntar que i*j sea menor a size. Creo que es necesario que i y j sean menores o Iguales, esto cuando las matrices tengan como posicion inicial el (1,1).
+        {
+            return this->_matrix[position];
+        } else {
+            cout << "position out of range" << endl; //TODO: este cero queda feo.
+        }
+//    } else {
+//        int row = j - 1;
+//        int column = i - 1;
+//        int position = this->_columns * row +
+//                       column; //TODO: esta función se va a usar muchas veces, considerar si tiene sentido hacer que sea un método.
+//        if (i <= this->_rows && j <= this->_columns && i * j <= this->_size) //TODO: creo que no es necesario preguntar que i*j sea menor a size. Creo que es necesario que i y j sean menores o Iguales, esto cuando las matrices tengan como posicion inicial el (1,1).
+//        {
+//            return this->_matrix[position];
+//        } else {
+//            cout << "position out of range" << endl;
+//        }
+//    }
 }
 
 void Matrix::setAt (int i, int j, double value){
     int row = i - 1;
-    if(0 < i < this->_rows && 0 < j < this->_columns){
-        int position = this->_columns * (row) + j;
+    if(0 < i <= this->_rows && 0 < j <= this->_columns){
+        int position = this->_columns * (row) + j - 1;
         _matrix[position] = (int) value; //TODO: no deja agregar un float, creo que tiene que ver con el private _matrix.
     }
 }
 
+void Matrix::operator+(Matrix matrix) { //takes two matrices of the same size and makes the summ and stores it on the first one //todo: chequear comentario.
+    if(this->_columns !=  matrix.columnSize() || this->_rows != matrix.rowSize()){ //TODO: may be it would be more interesting if the sum isn't stored on the first matrix.
+        cout << "the sum is not possible" << endl; //fixme: check the cout message.
+    } else {
+        for(int i=1; i <= this->rowSize(); ++i){
+            for(int j=1; j <= this->_columns; ++j){
+                this->setAt(i, j, this->getPosition(i,j) + matrix.getPosition(i,j));
+            }
+        }
+    }
+}
+
+
+void Matrix::transpose() {
+    this->_transposed  = true;
+};
+
 
 #endif //__DYN_MATRIX_HPP__}
+
