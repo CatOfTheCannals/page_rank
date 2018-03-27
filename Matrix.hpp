@@ -15,13 +15,17 @@ public:
     int size() const;
     double getPosition(int i, int j) const;
     void setAt (int i, int j, double value); //fixme: completaro
-    void addMatrix (Matrix matrix);
+    void operator+(Matrix matrix);
+    //void operator=(Matrix matrix); //TODO: este operador es dificil de hacer porque las matrices están hechas con arrays y va a costar modificar los tamaños.
+    void trasponer();
+
 
 private:
     int _rows;
     int _columns;
     int _size; //it's convenient to have the size stored appart for different operations.
     int *_matrix; //pointer of type int to the location of the matrix.
+
 };
 
 // Constructor of Matrix Class initallized with 0 on every position.
@@ -76,11 +80,30 @@ double Matrix::getPosition(int i, int j) const { // TODO: pasar las condiciones 
 
 void Matrix::setAt (int i, int j, double value){
     int row = i - 1;
-    if(0 < i < this->_rows && 0 < j < this->_columns){
-        int position = this->_columns * (row) + j;
+    if(0 < i <= this->_rows && 0 < j <= this->_columns){
+        int position = this->_columns * (row) + j - 1;
         _matrix[position] = (int) value; //TODO: no deja agregar un float, creo que tiene que ver con el private _matrix.
     }
 }
 
+void Matrix::operator+(Matrix matrix) { //takes two matrices of the same size and makes the summ and stores it on the first one //todo: chequear comentario.
+    if(this->_columns !=  matrix.columnSize() || this->_rows != matrix.rowSize()){ //TODO: may be it would be more interesting if the sum isn't stored on the first matrix.
+        cout << "the sum is not possible" << endl; //fixme: check the cout message.
+    } else {
+        for(int i=1; i <= this->rowSize(); ++i){
+            for(int j=1; j <= this->_columns; ++j){
+                this->setAt(i, j, this->getPosition(i,j) + matrix.getPosition(i,j));
+            }
+        }
+    }
+}
+
+
+void Matrix::trasponer() {
+    //TODO: voy a necesitar el método = para copiar matrices.
+};
+
 
 #endif //__DYN_MATRIX_HPP__}
+
+
