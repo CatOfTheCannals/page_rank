@@ -1,0 +1,83 @@
+%Clase y configuracion de tipo de documento
+\documentclass[10pt,a4paper,spanish]{article}
+% Inclusion de paquetes
+\usepackage{a4wide}
+\usepackage{amsmath, amscd, amssymb, amsthm, latexsym}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[width=15.5cm, left=3cm, top=2.5cm, height= 24.5cm]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancyplain}
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{xspace}
+\usepackage{longtable}
+\usepackage{caratula}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{url}
+
+% Encabezado
+\lhead{M\'etodos Num\'ericos}
+%\rhead{Grupo GGJP}
+% Pie de pagina
+\renewcommand{\footrulewidth}{0.4pt}
+\lfoot{Facultad de Ciencias Exactas y Naturales}
+\rfoot{Universidad de Buenos Aires}
+
+\begin{document}
+
+% La primera pagina del informe comenzara con el nombre de la universidad, la facultad, el
+% departamento y la materia. A continuacion, el titulo del trabajo, el nombre y direcciones
+% de correo electronico de los autores, el resumen y las palabras clave.
+% El titulo debera ser breve y apropiado para una rapida identificacion del contenido del
+% trabajo. El resumen, de no mas de 200 palabras, debera explicar brevemente el trabajo
+% realizado y las conclusiones de los autores de manera que pueda ser util por si solo para
+% dar una idea del contenido del trabajo. Las palabras clave, no mas de cuatro, deben ser
+% terminos tecnicos que den una idea del contenido del trabajo para facilitar su busqueda
+% en una base de datos tematica.
+
+% Datos de caratula
+
+\materia{M\'etodos Num\'ericos}
+\titulo{Trabajo Pr\'actico 1}
+\subtitulo{Sistemas de ecuaciones lineales}
+%\grupo{Grupo: GGJP} 
+\integrante{Giudice, Carlos}{520/12}{cgiudice@dc.uba.ar}
+\integrante{Grenier, Michelle}{520/12}{mgrenier@dc.uba.ar}
+\integrante{Junqueras, Juan}{520/12}{jjunqueras@dc.uba.ar}
+\integrante{Pyrih, Franco}{520/12}{fpyrih@dc.uba.ar}
+
+\maketitle
+
+\section{Resumen} % no más de 200 palabras % son 197 :D
+
+\paragraph{Palabras clave:} % no más de 4 palabras
+PageRank, sparse matrix, ranking, websites
+% algorithms, big data, main eigenvector
+\newpage
+
+% Para crear un indice
+\tableofcontents
+
+% Forzar salto de pagina
+\clearpage
+
+\include{sections/introduccion}
+\clearpage
+
+\include{sections/desarrollo}
+\clearpage
+
+\include{sections/experimentacion}
+\clearpage
+
+\include{sections/conclusion}
+\clearpage
+
+\include{sections/apendices}
+
+\end{document}
