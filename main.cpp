@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "Matrix.hpp"
+#include "src/Matrix.hpp"
 
 using namespace std;
 
