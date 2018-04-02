@@ -24,14 +24,18 @@ protected:
     }
     int bigArray[10][10]; //100 arrays de 10 elementos random
     int reallyBig[1000];
+    int naturals[10];
 };
 
 TEST_F (runTest, nombreTest){
+
+
     int i = 0;
     while (i < 10) {
-        ASSERT_EQ(true, true);
-        std::cout << "Corrida numero " << i << std::endl;
+        naturals [i] = i;
         i++;
     }
+
+
 
 }

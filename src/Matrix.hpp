@@ -9,70 +9,65 @@ using namespace std;
 
 class Matrix {
 public:
-    Matrix(int rows, int columns);
-    int rowSize() const;  //fixme: chequear si los getters van en public, creo que si
-    int columnSize() const;
+    // Constructor of Matrix Class initallized with 0 on every position.
+    Matrix(int rows, int columns) : _rows(rows), _cols(columns){ //fixme: no se para que hago lo que hago dps de los dos puntos, creo que con las sgtes dos líneas,  no es necesario.
+        _rows = rows;
+        _cols = columns;
+        _matrix = new double[_rows*_cols]();  // dynamically allocates memory using new
+        for (int i= 0; i < _rows*_cols; ++i) {
+            _matrix[i] = 0;
+        }
+    }
+
+    Matrix(const Matrix & other) : _rows(other._rows), _cols(other._cols)
+    {
+        const int arr_size = _rows * _cols;
+        _matrix = new double[arr_size];
+        std::copy(other._matrix, other._matrix + arr_size, _matrix);
+    }
+
+    int rows() const;
+    int cols() const;
     int size() const;
-    bool isTransposed() const;
     double operator()(std::size_t row_idx, std::size_t col_idx) const;
-    double getPosition(int i, int j) const;
+    double operator()(std::size_t idx) const;
     void setIndex(int i, int j, double value); //fixme: completaro
     void operator+(Matrix matrix);
-    //void operator=(Matrix matrix); //TODO: este operador es dificil de hacer porque las matrices están hechas con arrays y va a costar modificar los tamaños.
     void transpose();
+    void swapRows(int i1, int i2);
+    Matrix getRow(int index);
+    std::tuple<int, int> shape() const;
+    bool operator==(const Matrix& other) const;
 
 
 
 private:
     int _rows;
     int _cols;
-    int _size; //it's convenient to have the size stored appart for different operations.
     double *_matrix; //pointer of type int to the location of the matrix.
-    bool _transposed;
 };
 
-// Constructor of Matrix Class initallized with 0 on every position.
-Matrix::Matrix(int rows, int columns) : _rows(rows), _cols(columns){ //fixme: no se para que hago lo que hago dps de los dos puntos, creo que con las sgtes dos líneas,  no es necesario.
-    _rows = rows;
-    _cols = columns;
-    int size = rows * columns; //fixme: ver si se puede juntar todo en la siguiente línea.
-    _size = size;
-    _transposed = false;
-    _matrix = new double[size]();  // dynamically allocates memory using new
-    for (int i= 0; i < size; ++i) {
-        _matrix[i] = 0;
-    }
+
+
+int Matrix::rows() const{
+        return _rows;
 }
 
-int Matrix::rowSize() const{
-    if (!this->_transposed) {
-        return _rows;
-    } else {
+int Matrix::cols() const {
         return _cols;
-    }
-}
-int Matrix::columnSize() const {
-    if (this->_transposed) {
-        return _rows;
-    } else {
-        return _cols;
-    }
 }
 
 int Matrix::size() const {
-    return _size;
+    return _rows * _cols;
 }
 
-bool Matrix::isTransposed() const {
-    return _transposed;
-}
 std::ostream& operator<<(std::ostream& o, const Matrix& a)
 {
-    for (std::size_t i = 1; i <= a.rowSize(); i++) {
-        for (std::size_t j = 1; j <= a.columnSize(); j++) {
-            o << a.getPosition(i, j) << ' ';
+    for (std::size_t i = 0; i < a.rows(); i++) {
+        for (std::size_t j = 0; j < a.cols(); j++) {
+            o << a(i, j) << ' ';
         }
-        if (!(i / a.rowSize())) {
+        if (!(i / a.rows())) {
             o << endl;
         }
     }
@@ -87,31 +82,78 @@ double Matrix::operator()(std::size_t row_idx, std::size_t col_idx) const
     return this->_matrix[idx];
 }
 
+double Matrix::operator()(std::size_t idx) const
+{
+    assert(this->_rows == 1 || this->_cols == 1);
+    assert(idx < std::max(this->_rows, this->_cols));
+    return this->_matrix[idx];
+}
+
 
 void Matrix::setIndex(int i, int j, double value){
     if(0 <= i < this->_rows && 0 <= j < this->_cols){
         int position = this->_cols * i + j;
-        this->_matrix[position] = (int) value; //TODO: no deja agregar un float, creo que tiene que ver con el private _matrix.
+        this->_matrix[position] = value;
     }
 }
 
-void Matrix::operator+(Matrix matrix) { //takes two matrices of the same size and makes the summ and stores it on the first one //todo: chequear comentario.
-    if(this->_cols !=  matrix.columnSize() || this->_rows != matrix.rowSize()){ //TODO: may be it would be more interesting if the sum isn't stored on the first matrix.
-        cout << "the sum is not possible" << endl; //fixme: check the cout message.
-    } else {
-        for(int i=1; i <= this->rowSize(); ++i){
-            for(int j=1; j <= this->_cols; ++j){
-                this->setIndex(i, j, this->getPosition(i, j) + matrix.getPosition(i, j));
-            }
+void Matrix::operator+(Matrix matrix) {
+    assert(this->_cols == matrix.cols() && this->_rows == matrix.rows());
+
+    for(int i=0; i < this->rows(); ++i){
+        for(int j=0; j < this->_cols; ++j){
+            this->setIndex(i, j, (*this)(i, j) + matrix(i, j));
         }
     }
+
 }
 
 
 void Matrix::transpose() {
-    this->_transposed  = true;
-};
+}
 
+void Matrix::swapRows(int i1, int i2) {
+    assert(i1 < _rows && i2 < _rows);
+    if(i1 != i2){
+        double  *tempRow = new double[_cols];
+        double *start_index_1 = _matrix + i1 * _cols;
+        double *end_index_1 = start_index_1 + _cols;
+        double *start_index_2 = _matrix + i2 * _cols;
+        double *end_index_2 = start_index_2 + _cols;
+
+        std::copy(start_index_1, end_index_1, tempRow);
+        std::cout << "tempRow:" << std::endl;
+        std::cout << tempRow[0] << "\n" << std::endl;
+        std::copy(start_index_2, end_index_2, start_index_1);
+        std::copy(tempRow, tempRow + _cols, start_index_2);
+    }
+}
+
+Matrix Matrix::getRow(int index) {
+    Matrix row(1, _cols);
+    for (int i= 0; i < _cols; ++i) {
+        row._matrix[i] = _matrix[index * _cols + i];
+    }
+    return row;
+}
+
+std::tuple<int, int> Matrix::shape() const {
+    return std::make_tuple(this->_rows, this->_cols);
+}
+
+bool Matrix::operator==(const Matrix& other) const{
+    if (this->_rows != other.rows() || this->_cols != other.cols()) {
+        return false;
+    }
+    else {
+        for(int i = 0; i < _rows * _cols; i++){
+            if(this->_matrix[i] != other._matrix[i]){
+                return false;
+            }
+        }
+    }
+    return true;
+}
 
 #endif //__DYN_MATRIX_HPP__}
 

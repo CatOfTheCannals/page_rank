@@ -26,16 +26,16 @@ int main(int argc, char** argv){
     e.setIndex(5, 2, 5);
     e.setIndex(5, 3, 6);
     cout << e.size() << endl;
-    cout << e.rowSize() << endl;
-    cout << e.columnSize() << endl;
+    cout << e.rows() << endl;
+    cout << e.cols() << endl;
     cout << e.getPosition(4,2) << endl;
     cout << e.isTransposed() <<endl;
     cout << e << endl;
 
     e.transpose();
     cout << e.size() << endl;
-    cout << e.rowSize() << endl;
-    cout << e.columnSize() << endl;
+    cout << e.rows() << endl;
+    cout << e.cols() << endl;
     cout << e.getPosition(4,2) << endl;
     cout << e.isTransposed()<<endl;
     cout << e << endl;
@@ -43,11 +43,11 @@ int main(int argc, char** argv){
 
 
     Matrix j = Matrix(9,2);
-    cout << j.rowSize() << endl;
-    cout << j.columnSize() << endl;
+    cout << j.rows() << endl;
+    cout << j.cols() << endl;
     j.transpose();
-    cout << j.rowSize() << endl;
-    cout << j.columnSize() << endl;
+    cout << j.rows() << endl;
+    cout << j.cols() << endl;
 
 
 
