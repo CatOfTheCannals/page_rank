@@ -140,3 +140,30 @@ TEST_F (mockMatrices, subMatrix){ // FIXME: este test solo checkea que la funcio
         ASSERT_EQ(e_row, e_sub);
     }
 }
+
+TEST_F (mockMatrices, matrixMultipOperator){
+    Matrix r = e.multiply(m);
+    ASSERT_EQ(r.rows(),e.rows()); //TODO: check if the test ends with this assertion
+    ASSERT_EQ(r.cols(),m.cols());
+    //ASSERT_EQ(9*6+5+6,r(0,0)); //TODO:check if this possition is calculated correctly.
+    ASSERT_EQ(3*7+1+8,r(1,1));
+
+    int rows, cols;
+    std::tie(rows, cols) = m.shape();
+    Matrix id = Matrix::identity(rows, cols);
+    ASSERT_EQ(m, m.multiply(id));
+}
+
+TEST_F (mockMatrices, maxCoeff){
+    int x = std::get<0>(maxCoeff(e));
+    int y = std::get<1>(maxCoeff(e));
+    ASSERT_EQ(3, x);
+    ASSERT_EQ(0, y);
+}
+
+
+TEST_F (mockMatrices, abs){
+    Matrix l_copy(l);
+    l_copy.setIndex(0, 1, 8);
+    ASSERT_EQ(l_copy, abs(l));
+}

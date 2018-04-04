@@ -42,7 +42,9 @@ public:
     std::tuple<int, int> shape() const;
     bool operator==(const Matrix& other) const;
     Matrix subMatrix(int i1, int i2, int j1, int j2);
-
+    Matrix multiply(const Matrix b);
+    static Matrix identity(int rows, int cols);
+    std::tuple<int, int> maxCoeff(const Matrix a);
 
 
 private:
@@ -183,6 +185,64 @@ Matrix Matrix::subMatrix(int i1, int i2, int j1, int j2 ){
         for(int j = 0; j < res_cols ; j++){
             index = (i + i1) * _cols + j1 + j;
             res._matrix[i * res_cols + j] = _matrix[index];
+        }
+    }
+
+    return res;
+}
+
+Matrix Matrix::multiply(const Matrix b) { //TODO: add error handling (case: the sizes don't match)
+    assert(this->_cols == b.rows());
+    Matrix result = Matrix(this->_rows, b.cols());
+    for (int i = 0; i < this->rows(); ++i) {
+        for (int j = 0; j < b.cols(); ++j) {
+            double temp = 0;
+            for (int k = 0; k < this->_cols; ++k) {
+                temp = temp + (*this)(i, k) * b(k, j);
+            }
+            result.setIndex(i, j, temp);
+            temp = 0;
+        }
+    }
+    return result;
+}
+
+Matrix Matrix::identity(int rows, int cols){
+    assert(rows == cols);
+    assert(0 < rows);
+    Matrix res(rows, cols);
+    for(int i = 0; i < rows; i++){
+        res.setIndex(i, i, 1);
+    }
+    return res;
+}
+
+std::tuple<int, int> maxCoeff(const Matrix a) {
+    int res_x, res_y;
+    double max = a(0,0);
+    for (int i = 0; i < a.rows(); ++i) {
+        for (int j = 0; j < a.cols(); ++j) {
+            if(a(i,j) >= max){
+                max = a(i,j);
+                res_x = i;
+                res_y = j;
+            }
+        }
+    }
+    return std::make_tuple(res_x, res_y);
+};
+
+Matrix abs(const Matrix a) {
+    Matrix res(a.rows(), a.cols());
+
+    for (int i = 0; i < a.rows(); ++i) {
+        for (int j = 0; j < a.cols(); ++j) {
+            double val = a(i,j);
+            if(a(i,j) < 0){
+                res.setIndex(i, j, val * -1);
+            } else {
+                res.setIndex(i, j, val);
+            }
         }
     }
 
