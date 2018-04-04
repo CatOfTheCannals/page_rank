@@ -38,6 +38,7 @@ public:
     Matrix getRow(int index);
     std::tuple<int, int> shape() const;
     bool operator==(const Matrix& other) const;
+    Matrix subMatrix(int i1, int i2, int j1, int j2);
 
 
 
@@ -153,6 +154,27 @@ bool Matrix::operator==(const Matrix& other) const{
         }
     }
     return true;
+}
+
+Matrix Matrix::subMatrix(int i1, int i2, int j1, int j2 ){
+    assert(i1 <= i2 && j1 <= j2);
+    assert(-1 < i1 && -1 < j2);
+    assert(i2 < _rows && j2 < _cols);
+
+    int res_rows = i2 - i1 + 1;
+    int res_cols = j2 - j1 + 1;
+
+    int index;
+
+    Matrix res(res_rows, res_cols);
+    for(int i = 0; i < res_rows ; i++){
+        for(int j = 0; j < res_cols ; j++){
+            index = (i + i1) * _cols + j1 + j;
+            res._matrix[i * res_cols + j] = _matrix[index];
+        }
+    }
+
+    return res;
 }
 
 #endif //__DYN_MATRIX_HPP__}

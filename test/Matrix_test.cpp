@@ -46,11 +46,10 @@ protected:
         l.setIndex(0, 2, 1);
         l.setIndex(0, 0, 1);
 
-
+        /*
         std::cout << "Test Matrix initialized:" << std::endl;
         std::cout << "e:" << std::endl;
         std::cout << e << std::endl;
-        /*
         std::cout << "m:" << std::endl;
         std::cout << m << std::endl;
         std::cout << "l:" << std::endl;
@@ -120,4 +119,14 @@ TEST_F (mockMatrices, swapRows){
     e.swapRows(i1, i2);
     ASSERT_EQ(e_row_1, e.getRow(i2));
     ASSERT_EQ(e_row_2, e.getRow(i1));
+}
+
+TEST_F (mockMatrices, subMatrix){ // FIXME: este test solo checkea que la funcion subMatrix obtiene rows adecuadamente
+    int rows, cols;
+    std::tie(rows, cols) = e.shape();
+    for (std::size_t i = 0; i < e.rows(); i++) {
+        auto e_row = e.getRow(i);
+        auto e_sub = e.subMatrix(i,i,0, cols-1);
+        ASSERT_EQ(e_row, e_sub);
+    }
 }

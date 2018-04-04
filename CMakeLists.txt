@@ -5,7 +5,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11  -Wall -Wno-long-long -pedant
 
 set(SOURCE_FILES
         src/empy_file.cpp
-        src/Matrix.hpp)
+        src/Matrix.hpp ) # agregar src/Solvers.h
 
 add_library(metodos-tp1-base ${SOURCE_FILES})
 
