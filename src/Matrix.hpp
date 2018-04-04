@@ -35,6 +35,7 @@ public:
     double operator()(std::size_t idx) const;
     void setIndex(int i, int j, double value); //fixme: completaro
     void operator+(Matrix matrix);
+    void operator*(double scalar); //scalar multiplication
     void transpose();
     void swapRows(int i1, int i2);
     Matrix getRow(int index);
@@ -106,6 +107,15 @@ void Matrix::operator+(Matrix matrix) {
     for(int i=0; i < this->rows(); ++i){
         for(int j=0; j < this->_cols; ++j){
             this->setIndex(i, j, (*this)(i, j) + matrix(i, j));
+        }
+    }
+
+}
+
+void Matrix::operator*(double scalar) {
+    for(int i=0; i < this->rows(); ++i){
+        for(int j=0; j < this->_cols; ++j){
+            this->setIndex(i, j, (*this)(i, j) * scalar);
         }
     }
 

@@ -86,6 +86,16 @@ TEST_F (mockMatrices, sumOperator){
     }
 }
 
+TEST_F (mockMatrices, scalarOperator){
+    auto e_copy = e;
+    e * 3.14;
+    for (std::size_t i = 0; i < e.rows(); i++) {
+        for (std::size_t j = 0; j < e.cols(); j++) {
+            ASSERT_EQ(e_copy(i, j) * 3.14,  e(i, j));
+        }
+    }
+}
+
 TEST_F (mockMatrices, getRow){
     int rows, cols;
     std::tie(rows, cols) = e.shape();
