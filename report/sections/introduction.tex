@@ -1,2 +1,50 @@
 \section{Introducción}
 
+% from file pautas.pdf:
+
+	% Contendrá una breve explicación de la base teórica que fundamenta los métodos involucrados
+	% en el trabajo, junto con los métodos mismos. No deben incluirse demostraciones
+	% de propiedades ni teoremas, ejemplos innecesarios, ni definiciones elementales (como
+	% por ejemplo la de matriz simétrica). En vez de definiciones básicas es conveniente citar
+	% ejemplos de bibliografía adecuada. Una cita vale más que mil palabras.
+
+% from file Enunciado_TP1.pdf, Enunciado section:
+
+	% Previamente, deberán estudiar las caracterı́sticas de la matriz involucrada y responder a lo siguiente:
+	% 1. ¿Por qué la matriz A definida en (4) es equivalente a pWD+ez^t? Justificar adecuadamente.
+	% 2. ¿Cómo se garantiza la aplicabilidad de EG? ¿La matriz I-pWD está bien condicionada? ¿Cómo influye el valor de p?
+
+Un motor de búsqueda debe poder ordenar las páginas web de acceso público según su importancia, para poder presentar los resultados de las búsquedas de una manera más útil. Este trabajo se centra en cómo determinar ese orden. \\
+
+Para esto vamos a usar la matriz que representa cómo enlazan las distintas páginas entre si y explotar sus propiedades numéricas. \\
+
+No solo vamos a ponderar la cantidad de enlaces que llegan a una página, sino la relevancia de las páginas que enlazan a las mismas. \\
+
+Para un conjunto de páginas web: $\{1 ... n\}$ vamos a definir a la \textbf{matriz de conectividad} $ W \in \{0, 1\}^{nxn} $ como: \\
+
+\[ W_{ij} =
+	\begin{cases}
+		1 & \text{ si la página \textit{j} tiene un enlace a la página \textit{i} } \\
+		0 & \text{ si la página \textit{j} \textbf{no} tiene un enlace a la página \textit{i} } \\
+		0 & \text{ si $j = i$}
+	\end{cases}
+\]
+
+Es decir, que en la fila \textit{i} están las páginas que apuntan a la página \textit{i} y en la columna \textit{j} están las páginas apuntadas por \textit{j}. \\
+
+Luego, para una página $j \in W$, definimos su \textbf{grado} $c_{j} = \sum_{i = 1}^{n} w_{ij}$. Es decir, como la cantidad de enlaces \textit{salientes} de \textit{j}. \\
+
+Para ordenar las páginas web por orden de importancia, vamos a asignarle a cada página \textit{i} un \textbf{puntaje} $x_i$. \\
+
+Dadas $i, j \in \{1...n\}$ el \textbf{aporte} del enlace que va de la página $j$ a la página $i$ se calcula como: \\
+
+\[
+	\begin{cases}
+		\frac{x_j}{c_j}w_{ij} & \text{ si la página \textit{j} tiene un enlace a la página \textit{i} } \\
+		0 & \text{ si la página \textit{j} \textbf{no} tiene un enlace a la página \textit{i} } \\
+		0 & \text{ si el grado $c_j = 0$}
+	\end{cases}
+\]
+
+Es decir que, cuando existe un enlace desde \textit{j} hacia \textit{i} y el grado de \textit{j} $c_j$ es distinto de $0$, la página \textit{j} le aporta a la página \textit{i} su puntaje, ponderado por cuántos enlaces salientes tiene.
+
