@@ -4,6 +4,7 @@
 #include "gtest/gtest.h"
 
 #include "../src/Matrix.hpp"
+//#include "../src/Solvers.hpp"
 
 // --------- SET UP --------------
 class mockMatrices : public ::testing::Test {
@@ -46,6 +47,16 @@ protected:
         l.setIndex(0, 2, 1);
         l.setIndex(0, 0, 1);
 
+        g.setIndex(0, 0, 1);
+        g.setIndex(0, 1, 2);
+        g.setIndex(0, 2, 3);
+        g.setIndex(1, 1, 4);
+        g.setIndex(1, 2, 5);
+        g.setIndex(1, 0, 6);
+        g.setIndex(2, 1, 7);
+        g.setIndex(2, 2, 8);
+        g.setIndex(2, 0, 9);
+
         /*
         std::cout << "Test Matrix initialized:" << std::endl;
         std::cout << "e:" << std::endl;
@@ -59,6 +70,7 @@ protected:
     Matrix e = Matrix(5,3);
     Matrix m = Matrix(3,3);
     Matrix l = Matrix(3,3);
+    Matrix g = Matrix(3,3);
 };
 
 TEST_F (mockMatrices, getIndex){
@@ -131,7 +143,7 @@ TEST_F (mockMatrices, swapRows){
     ASSERT_EQ(e_row_2, e.getRow(i1));
 }
 
-TEST_F (mockMatrices, subMatrix){ // FIXME: este test solo checkea que la funcion subMatrix obtiene rows adecuadamente
+TEST_F (mockMatrices, subMatrixRows){ // FIXME: este test solo checkea que la funcion subMatrix obtiene rows adecuadamente
     int rows, cols;
     std::tie(rows, cols) = e.shape();
     for (std::size_t i = 0; i < e.rows(); i++) {
@@ -155,8 +167,8 @@ TEST_F (mockMatrices, matrixMultipOperator){
 }
 
 TEST_F (mockMatrices, maxCoeff){
-    int x = std::get<0>(maxCoeff(e));
-    int y = std::get<1>(maxCoeff(e));
+    int x = std::get<0>(e.maxCoeff());
+    int y = std::get<1>(e.maxCoeff());
     ASSERT_EQ(3, x);
     ASSERT_EQ(0, y);
 }
@@ -165,5 +177,6 @@ TEST_F (mockMatrices, maxCoeff){
 TEST_F (mockMatrices, abs){
     Matrix l_copy(l);
     l_copy.setIndex(0, 1, 8);
-    ASSERT_EQ(l_copy, abs(l));
+    ASSERT_EQ(l_copy, l.abs());
 }
+
