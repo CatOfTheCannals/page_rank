@@ -40,11 +40,28 @@ Dadas $i, j \in \{1...n\}$ el \textbf{aporte} del enlace que va de la página $j
 
 \[
 	\begin{cases}
-		\frac{x_j}{c_j}w_{ij} & \text{ si la página \textit{j} tiene un enlace a la página \textit{i} } \\
-		0 & \text{ si la página \textit{j} \textbf{no} tiene un enlace a la página \textit{i} } \\
-		0 & \text{ si el grado $c_j = 0$}
+		\frac{x_j}{c_j}w_{ij} 	& \text{ si la página \textit{j} tiene un enlace a la página \textit{i} } \\
+		0 			& \text{ si la página \textit{j} \textbf{no} tiene un enlace a la página \textit{i} } \\
+		0 			& \text{ si el grado $c_j = 0$}
 	\end{cases}
 \]
 
-Es decir que, cuando existe un enlace desde \textit{j} hacia \textit{i} y el grado de \textit{j} $c_j$ es distinto de $0$, la página \textit{j} le aporta a la página \textit{i} su puntaje, ponderado por cuántos enlaces salientes tiene.
+Es decir que, cuando existe un enlace desde \textit{j} hacia \textit{i} y el grado de \textit{j} $c_j$ es distinto de $0$, la página \textit{j} le aporta a la página \textit{i} su puntaje, ponderado por cuántos enlaces salientes tiene. \\
+
+Finalmente, calculamos el puntaje de la página \textit{i} como:
+
+$ x_i = \sum_{j=1}^{n} \frac{x_j}{c_j} w_{ij} $
+
+Notar que el puntaje de una página depende del puntaje de las otras. \\
+
+Para modelar mejor el comportamiento de los usuarios de la web, se introduce el modelo del \textit{navegante aleatorio}: la idea es que el usuario incia en una página cualquiera y luego sigue uno de sus enlaces con probabilidad $p$, o bien salta a una página al azar con probabilidad $1 - p$. Si la página actual no tiene enlaces, también salta a una página al azar (con probabilidad $1/n$). \\
+
+Finalmente, definimos la matriz $A \in \mathbb{R}^{nxn}$, donde la posición $a_{ij}$ representa la probabilidad de pasar a la página \textit{i} estando en la página \textit{j} y está definida como:
+
+\[ a_{ij} =
+	\begin{cases}
+		(1-p)/n + (p \, w_{ij}) 	& \text{si } c_{j}  \neq 0 \\
+		1/n 				& \text{si } c_{j}   =   0
+	\end{cases}
+\]
 
