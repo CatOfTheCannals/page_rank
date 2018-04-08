@@ -26,6 +26,7 @@
 *.exe
 *.out
 *.app
+test/correrTests
 
 # Cosas de latex
 *.log
