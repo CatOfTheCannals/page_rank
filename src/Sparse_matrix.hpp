@@ -34,17 +34,17 @@ public:
     double operator()(std::size_t row_idx, std::size_t col_idx) const;
     double operator()(std::size_t idx) const;
     void setIndex(int i, int j, double value);
-    map<int, double>& operator[] ( std::size_t col_idx);
+    map<int, double> operator[] ( std::size_t col_idx);
     void transpose();
     void swapRows(int i1, int i2);
 	Sparse_matrix subMatrix(int i1, int i2, int j1, int j2);
+	std::tuple<int, int> shape() const;
 //	std::tuple<int, int> maxCoeff(const Sparse_matrix a);
 //	Sparse_matrix abs(const Sparse_matrix a) {
 
 /*    void operator+(Sparse_matrix matrix);
     void operator*(double scalar); //scalar multiplication
     Sparse_matrix getRow(int index);
-    std::tuple<int, int> shape() const;
     bool operator==(const Sparse_matrix& other) const;
     Sparse_matrix multiply(const Sparse_matrix b);
     static Sparse_matrix identity(int rows, int cols);
@@ -119,6 +119,11 @@ double Sparse_matrix::operator()(std::size_t idx) const
 }
 
 
+map<int, double> Sparse_matrix::operator[] (std::size_t col_idx){	
+	return this->_matrix.find(col_idx)->second;
+}
+
+	
 void Sparse_matrix::setIndex(int i, int j, double value){
 	
 	assert(0 <= i < this->_rows && 0 <= j < this->_cols);
@@ -143,12 +148,6 @@ void Sparse_matrix::setIndex(int i, int j, double value){
 	}
 }
 
-
-map<int, double>& Sparse_matrix::operator[] (std::size_t col_idx){
-	
-	return this->_matrix.find(col_idx)->second;
-	
-	}
 
 /*
 void Sparse_matrix::operator+(Sparse_matrix matrix) {
@@ -218,11 +217,11 @@ Sparse_matrix Sparse_matrix::getRow(int index) {
     }
     return row;
 }
-
+*/
 std::tuple<int, int> Sparse_matrix::shape() const {
     return std::make_tuple(this->_rows, this->_cols);
 }
-
+/*
 bool Sparse_matrix::operator==(const Sparse_matrix& other) const{
     if (this->_rows != other.rows() || this->_cols != other.cols()) {
         return false;
