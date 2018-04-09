@@ -6,7 +6,7 @@
 
 using namespace std;
 
-bool map_of_rows = false;
+bool map_of_rows = false; // indica si la matriz está guardada por filas o por columnas.
 
 int main(int argc, char** argv){
 
