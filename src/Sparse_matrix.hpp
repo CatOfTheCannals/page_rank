@@ -177,6 +177,7 @@ void Sparse_matrix::operator*(double scalar) {
 
 void Sparse_matrix::transpose() {
 	
+	map_of_rows= !map_of_rows;
 	Sparse_matrix mt = Sparse_matrix(this->_rows);
 	for( map<int, map<int, double> >::const_iterator it_col = this->_matrix.begin(); it_col != this->_matrix.end(); it_col++){
 		for( map<int, double>::const_iterator it_row = (it_col->second).begin(); it_row != (it_col->second).end(); it_row++){
