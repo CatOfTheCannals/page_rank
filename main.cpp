@@ -1,10 +1,12 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "src/Matrix.hpp"
+//#include "src/Matrix.hpp"
 #include "src/Sparse_matrix.hpp"
 
 using namespace std;
+
+bool map_of_rows = false;
 
 int main(int argc, char** argv){
 
@@ -22,7 +24,8 @@ int main(int argc, char** argv){
         cout << "Unable to open file." << endl;
     }
 
-	Sparse_matrix m;
+	Sparse_matrix m  = Sparse_matrix(5);
+	
 	map<int, double> col0;
 	map<int, double> col1;
 	map<int, double> col2;
@@ -66,12 +69,11 @@ int main(int argc, char** argv){
 	m[4] = col4;
 
 
-        map<int, map<int, double> >::iterator   row_it = _matrix.find(3);
-        map<int, double>::iterator              col_it = _matrix[row_it].find(3);
-
-	assert(m[3][3] == 0);
-	assert(m[0][3] == 1);
-
+	assert( m((size_t)3, (size_t)3) == 0);
+	assert( m((size_t) 0, (size_t) 3) == 1);
+	
+	
+	
   return 0;
 }
 

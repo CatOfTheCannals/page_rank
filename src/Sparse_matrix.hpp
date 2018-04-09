@@ -6,17 +6,25 @@
 #include <string>
 #include <assert.h>
 #include <tuple>
+#include <map>
+
+
+extern bool map_of_rows;
 
 using namespace std;
 
+typedef map<int, map<int, double> >::const_iterator it_s_matrix;
+typedef map<int, map<int, double> > s_matrix;
+
 class Sparse_matrix {
 public:
-    // Constructor of Sparse Matrix Class
-    Matrix(int websiteCount) {
+    // Constructor of Sparse Sparse_matrix Class
+    Sparse_matrix(int websiteCount) {
 
 	_rows = websiteCount;
 	_cols = websiteCount;
-	_matrix = map<int, map<int, double> >;
+	s_matrix m;
+	_matrix = m;
     }
 
     int rows() const;
@@ -24,41 +32,42 @@ public:
     int size() const;
     double operator()(std::size_t row_idx, std::size_t col_idx) const;
     double operator()(std::size_t idx) const;
-    void setIndex(int i, int j, double value); //fixme: completaro
-    void operator+(Matrix matrix);
-    void operator*(double scalar); //scalar multiplication
+    void setIndex(int i, int j, double value);
+    map<int, double>& operator[] ( std::size_t col_idx);
     void transpose();
     void swapRows(int i1, int i2);
-    Matrix getRow(int index);
+/*    void operator+(Sparse_matrix matrix);
+    void operator*(double scalar); //scalar multiplication
+    Sparse_matrix getRow(int index);
     std::tuple<int, int> shape() const;
-    bool operator==(const Matrix& other) const;
-    Matrix subMatrix(int i1, int i2, int j1, int j2);
-    Matrix multiply(const Matrix b);
-    static Matrix identity(int rows, int cols);
-    std::tuple<int, int> maxCoeff(const Matrix a);
-
+    bool operator==(const Sparse_matrix& other) const;
+    Sparse_matrix subMatrix(int i1, int i2, int j1, int j2);
+    Sparse_matrix multiply(const Sparse_matrix b);
+    static Sparse_matrix identity(int rows, int cols);
+    std::tuple<int, int> maxCoeff(const Sparse_matrix a);
+*/
 
 private:
     int _rows;
     int _cols;
-    map* &_matrix; //pointer to map (to matrix).
+    s_matrix _matrix;
 };
 
 
 
-int Matrix::rows() const{
+int Sparse_matrix::rows() const{
         return _rows;
 }
 
-int Matrix::cols() const {
+int Sparse_matrix::cols() const {
         return _cols;
 }
 
-int Matrix::size() const {
+int Sparse_matrix::size() const {
     return _rows * _cols;
 }
 
-std::ostream& operator<<(std::ostream& o, const Matrix& a)
+std::ostream& operator<<(std::ostream& o, const Sparse_matrix& a)
 {
     for (std::size_t i = 0; i < a.rows(); i++) {
         for (std::size_t j = 0; j < a.cols(); j++) {
@@ -72,41 +81,70 @@ std::ostream& operator<<(std::ostream& o, const Matrix& a)
 
 }
 
-double Matrix::operator()(std::size_t row_idx, std::size_t col_idx) const
-{
+double Sparse_matrix::operator()(std::size_t row_idx, std::size_t col_idx) const
+{	
+	double val = 0.0; //si el indice no está definido en la matriz, entonces valor es cero
 	assert(row_idx < this->_rows && col_idx < this->_cols);
+	it_s_matrix col_it = _matrix.find(col_idx);
 
-	map<int, map<int, double> >::iterator 	row_it = _matrix.find(row_idx);
-	map<int, double>::iterator 		col_it = _matrix[row_it].find(col_idx);
+	if (col_it != _matrix.end()){
+	
+		map<int, double> requested_col =  _matrix.find(col_idx)->second;
+		map<int, double>::iterator 	row_it = (requested_col).find(row_idx);
+		if (row_it != requested_col.end()){
 
-	double val = 0.0;
-
-	if (row_it != _matrix.end()){
-
-		if (col_it != _matrix.end()){
-
-			val = _matrix[row_it][col_it];
+			val = requested_col.find(row_idx)->second;
 		}
 	}
 	return val;
 }
 
-double Matrix::operator()(std::size_t idx) const
-{
+
+double Sparse_matrix::operator()(std::size_t idx) const
+{//solo si mi matriz es un vector fila o columna
     assert(this->_rows == 1 || this->_cols == 1);
     assert(idx < std::max(this->_rows, this->_cols));
-    return this->_matrix[idx];
+    //si tengo una sola fila, idx es el indice columna
+    if (this->_rows == 1 ){return this->_matrix.find(idx)->second.find(1)->second;}
+    //si tengo una sola columna, idx es el indice fila
+    if (this->_cols == 1 ){return this->_matrix.find(1)->second.find(idx)->second;}
 }
 
 
-void Matrix::setIndex(int i, int j, double value){
-    if(0 <= i < this->_rows && 0 <= j < this->_cols){
-        int position = this->_cols * i + j;
-        this->_matrix[position] = value;
-    }
+void Sparse_matrix::setIndex(int i, int j, double value){
+	
+	assert(0 <= i < this->_rows && 0 <= j < this->_cols);
+    it_s_matrix col_it = _matrix.find(j);
+
+	if (col_it != _matrix.end()){ //la columna j está definida
+    
+		map<int, double> requested_col =  _matrix.find(j)->second;
+		map<int, double>::iterator row_it = (requested_col).find(i);
+		if (row_it != requested_col.end()){ //si la fila i esta definida
+
+			requested_col.find(i)->second= value; //seteo el valor
+		}
+		else{ // la fila i no está definida
+			  requested_col[i]= value;
+		}
+	}
+	else { //la columna j no está definida
+		map<int, double> new_col;
+		new_col[i]= value;
+		_matrix[j] = new_col;
+	}
 }
 
-void Matrix::operator+(Matrix matrix) {
+
+map<int, double>& Sparse_matrix::operator[] (std::size_t col_idx){
+	
+	return this->_matrix.find(col_idx)->second;
+	
+	}
+
+/*
+void Sparse_matrix::operator+(Sparse_matrix matrix) {
+	
     assert(this->_cols == matrix.cols() && this->_rows == matrix.rows());
 
     for(int i=0; i < this->rows(); ++i){
@@ -114,10 +152,12 @@ void Matrix::operator+(Matrix matrix) {
             this->setIndex(i, j, (*this)(i, j) + matrix(i, j));
         }
     }
-
 }
+*/
 
-void Matrix::operator*(double scalar) {
+/*
+
+void Sparse_matrix::operator*(double scalar) {
     for(int i=0; i < this->rows(); ++i){
         for(int j=0; j < this->_cols; ++j){
             this->setIndex(i, j, (*this)(i, j) * scalar);
@@ -125,41 +165,57 @@ void Matrix::operator*(double scalar) {
     }
 
 }
+*/
 
 
-void Matrix::transpose() {
+void Sparse_matrix::transpose() {
+	
+	Sparse_matrix mt = Sparse_matrix(this->_rows);
+	for( map<int, map<int, double> >::const_iterator it_col = this->_matrix.begin(); it_col != this->_matrix.end(); it_col++){
+		for( map<int, double>::const_iterator it_row = (it_col->second).begin(); it_row != (it_col->second).end(); it_row++){
+			mt.setIndex(it_col->first, it_row->first, it_row->second);
+		}
+	}
+	this-> _matrix = mt._matrix;
 }
 
-void Matrix::swapRows(int i1, int i2) {
+
+
+//asumo que cuando se llama a esta función se tiene a la matriz guardada como map<idx_fila, map< idx_col, valor> >
+//esto se obtiene transponiendo la matriz guardada como map<idx_col, map< idx_fila, valor> > (q es como se guarda cuando se levanta el archivo)
+void Sparse_matrix::swapRows(int i1, int i2) {
+	
+	if(map_of_rows == 1){ 
+		printf ("%s \n", "Esta función interpreta la matriz por filas, ahora están guardadas por columnas :O"); 
+		assert( map_of_rows == 0);
+	}
+	
     assert(i1 < _rows && i2 < _rows);
     if(i1 != i2){
-        double  *tempRow = new double[_cols];
-        double *start_index_1 = _matrix + i1 * _cols;
-        double *end_index_1 = start_index_1 + _cols;
-        double *start_index_2 = _matrix + i2 * _cols;
-        double *end_index_2 = start_index_2 + _cols;
-
-        std::copy(start_index_1, end_index_1, tempRow);
-        std::cout << "tempRow:" << std::endl;
-        std::cout << tempRow[0] << "\n" << std::endl;
-        std::copy(start_index_2, end_index_2, start_index_1);
-        std::copy(tempRow, tempRow + _cols, start_index_2);
+		
+		map<int, double> fila_aux = this->_matrix[i1] ;
+		
+		this->_matrix[i1] = this->_matrix[i2];
+		this->_matrix[i2] = fila_aux;
+		
     }
 }
 
-Matrix Matrix::getRow(int index) {
-    Matrix row(1, _cols);
+
+/*
+Sparse_matrix Sparse_matrix::getRow(int index) {
+    Sparse_matrix row(1, _cols);
     for (int i= 0; i < _cols; ++i) {
         row._matrix[i] = _matrix[index * _cols + i];
     }
     return row;
 }
 
-std::tuple<int, int> Matrix::shape() const {
+std::tuple<int, int> Sparse_matrix::shape() const {
     return std::make_tuple(this->_rows, this->_cols);
 }
 
-bool Matrix::operator==(const Matrix& other) const{
+bool Sparse_matrix::operator==(const Sparse_matrix& other) const{
     if (this->_rows != other.rows() || this->_cols != other.cols()) {
         return false;
     }
@@ -173,7 +229,7 @@ bool Matrix::operator==(const Matrix& other) const{
     return true;
 }
 
-Matrix Matrix::subMatrix(int i1, int i2, int j1, int j2 ){
+Sparse_matrix Sparse_matrix::subMatrix(int i1, int i2, int j1, int j2 ){
     assert(i1 <= i2 && j1 <= j2);
     assert(-1 < i1 && -1 < j2);
     assert(i2 < _rows && j2 < _cols);
@@ -183,7 +239,7 @@ Matrix Matrix::subMatrix(int i1, int i2, int j1, int j2 ){
 
     int index;
 
-    Matrix res(res_rows, res_cols);
+    Sparse_matrix res(res_rows, res_cols);
     for(int i = 0; i < res_rows ; i++){
         for(int j = 0; j < res_cols ; j++){
             index = (i + i1) * _cols + j1 + j;
@@ -194,9 +250,9 @@ Matrix Matrix::subMatrix(int i1, int i2, int j1, int j2 ){
     return res;
 }
 
-Matrix Matrix::multiply(const Matrix b) { //TODO: add error handling (case: the sizes don't match)
+Sparse_matrix Sparse_matrix::multiply(const Sparse_matrix b) { //TODO: add error handling (case: the sizes don't match)
     assert(this->_cols == b.rows());
-    Matrix result = Matrix(this->_rows, b.cols());
+    Sparse_matrix result = Sparse_matrix(this->_rows, b.cols());
     for (int i = 0; i < this->rows(); ++i) {
         for (int j = 0; j < b.cols(); ++j) {
             double temp = 0;
@@ -210,17 +266,17 @@ Matrix Matrix::multiply(const Matrix b) { //TODO: add error handling (case: the 
     return result;
 }
 
-Matrix Matrix::identity(int rows, int cols){
+Sparse_matrix Sparse_matrix::identity(int rows, int cols){
     assert(rows == cols);
     assert(0 < rows);
-    Matrix res(rows, cols);
+    Sparse_matrix res(rows, cols);
     for(int i = 0; i < rows; i++){
         res.setIndex(i, i, 1);
     }
     return res;
 }
 
-std::tuple<int, int> maxCoeff(const Matrix a) {
+std::tuple<int, int> maxCoeff(const Sparse_matrix a) {
     int res_x, res_y;
     double max = a(0,0);
     for (int i = 0; i < a.rows(); ++i) {
@@ -235,8 +291,8 @@ std::tuple<int, int> maxCoeff(const Matrix a) {
     return std::make_tuple(res_x, res_y);
 };
 
-Matrix abs(const Matrix a) {
-    Matrix res(a.rows(), a.cols());
+Sparse_matrix abs(const Sparse_matrix a) {
+    Sparse_matrix res(a.rows(), a.cols());
 
     for (int i = 0; i < a.rows(); ++i) {
         for (int j = 0; j < a.cols(); ++j) {
@@ -251,6 +307,6 @@ Matrix abs(const Matrix a) {
 
     return res;
 }
-
+*/
 #endif //__DYN_MATRIX_HPP__}
 
