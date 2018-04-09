@@ -30,13 +30,13 @@ double Matrix::operator()(std::size_t idx) const
 
 
 void Matrix::setIndex(int i, int j, double value){
-    if(0 <= i < this->_rows && 0 <= j < this->_cols){
-        int position = this->_cols * i + j;
-        this->_matrix[position] = value;
-    }
+    assert(0 <= i && i < this->_rows && 0 <= j && j < this->_cols);
+    int position = this->_cols * i + j;
+    this->_matrix[position] = value;
+
 }
 
-void Matrix::operator+(Matrix matrix) {
+Matrix Matrix::operator+(Matrix matrix) {
     assert(this->_cols == matrix.cols() && this->_rows == matrix.rows());
 
     for(int i=0; i < this->rows(); ++i){
@@ -44,16 +44,16 @@ void Matrix::operator+(Matrix matrix) {
             this->setIndex(i, j, (*this)(i, j) + matrix(i, j));
         }
     }
-
+    return (*this);
 }
 
-void Matrix::operator*(double scalar) {
+Matrix Matrix::operator*(double scalar) {
     for(int i=0; i < this->rows(); ++i){
         for(int j=0; j < this->cols(); ++j){
             this->setIndex(i, j, (*this)(i, j) * scalar);
         }
     }
-
+    return (*this);
 }
 
 
@@ -101,7 +101,7 @@ bool Matrix::operator==(const Matrix& other) const{
     return true;
 }
 
-Matrix Matrix::subMatrix(int i1, int i2, int j1, int j2 ){
+Matrix Matrix::subMatrix(int i1, int i2, int j1, int j2 ) const{
     assert(i1 <= i2 && j1 <= j2);
     assert(-1 < i1 && -1 < j2);
     assert(i2 < _rows && j2 < _cols);
@@ -138,11 +138,10 @@ Matrix Matrix::multiply(const Matrix b) {
     return result;
 }
 
-Matrix Matrix::identity(int rows, int cols){
-    assert(rows == cols);
-    assert(0 < rows);
-    Matrix res(rows, cols);
-    for(int i = 0; i < rows; i++){
+Matrix Matrix::identity(int n){
+    assert(0 < n);
+    Matrix res(n, n);
+    for(int i = 0; i < n; i++){
         res.setIndex(i, i, 1);
     }
     return res;
@@ -192,4 +191,19 @@ std::ostream& operator<<(std::ostream& o, const Matrix& a)
     }
     return o;
 
+}
+
+bool Matrix::isApproximate(const Matrix b, double epsilon) const{
+    Matrix a_copy = (*this);
+    Matrix b_copy = b;
+    auto diff = (a_copy + b_copy * (-1)).abs();
+
+    for (int i = 0; i < b_copy.rows(); i++) {
+        for (int j = 0; j < b_copy.cols(); j++) {
+            if(diff(i,j) > epsilon){
+                return false;
+            }
+        }
+    }
+    return true;
 }
