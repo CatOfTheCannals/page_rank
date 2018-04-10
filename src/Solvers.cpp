@@ -40,3 +40,22 @@ Matrix gauss_elimination(const Matrix& a)
     return x;
     //return x.subMatrix(0, 0, rows_a - 1, rows_a -1);
 }
+
+Matrix backward_sub(const Matrix& a, const Matrix& y)
+{
+    int rows_a, cols_a, rows_y, cols_y;
+    std::tie(rows_a, cols_a) = a.shape();
+    std::tie(rows_y, cols_y) = y.shape();
+    assert(rows_a == cols_a && rows_a == rows_y && cols_y == 1);
+
+    Matrix x(rows_a, 1);
+
+    for (int i = rows_a - 1; i >= 0; i--) {
+        auto temp_row = a.subMatrix(i, i, i, cols_a - 1);
+        auto temp_col = x.subMatrix(i, rows_y - 1, 0, 0);
+        double temp_coeff = temp_row.multiply(temp_col)(0,0);
+        x.setIndex(i, 0, (y(i, 0) - temp_coeff) / a(i,i));
+    }
+
+    return x;
+}

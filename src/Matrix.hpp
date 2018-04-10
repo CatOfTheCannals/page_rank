@@ -34,19 +34,20 @@ public:
     double operator()(std::size_t row_idx, std::size_t col_idx) const;
     double operator()(std::size_t idx) const;
     void setIndex(int i, int j, double value); //fixme: completaro
-    void operator+(Matrix matrix);
-    void operator*(double scalar); //scalar multiplication
+    Matrix operator+(Matrix matrix);
+    Matrix operator*(double scalar); //scalar multiplication
     void transpose();
     void swapRows(int i1, int i2);
     Matrix getRow(int index);
     std::tuple<int, int> shape() const;
     bool operator==(const Matrix& other) const;
-    Matrix subMatrix(int i1, int i2, int j1, int j2);
+    Matrix subMatrix(int i1, int i2, int j1, int j2) const;
     Matrix multiply(const Matrix b);
-    static Matrix identity(int rows, int cols);
+    static Matrix identity(int n);
     Matrix abs();
     std::tuple<int, int> maxCoeff();
     friend std::ostream& operator<<(std::ostream& o, const Matrix& a);
+    bool isApproximate(const Matrix b, double epsilon) const;
 
 private:
     int _rows;

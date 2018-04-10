@@ -162,7 +162,7 @@ TEST_F (mockMatrices, matrixMultipOperator){
 
     int rows, cols;
     std::tie(rows, cols) = m.shape();
-    Matrix id = Matrix::identity(rows, cols);
+    Matrix id = Matrix::identity(rows);
     ASSERT_EQ(m, m.multiply(id));
 }
 
