@@ -48,15 +48,15 @@ Dadas $i, j \in \{1...n\}$ el \textbf{aporte} del enlace que va de la página $j
 
 Es decir que, cuando existe un enlace desde \textit{j} hacia \textit{i} y el grado de \textit{j} $c_j$ es distinto de $0$, la página \textit{j} le aporta a la página \textit{i} su puntaje, ponderado por cuántos enlaces salientes tiene. \\
 
-Finalmente, calculamos el puntaje $x_i$ de la página \textit{i} como:
+Finalmente, calculamos el puntaje $x_i$ de la página \textit{i} como: \\
 
-$ x_i = \sum_{j=1}^{n} \frac{x_j}{c_j} w_{ij} $
+$ x_i = \sum_{j=1}^{n} \frac{x_j}{c_j} w_{ij} $ \\
 
 (Notar que el puntaje de una página depende del puntaje de las otras.) \\
 
-Entonces, definiendo $R = WD$, el sistema a resolver quedaría:
+Entonces, definiendo $R = WD$, el sistema a resolver quedaría: \\
 
-$Rx = x$
+$Rx = x$ \\
 
 Donde $D$ es la matriz diagonal con $d_{jj} = \frac{1}{c_j}$ (salvo cuando $c_j = 0$: en tal caso, $d_{jj} = 0$). \\
 
