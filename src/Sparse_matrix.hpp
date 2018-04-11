@@ -34,7 +34,7 @@ public:
     double operator()(std::size_t row_idx, std::size_t col_idx) const;
     double operator()(std::size_t idx) const;
     void setIndex(int i, int j, double value);
-    map<int, double> operator[] ( std::size_t col_idx);
+    map<int, double> operator[] ( std::size_t col_idx); //devuelve la columna/fila  col_idx si está definida 
     void transpose();
     void swapRows(int i1, int i2);
 	Sparse_matrix subMatrix(int i1, int i2, int j1, int j2);
@@ -119,13 +119,17 @@ double Sparse_matrix::operator()(std::size_t idx) const
 }
 
 
+
 map<int, double> Sparse_matrix::operator[] (std::size_t col_idx){	
-	return this->_matrix.find(col_idx)->second;
+	map<int, double> empty_col;
+	it_s_matrix col_it = this->_matrix.find(col_idx);
+	if (col_it != this->_matrix.end()) { return col_it->second; }
+	else{ return empty_col; }
 }
 
 	
 void Sparse_matrix::setIndex(int i, int j, double value){
-	
+	cout<< i <<" "<<j<<". "<<endl;
 	assert(0 <= i < this->_rows && 0 <= j < this->_cols);
     it_s_matrix col_it = _matrix.find(j);
 

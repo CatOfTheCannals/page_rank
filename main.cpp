@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <string>
+
 //#include "src/Matrix.hpp"
 #include "src/Sparse_matrix.hpp"
 
@@ -9,22 +11,39 @@ using namespace std;
 bool map_of_rows = false; // indica si la matriz está guardada por filas o por columnas.
 
 int main(int argc, char** argv){
-
-    // m.printarray();
-
-    string line;
-
-    ifstream f_test("test.txt");
+	if (argc != 3){
+		cout << endl<<"	Unable to run program" << endl;
+		cout << "	Three parameters are expected:    program_name.exe  in_file.txt  out_file.txt" << endl;
+		return 0;
+	}
+		
+	string inFile(argv[1]);
+	string outFile(argv[2]);
+	string line;
+	int pages, links;
+    ifstream f_test(inFile);
+	Sparse_matrix sm = Sparse_matrix(pages);
+	map_of_rows= false;
+	
     if ( f_test.is_open() ){
+		f_test >> pages >> links;
+		//cout <<"paginas: "<< pages<<" "<<"links: "<< links <<endl;
         while( getline(f_test, line) ){
-            cout << line << endl;
+			
+			std::istringstream lineStream(line);
+			int i, j;
+			//el primer par q lee es fruta y falla el assert!!!!!!!
+			//lineStream >> i >> j;
+			//cout << i<<" "<<j <<endl;
+			//sm.setIndex(i,j,1);
+			//cout << sm(i,j)<<" ";
         }
         f_test.close();
     } else {
         cout << "Unable to open file." << endl;
     }
 
-	Sparse_matrix m  = Sparse_matrix(5);
+/*	Sparse_matrix m  = Sparse_matrix(5);
 	
 	map<int, double> col0;
 	map<int, double> col1;
@@ -70,10 +89,10 @@ int main(int argc, char** argv){
 
 
 	assert( m((size_t)3, (size_t)3) == 0);
-	assert( m((size_t) 0, (size_t) 3) == 1);
+	assert( m((size_t)0, (size_t) 3) == 1);
 	
 	
-	
+	*/
   return 0;
 }
 
