@@ -36,28 +36,39 @@ void Matrix::setIndex(int i, int j, double value){
 
 }
 
-Matrix Matrix::operator+(Matrix matrix) {
+Matrix Matrix::operator+(const Matrix& matrix) const{
     assert(this->_cols == matrix.cols() && this->_rows == matrix.rows());
+    Matrix res = (*this);
 
-    for(int i=0; i < this->rows(); ++i){
-        for(int j=0; j < this->_cols; ++j){
-            this->setIndex(i, j, (*this)(i, j) + matrix(i, j));
+    for(int i=0; i < res.rows(); ++i){
+        for(int j=0; j < res.cols(); ++j){
+            res.setIndex(i, j, res(i, j) + matrix(i, j));
         }
     }
-    return (*this);
+    return res;
 }
 
-Matrix Matrix::operator*(double scalar) {
-    for(int i=0; i < this->rows(); ++i){
-        for(int j=0; j < this->cols(); ++j){
-            this->setIndex(i, j, (*this)(i, j) * scalar);
+Matrix Matrix::operator*(const double& scalar) const{
+    Matrix res = (*this);
+    for(int i=0; i < res.rows(); ++i){
+        for(int j=0; j < res.cols(); ++j){
+            res.setIndex(i, j, res(i, j) * scalar);
         }
     }
-    return (*this);
+    return res;
 }
 
 
-void Matrix::transpose() {
+
+
+Matrix Matrix::transpose() {
+    Matrix res(this->rows(), this->cols());
+    for(int i = 0; i < this->rows() ; i++){
+        for(int j = 0; j < this->cols() ; j++){
+            res.setIndex(i,j, (*this)(j,i));
+        }
+    }
+    return res;
 }
 
 void Matrix::swapRows(int i1, int i2) {
@@ -152,7 +163,7 @@ std::tuple<int, int> Matrix::maxCoeff() {
     double max = (*this)(0,0);
     for (int i = 0; i < this->rows(); ++i) {
         for (int j = 0; j < this->cols(); ++j) {
-            if((*this)(i,j) >= max){
+            if((*this)(i,j) > max){
                 max = (*this)(i,j);
                 res_x = i;
                 res_y = j;
