@@ -9,40 +9,45 @@
 using namespace std;
 
 bool map_of_rows = false; // indica si la matriz está guardada por filas o por columnas.
+int contador=0;
 
 int main(int argc, char** argv){
+	
 	if (argc != 3){
 		cout << endl<<"	Unable to run program" << endl;
 		cout << "	Three parameters are expected:    program_name.exe  in_file.txt  out_file.txt" << endl;
-		return 0;
+		return 1;
 	}
-		
+	
 	string inFile(argv[1]);
 	string outFile(argv[2]);
 	string line;
-	int pages, links;
-    ifstream f_test(inFile);
-	Sparse_matrix sm = Sparse_matrix(pages);
+	int pages, links, i, j;
 	map_of_rows= false;
+	contador = 0;//lo uso solo para debug
+	ifstream f_test(inFile);
 	
-    if ( f_test.is_open() ){
-		f_test >> pages >> links;
-		//cout <<"paginas: "<< pages<<" "<<"links: "<< links <<endl;
-        while( getline(f_test, line) ){
-			
-			std::istringstream lineStream(line);
-			int i, j;
-			//el primer par q lee es fruta y falla el assert!!!!!!!
-			//lineStream >> i >> j;
-			//cout << i<<" "<<j <<endl;
-			//sm.setIndex(i,j,1);
-			//cout << sm(i,j)<<" ";
-        }
-        f_test.close();
-    } else {
-        cout << "Unable to open file." << endl;
-    }
+    if ( f_test.is_open() ){ f_test >> pages >> links;} 
+    else { cout << "Unable to open file." << endl; return 1; }
+    
+	Sparse_matrix sm = Sparse_matrix(pages);
+	
+	/**/ // leo basura, hay q lograr sacarla
+	getline(f_test, line);	
+	istringstream lineStream(line);
+	lineStream >> i >> j;
 
+	/**/ //ahora si leo el archivo de test
+	
+	while( getline(f_test, line) ){
+		istringstream lineStream(line);
+		lineStream >> i >> j;
+		sm.setIndex(i,j,1);
+	}
+	f_test.close();
+	
+	
+	
 /*	Sparse_matrix m  = Sparse_matrix(5);
 	
 	map<int, double> col0;

@@ -11,13 +11,14 @@
 
 
 extern bool map_of_rows;
+extern int contador;
 
 using namespace std;
 
 typedef map<int, map<int, double> >::const_iterator it_s_matrix;
 typedef map<int, map<int, double> > s_matrix;
 
-class Sparse_matrix {
+class Sparse_matrix { // la primer posicion de la matriz es el 1,1
 public:
     // Constructor of Sparse Sparse_matrix Class
     Sparse_matrix(int websiteCount) {
@@ -34,7 +35,7 @@ public:
     double operator()(std::size_t row_idx, std::size_t col_idx) const;
     double operator()(std::size_t idx) const;
     void setIndex(int i, int j, double value);
-    map<int, double> operator[] ( std::size_t col_idx); //devuelve la columna/fila  col_idx si está definida 
+    map<int, double> column( std::size_t col_idx); //devuelve la columna/fila  col_idx si está definida 
     void transpose();
     void swapRows(int i1, int i2);
 	Sparse_matrix subMatrix(int i1, int i2, int j1, int j2);
@@ -77,8 +78,8 @@ s_matrix Sparse_matrix::matrix() const {
 
 std::ostream& operator<<(std::ostream& o, const Sparse_matrix& a)
 {
-    for (std::size_t i = 0; i < a.rows(); i++) {
-        for (std::size_t j = 0; j < a.cols(); j++) {
+    for (std::size_t i = 1; i <= a.rows(); i++) {
+        for (std::size_t j = 1; j <= a.cols(); j++) {
             o << a(i, j) << ' ';
         }
         if (!(i / a.rows())) {
@@ -92,14 +93,14 @@ std::ostream& operator<<(std::ostream& o, const Sparse_matrix& a)
 double Sparse_matrix::operator()(std::size_t row_idx, std::size_t col_idx) const
 {	
 	double val = 0.0; //si el indice no está definido en la matriz, entonces valor es cero
-	assert(row_idx < this->_rows && col_idx < this->_cols);
+	assert(row_idx <= this->_rows && col_idx <= this->_cols);
 	it_s_matrix col_it = _matrix.find(col_idx);
 
-	if (col_it != _matrix.end()){
+	if (col_it != _matrix.end()){ //la columna col_idx está definida
 	
 		map<int, double> requested_col =  _matrix.find(col_idx)->second;
 		map<int, double>::iterator 	row_it = (requested_col).find(row_idx);
-		if (row_it != requested_col.end()){
+		if (row_it != requested_col.end()){ //la fila row_idx está definida
 
 			val = requested_col.find(row_idx)->second;
 		}
@@ -120,7 +121,7 @@ double Sparse_matrix::operator()(std::size_t idx) const
 
 
 
-map<int, double> Sparse_matrix::operator[] (std::size_t col_idx){	
+map<int, double> Sparse_matrix::column(std::size_t col_idx){	
 	map<int, double> empty_col;
 	it_s_matrix col_it = this->_matrix.find(col_idx);
 	if (col_it != this->_matrix.end()) { return col_it->second; }
@@ -129,26 +130,24 @@ map<int, double> Sparse_matrix::operator[] (std::size_t col_idx){
 
 	
 void Sparse_matrix::setIndex(int i, int j, double value){
-	cout<< i <<" "<<j<<". "<<endl;
-	assert(0 <= i < this->_rows && 0 <= j < this->_cols);
+	assert(1 <= i < this->_rows && 1 <= j < this->_cols);
     it_s_matrix col_it = _matrix.find(j);
 
 	if (col_it != _matrix.end()){ //la columna j está definida
-    
-		map<int, double> requested_col =  _matrix.find(j)->second;
+		map<int, double> requested_col =  _matrix.find(j)->second; //ver de hacerlo por referencia y no por copia
 		map<int, double>::iterator row_it = (requested_col).find(i);
 		if (row_it != requested_col.end()){ //si la fila i esta definida
 
-			requested_col.find(i)->second= value; //seteo el valor
+			_matrix.find(j)->second.find(i)->second= value; //seteo el valor
 		}
 		else{ // la fila i no está definida
-			  requested_col[i]= value;
+			 _matrix.find(j)->second[i]= value;
 		}
 	}
 	else { //la columna j no está definida
 		map<int, double> new_col;
 		new_col[i]= value;
-		_matrix[j] = new_col;
+		this->_matrix[j] = new_col;
 	}
 }
 
