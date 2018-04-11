@@ -32,6 +32,11 @@ protected:
         y.setIndex(1, 0, 20);
         y.setIndex(2, 0, 30);
 
+        r.setIndex(0, 0, 10);
+        r.setIndex(1, 0, 20);
+        r.setIndex(2, 0, 30);
+        r.setIndex(3, 0, 40);
+
         z.setIndex(0, 0,17.1431);
         z.setIndex(1, 0,-40);
         z.setIndex(2, 0,30);
@@ -56,11 +61,13 @@ protected:
     Matrix g = Matrix(3,3);
     Matrix v = Matrix(3,3);
     Matrix y = Matrix(3,1);
+    Matrix r = Matrix(4,1);
     Matrix z = Matrix(3,1);
     Matrix fourByFour = Matrix(4,4);
 };
 
 TEST_F (mockGaussInput, gaussElimFourByFour){
+
     Matrix l(fourByFour.rows(), fourByFour.cols());
     Matrix u(fourByFour.rows(), fourByFour.cols());
     std::tie(l, u) = gauss_elimination(fourByFour);
@@ -87,7 +94,6 @@ TEST_F (mockGaussInput, gaussElimFourByFour){
 }
 
 TEST_F (mockGaussInput, backwardSub){
-    Matrix id = Matrix::identity(3);
     auto x = backward_sub(v, y);
     // ASSERT_TRUE(x.isApproximate(z, 0.0001)); // z la jarcodie en base a los resultados de solve_triangular de scipy
     ASSERT_TRUE(v.multiply(x).isApproximate(y, 0.0001));
@@ -107,13 +113,21 @@ TEST_F (mockGaussInput, findX){
     p.swapRows(0, 2);
     p.swapRows(0, 1);
 
-    Matrix l(g.rows(), g.cols());
-    Matrix u(g.rows(), g.cols());
-    std::tie(l, u) = gauss_elimination(g);
-    auto z = forward_sub(l, y);
-    auto x = backward_sub(u, z);
-    std::cout << l.multiply(u) + g * -1 << std::endl;
-    // std::cout << p.multiply(g).multiply(x) << std::endl;
-    // ASSERT_TRUE(p.multiply(g).multiply(x).isApproximate(y, 0.0001)); // FIXME: esto falla y no se si es esperable
+    Matrix l(fourByFour.rows(), fourByFour.cols());
+    Matrix u(fourByFour.rows(), fourByFour.cols());
+    std::tie(l, u) = gauss_elimination(fourByFour);
+    auto q = forward_sub(l, r);
+    auto x = backward_sub(u, q);
+
+    /*
+    std::cout << std::endl << l << std::endl;
+    std::cout << u << std::endl;
+    std::cout << l.multiply(u) << std::endl;
+    std::cout << fourByFour << std::endl;
+    std::cout << l.multiply(u) + fourByFour * -1 << std::endl;
+    std::cout << x << std::endl;
+     */
+
+    ASSERT_TRUE(fourByFour.multiply(x).isApproximate(r, 0.0001));
 
 }

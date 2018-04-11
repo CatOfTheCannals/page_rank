@@ -5,7 +5,7 @@ std::tuple<Matrix, Matrix> gauss_elimination(const Matrix& a)
 {
     assert(a.cols() == a.rows());
     auto u = a;
-    Matrix l = Matrix::identity(a.rows());
+    Matrix l(a.rows(), a.cols());
 
     for (int i = 0; i < a.cols(); i++) {
         //find max coeff
@@ -15,20 +15,21 @@ std::tuple<Matrix, Matrix> gauss_elimination(const Matrix& a)
         if (current_col(max_coeff) != 0) {
             //swap it
             u.swapRows(i, max_coeff + i);
-            // std::cout << std::endl  << "swap " << i << " with " << max_coeff + i << std::endl;
+            l.swapRows(i, max_coeff + i);
             for (int r = i + 1; r < a.rows(); r++) {
                 if (u(r,i) != 0){
                     double rowMultiplicator = u(r,i) / u(i, i);
                     l.setIndex(r, i, rowMultiplicator);
-                    // std::cout <<  "(" << r << "," << i << "): " << rowMultiplicator << std::endl;
                     for (int c = i; c < a.cols(); c++) {
-                        u.setIndex(r, c, u(r, c) - u(i, c) * rowMultiplicator);
+                        u.setIndex(r, c, u(r, c) - (u(i, c) * rowMultiplicator));
                     }
                 }
             }
 
         }
     }
+    Matrix id = Matrix::identity(a.rows());
+    l = l + id;
     return std::make_tuple(l, u);
 }
 
