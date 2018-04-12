@@ -82,14 +82,13 @@ std::ostream& operator<<(std::ostream& o, const Sparse_matrix& a)
 {
     for (std::size_t i = 1; i <= a.rows(); i++) {
         for (std::size_t j = 1; j <= a.cols(); j++) {
-            o << a(i, j) << ' ';
+            o << a(i, j) << '\t';
         }
         if (!(i / a.rows())) {
             o << endl;
         }
     }
     return o;
-
 }
 
 double Sparse_matrix::operator()(std::size_t row_idx, std::size_t col_idx) const
@@ -139,21 +138,22 @@ void Sparse_matrix::multColByScalar(std::size_t j, double scalar){
 		
 		for( map<int, double>::const_iterator it_row = (it_col->second).begin(); it_row != (it_col->second).end(); it_row++){
 			
-			double res = it_row->second * scalar;
-			if( fabs(res) > epsilon ){
-				this->setIndex(it_col->first, it_row->first, res);
+			double new_val = it_row->second * scalar;
+			//cout <<new_val<<endl;
+			if( fabs(new_val) > epsilon ){
+				this->setIndex( it_row->first, j, new_val);
+				//it_row->second= new_val;
 			}else{//lo elimino de la matriz
-				_matrix.find(j)->second.erase(it_row->first);
+				_matrix[j].erase(it_row->first);
 			}
 		}
-	} // si no esta definida quiero que siga así
-
+	} // si j no esta definida, es cero y quiero que siga así
 	
 }
 
 	
 void Sparse_matrix::setIndex(int i, int j, double value){
-	assert(1 <= i < this->_rows && 1 <= j < this->_cols);
+	assert(1 <= i <= this->_rows && 1 <= j <= this->_cols);
     it_s_matrix col_it = _matrix.find(j);
 
 	if (col_it != _matrix.end()){ //la columna j está definida

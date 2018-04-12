@@ -43,29 +43,36 @@ int main(int argc, char** argv){
 	istringstream lineStream(line);
 	lineStream >> i >> j;
 
-	/**/ //ahora si leo el archivo de test
+	/**/ //ahora si leo el archivo de test -->la entrada i,j indica un 1 en la posicion [j][i]
 		 // armo W y C al mismo tiempo
-	vector<int> C (pages);	
-	while( getline(f_test, line) ){
+	vector<int> C (pages);	 //podemos ver como inicializarlo con ceros acá
+	for(int n=0; n<pages; n++){
+		C[n]= 0;
+	}
+
+	while( getline(f_test, line) ){ //asumo que el archivo de entrada no termina con salto de linea (en ese caso se vuelve a cargar en W y se suma uno a C)
 		istringstream lineStream(line);
-		lineStream >> i >> j;
-		W.setIndex(i,j,1);
+		lineStream >> j >> i;
+		W.setIndex(i, j, 1);
 		C[i-1] ++ ;//el vector esta indexado a partir de cero
 	}
+	
+
 	f_test.close();
 	
 	//***********fin levantar W************
 	
-	
-	
-	//***********armo matrices -pD y E************
 
+	//***********armo matrices -pD y E************
+ 
 	vector<double> minusPD(pages); //se inicializa con "" ceros "" por default, ejemplo  minusPD[5] = 8.90675e-310
+
 	for (int i = 0; i< pages; i++){
 		if (C[i]!=0) { //si C es igual a cero , D es cero
 		minusPD[i] = -(p/C[i]);
 		}
 	}
+	
 	vector<int> E (pages, 1);
 	
 	//***********fin armar matrices -pD y E************
@@ -73,9 +80,11 @@ int main(int argc, char** argv){
 	
 	//*********** Calculo A =  W  * (-pD), descarto resultados menores a epsilon  ************
 	
-	for (int i = 1; i<= pages; i++){
+	cout<<W<<endl;
+	for (int j = 1; j<= pages; j++){
 		
-	//	W.multColByScalar( i, minusPD[i-1]);
+	
+	//	W.multColByScalar( j, minusPD[j-1]);
 	}
 	
 	
