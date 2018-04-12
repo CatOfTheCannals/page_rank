@@ -22,19 +22,19 @@
 
 		Viendo esto, pensamos que sería bueno tener alguna estructura que contuviera a \textit{las columnas} de $W$, para poder pedirlas en $O(1)$ y multiplicar fácilmente a cada una por un mismo escalar. \\
 
-		En particular, vamos a querer multiplicar a sus elementos \textit{distintos de $0$} (pues los que son $0$ no haría falta porque quedarían iguales), y la matriz $W$, por ser rala, contiene muchos elementos iguales a $0$. Es por esto que pensamos usar un \textit{map$<$int, double$>$} para almacenar las columnas: donde el \textit{int} es el número de fila y el \textit{double} es el valor almacenado en esa posición del \textit{map} (es decir, de la columna). Nos evitaremos almacenar los $0$s, asumiendo que las posiciones que no está almacenadas son $0$. \\
+		En particular, vamos a querer multiplicar a sus elementos \textit{distintos de $0$} (pues los que son $0$ no haría falta porque quedarían iguales), y la matriz $W$, por ser rala, contiene muchos elementos iguales a $0$. Es por esto que pensamos usar un \textit{map$<$int, double$>$} para almacenar las columnas: donde el \textit{int} es el número de fila y el \textit{double} es el valor almacenado en esa posición del \textit{map} (es decir, de la columna). Nos evitaremos almacenar los $0$s, asumiendo que las posiciones que no están almacenadas son $0$. \\
 
 		Por otro lado, para la triangulación del sistema lineal mediante el algoritmo de Eliminación Gaussiana, lo que sucede es más bien lo opuesto: cada paso del algoritmo es equivalente a \textit{pre}multiplicar (multiplicar por izquierda) al sistema $(I - pWD) x = e$ por un matriz elemental $E_{(i,j)}$ distinta. Estas matrices son como la matriz identidad, pero poseen un elemento distinto de $0$ en la posición $(i,j)$. \\
 
-		$E_{(n,n-1)} \hdots E_{(2,1)} (I - pWD) x = E_{(n,n-1)} \hdots E_{(2,1)} e$ \\
+		$ (I - pWD) x = e <=> E_{(n,n-1)} \hdots E_{(2,1)} (I - pWD) x = E_{(n,n-1)} \hdots E_{(2,1)} e $ \\
 
 		Esto, a su vez, es equivalente a hacer operaciones con las filas. Por ejemplo, si $E_{(2,1)}$ tiene un escalar $m_{2,1} \neq 0$ en la posición $(2,1)$, premultiplicar $E_{(2,1)}$ por $(I - pWD)$ será modificar la segunda fila de $(I - pWD)$ de manera tal que: \\
 
 		$fila_{2}(I-pWD) = m_{2,1} *  fila_{1}(I-pWD) + fila_{2}(I-pWD)$ \\
 
-		Esto nos hizo pensar que, para hacer estas operaciones, sería más fácil tener a la matriz como map \textit{de filas}. \\
+		Esto nos hizo pensar que, para hacer estas operaciones, sería más fácil tener a la matriz como \textit{map} \underline{de filas}. \\
 
-		Entonces lo que resolvimos hacer fue cargar la matriz como map de columnas para armar el sistema, y luego traponerla e interpretarla como un map de filas para la resolución del sistema lineal. \\
+		Entonces lo que resolvimos hacer fue cargar la matriz como \textit{map} de columnas para armar el sistema, y luego trasponerla e interpretarla como un \textit{map} de filas para la resolución del sistema lineal. \\
 
 	\subsection{Page Rank}
 
