@@ -12,6 +12,7 @@
 
 extern bool map_of_rows;
 extern int contador;
+extern double epsilon;
 
 using namespace std;
 
@@ -36,6 +37,7 @@ public:
     double operator()(std::size_t idx) const;
     void setIndex(int i, int j, double value);
     map<int, double> column( std::size_t col_idx); //devuelve la columna/fila  col_idx si está definida 
+    void multColByScalar(std::size_t col_idx, double scalar);
     void transpose();
     void swapRows(int i1, int i2);
 	Sparse_matrix subMatrix(int i1, int i2, int j1, int j2);
@@ -126,6 +128,27 @@ map<int, double> Sparse_matrix::column(std::size_t col_idx){
 	it_s_matrix col_it = this->_matrix.find(col_idx);
 	if (col_it != this->_matrix.end()) { return col_it->second; }
 	else{ return empty_col; }
+}
+
+
+void Sparse_matrix::multColByScalar(std::size_t j, double scalar){
+	
+	it_s_matrix it_col = _matrix.find(j);
+
+	if (it_col != _matrix.end()){ //la columna j está definida
+		
+		for( map<int, double>::const_iterator it_row = (it_col->second).begin(); it_row != (it_col->second).end(); it_row++){
+			
+			double res = it_row->second * scalar;
+			if( fabs(res) > epsilon ){
+				this->setIndex(it_col->first, it_row->first, res);
+			}else{//lo elimino de la matriz
+				_matrix.find(j)->second.erase(it_row->first);
+			}
+		}
+	} // si no esta definida quiero que siga así
+
+	
 }
 
 	
