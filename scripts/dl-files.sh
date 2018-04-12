@@ -49,6 +49,8 @@ END
 		--input-file=http://www-2.dc.uba.ar/materias/metnum/dnload/2018_C1/tp1/tp1.html && \
 	rm 	tp1.html	# TODO try the --delete-after flag with wget to avoid having to remove this file later
 
+	wget	http://www-2.dc.uba.ar/materias/metnum/dnload/2015_C1/pautas.1C2015.pdf
+
 # process the files
 
 	 unzip tests_tp1.zip && \	# uncompress zip file and remove it
