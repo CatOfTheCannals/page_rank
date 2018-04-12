@@ -24,7 +24,7 @@ int main(int argc, char** argv){
 	
 	//********* levanto W y armo C***********
 	string inFile(argv[1]);
-	string outFile(strcat(argv[1], ".out"));
+	string outFile (strcat(argv[1], ".out"));
 	double p = atof(argv[2]);
 	
 	string line;
@@ -50,7 +50,7 @@ int main(int argc, char** argv){
 		istringstream lineStream(line);
 		lineStream >> i >> j;
 		W.setIndex(i,j,1);
-		C[i] ++ ;
+		C[i-1] ++ ;//el vector esta indexado a partir de cero
 	}
 	f_test.close();
 	
@@ -61,21 +61,21 @@ int main(int argc, char** argv){
 	//***********armo matrices -pD y E************
 
 	vector<double> minusPD(pages); //se inicializa con "" ceros "" por default, ejemplo  minusPD[5] = 8.90675e-310
-	for (int i = 0; i<= pages; i++){
+	for (int i = 0; i< pages; i++){
 		if (C[i]!=0) { //si C es igual a cero , D es cero
-		minusPD[i] = -p/C[i];
+		minusPD[i] = -(p/C[i]);
 		}
 	}
 	vector<int> E (pages, 1);
 	
 	//***********fin armar matrices -pD y E************
-	
+
 	
 	//*********** Calculo A =  W  * (-pD), descarto resultados menores a epsilon  ************
 	
-	for (int i = 0; i<= pages; i++){
+	for (int i = 1; i<= pages; i++){
 		
-		W.multColByScalar( i, minusPD[i]);
+	//	W.multColByScalar( i, minusPD[i-1]);
 	}
 	
 	
