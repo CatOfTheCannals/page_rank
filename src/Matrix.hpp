@@ -34,9 +34,9 @@ public:
     double operator()(std::size_t row_idx, std::size_t col_idx) const;
     double operator()(std::size_t idx) const;
     void setIndex(int i, int j, double value); //fixme: completaro
-    Matrix operator+(Matrix matrix);
-    Matrix operator*(double scalar); //scalar multiplication
-    void transpose();
+    Matrix operator+(const Matrix& matrix) const;
+    Matrix operator*(const double& scalar) const; //scalar multiplication
+    Matrix transpose() ;
     void swapRows(int i1, int i2);
     Matrix getRow(int index);
     std::tuple<int, int> shape() const;
