@@ -36,7 +36,7 @@ int main(int argc, char** argv){
     if ( f_test.is_open() ){ f_test >> pages >> links;} 
     else { cout << "Unable to open file." << endl; return 1; }
     
-	Sparse_matrix W = Sparse_matrix(pages);
+	Sparse_matrix W = Sparse_matrix(pages, pages);
 	
 	/**/ // leo basura, hay q lograr sacarla
 	getline(f_test, line);	
@@ -93,6 +93,10 @@ int main(int argc, char** argv){
 	//*********** Guardo A por FILAS, luego Triangulo A **************
 	
 	W.transpose();
+	
+	cout<< W<<endl <<endl <<endl;
+	
+
 	
 	//std::tuple<Sparse_matrix, Sparse_matrix> salida_gauss = gauss_elimination(W);
 	//*********** Fin triangulo A **************
