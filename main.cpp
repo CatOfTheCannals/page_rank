@@ -69,13 +69,13 @@ int main(int argc, char** argv){
 		minusPD[n]= 0.0;
 	}
 	
-	for (int i = 0; i< pages; i++){
+	for (int i = 0; i< pages; i++){ // cambiaría "pages" por "pageCount" si están de acuerdo y no se mucho lío
 		if (C[i]!=0) { //si C es igual a cero , D es cero
-		minusPD[i] = -(p/C[i]);
+			minusPD[i] = -(p/C[i]);
 		}
 	}
 	
-	vector<int> E (pages, 1);
+	vector<int> E (pages, 1); // esto andará? para inicializar en 0 no nos había andado y tuvimos que hacer el ciclo
 	
 	//***********fin armar matrices -pD y E************
 
@@ -92,15 +92,15 @@ int main(int argc, char** argv){
   
 	//*********** Guardo A por FILAS, luego Triangulo A **************
 	
-	W.transpose();
+	W.transpose(); // ¿capaz estaría bueno que a esta altura se llamase A en vez de W?
+	//map_of_rows = true;
 	
 	//cout<< W<<endl <<endl <<endl;
 	
 	
-	//std::tuple<Sparse_matrix, Sparse_matrix> salida_gauss = gauss_elimination(W);
+	//std::tuple<Sparse_matrix, Sparse_matrix> salida_gauss = gauss_elimination(W); // no soy muy fan de los nombres. EG es hacer la triangulación. para mi debería llamarse "gaussAndBackSub" o "solve". y "salida_gauss" capaz "res"
 	//*********** Fin triangulo A **************
   
   return 1;
 }
-
 
