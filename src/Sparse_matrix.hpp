@@ -42,7 +42,7 @@ public:
     void swapRows(int i1, int i2);
 	Sparse_matrix subMatrix(int i1, int i2, int j1, int j2);
 	std::tuple<int, int> shape() const;
-//	std::tuple<int, int> maxCoeff(const Sparse_matrix a);
+//	std::tuple<int, int> maxCoeffAbs(const Sparse_matrix a);
 //	Sparse_matrix abs(const Sparse_matrix a) {
 
 /*    void operator+(Sparse_matrix matrix);
@@ -74,7 +74,7 @@ int Sparse_matrix::size() const {
     return _rows * _cols;
 }
 
-s_matrix Sparse_matrix::matrix() const {
+s_matrix Sparse_matrix::matrix()const {
     return _matrix;
 }
 
@@ -302,20 +302,22 @@ Sparse_matrix Sparse_matrix::identity(int rows, int cols){
 }
 */
 
-std::tuple<int, int> maxCoeff(const Sparse_matrix a) {
-    int res_x, res_y;
-    double max = 0.0;
-	for( map<int, map<int, double> >::const_iterator it_col = a.matrix().begin(); it_col != a.matrix().end(); it_col++){
+tuple<int, int> maxCoeffAbs(const Sparse_matrix a) {
+	int res_x = 1;
+	int res_y = 1;
+    double max = a(1,1);
+	s_matrix aux_mat = a.matrix();
+	for( it_s_matrix it_col = aux_mat.begin(); it_col != aux_mat.end(); it_col++){
 		for( map<int, double>::const_iterator it_row = (it_col->second).begin(); it_row != (it_col->second).end(); it_row++){
-			if (it_row->second > max ){
-				max= it_row->second;
+			if (fabs(it_row->second) > max ){
+				max= fabs(it_row->second);
 				res_x = it_row->first;
 				res_y = it_col->first;
 			}
 		}
 	}
-    return std::make_tuple(res_x, res_y);
-};
+    return make_tuple(res_x, res_y);
+}
 
 Sparse_matrix abs(const Sparse_matrix a) {
 

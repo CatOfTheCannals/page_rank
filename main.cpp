@@ -94,9 +94,8 @@ int main(int argc, char** argv){
 	
 	W.transpose();
 	
-	cout<< W<<endl <<endl <<endl;
+	//cout<< W<<endl <<endl <<endl;
 	
-
 	
 	//std::tuple<Sparse_matrix, Sparse_matrix> salida_gauss = gauss_elimination(W);
 	//*********** Fin triangulo A **************
