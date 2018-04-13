@@ -81,12 +81,14 @@ s_matrix Sparse_matrix::matrix() const {
 std::ostream& operator<<(std::ostream& o, const Sparse_matrix& a)
 {
     for (std::size_t i = 1; i <= a.rows(); i++) {
+		o<< endl << ' ';
         for (std::size_t j = 1; j <= a.cols(); j++) {
             o << a(i, j) << '\t';
         }
         if (!(i / a.rows())) {
             o << endl;
         }
+		o<<endl;
     }
     return o;
 }
@@ -148,7 +150,7 @@ void Sparse_matrix::multColByScalar(std::size_t j, double scalar){
 			}
 		}
 	} // si j no esta definida, es cero y quiero que siga así
-	
+	//cout<<*this<<endl <<endl<<endl;
 }
 
 	

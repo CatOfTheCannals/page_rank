@@ -50,7 +50,7 @@ int main(int argc, char** argv){
 		C[n]= 0;
 	}
 
-	while( getline(f_test, line) ){ //asumo que el archivo de entrada no termina con salto de linea (en ese caso se vuelve a cargar en W y se suma uno a C)
+	while( getline(f_test, line) ){ //asumo que el archivo de entrada no termina con salto de linea (en ese caso se vuelve a cargar en W y se suma uno de más a C )
 		istringstream lineStream(line);
 		lineStream >> j >> i;
 		W.setIndex(i, j, 1);
@@ -63,10 +63,14 @@ int main(int argc, char** argv){
 	//***********fin levantar W************
 	
 
+	
 	//***********armo matrices -pD y E************
  
 	vector<double> minusPD(pages); //se inicializa con "" ceros "" por default, ejemplo  minusPD[5] = 8.90675e-310
-
+	for(int n=0; n<pages; n++){
+		minusPD[n]= 0.0;
+	}
+	
 	for (int i = 0; i< pages; i++){
 		if (C[i]!=0) { //si C es igual a cero , D es cero
 		minusPD[i] = -(p/C[i]);
@@ -78,15 +82,13 @@ int main(int argc, char** argv){
 	//***********fin armar matrices -pD y E************
 
 	
+	
 	//*********** Calculo A =  W  * (-pD), descarto resultados menores a epsilon  ************
 	
-	cout<<W<<endl;
+	
 	for (int j = 1; j<= pages; j++){
-		
-	
-	//	W.multColByScalar( j, minusPD[j-1]);
+		W.multColByScalar( j, minusPD[j-1]);
 	}
-	
 	
 	//*********** Fin calculo A =  W  y (-pD), descarto resultados menores a epsilon  ************
   
