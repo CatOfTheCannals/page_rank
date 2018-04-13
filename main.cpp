@@ -88,7 +88,8 @@ int main(int argc, char** argv){
 	}
 	
 	//*********** Fin calculo A =  W  y (-pD), descarto resultados menores a epsilon  ************
-  
+
+	// falta sumarle I
   
 	//*********** Guardo A por FILAS, luego Triangulo A **************
 	
