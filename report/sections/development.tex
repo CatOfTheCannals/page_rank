@@ -60,6 +60,16 @@
 
 			En este caso, su funcionamiento está garantizado porque la matriz $A$ es estrictamente diagonal dominante (en particular, por columnas). \\
 
+			\subsubsubsection{Implementación}
+
+				En un principio, implementamos y verificamos el funcionamiento de este método basándonos en una clase matriz previa más simple, implementada con un \textit{array}. \\
+
+				Como todavía no sabíamos que la matriz $(I-pWD)$, por sus propiedades numéricas, tendría factorización LU sin pivoteo. Programamos eliminación gaussiana con pivoteo parcial. \\
+
+				Lo que hicimos luego, fue programar los mismos métodos públicos en la nueva clase matriz dispersa, para poder utilizar el mismo el algoritmo de eliminación gaussiana, sin hacerle demasiados cambios. \\
+
+				Decidimos conservar el pivoteo parcial, ya que esto le otorga mayor estabilidad numérica a los cálculos. \\
+
 		\subsubsection{Substitución Hacia Adelante y Hacia Atrás \textit{(forwards and backwards substitution)}}
 
 			Una ecuación matricial de la forma $Lx = b$ o $Ux = b$ (L triangular inferior, U triangular superior) es fácilmente soluble mediante un método iterativo llamado sustitución hacia adelante (o sustitución hacia atrás, respectivamente). \\
