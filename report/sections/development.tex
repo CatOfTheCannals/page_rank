@@ -36,7 +36,7 @@
 
 		Entonces lo que resolvimos hacer fue cargar la matriz como \textit{map} de columnas para armar el sistema, y luego trasponerla e interpretarla como un \textit{map} de filas para la resolución del sistema lineal. \\
 
-	\subsection{\textit{Page Rank} (ranking de Page/rango de páginas)}
+	\subsection{\textit{Page Rank} (ranking de Page/rango de página)}
 
 		Como vimos en la introducción teórica, para implementar Page Rank vamos a armar la matriz dispersa W, llamada \textit{de conectividad}, que contiene un 1 en la posición $(i,j)$ si la página \textit{j} enlaza a la página \textit{i}. \\
 
@@ -44,12 +44,17 @@
 
 		La cantidad de enlaces será usada para verificación, la cantidad de páginas la usaremos para definir el tamaño de la matriz de conectividad y, a medida que vayamos leyendo los enlaces, escribiremos $1$ en la posición de $W$ correspondiente, al tiempo que sumaremos $1$ al contador ubicado en la fila $i$ del vector $c$ de grados. \\
 
+		Luego, para representar la matriz $-pD$, usaremos un \textit{vector<double>} en el que solo almacenaremos los elementos de su diagonal (pues el resto son $0$). \\
+
+		Para multiplicar (por derecha) a $W$ por $-pD$, haremos un ciclo que recorrerá el vector en el que almacenamos $-pD$, multiplicando en casa paso a la columna de $W$ correspondiente. Para esto usará el método público de nuestra implementación de matriz dispersa $multColByScalar$ (multiplicar columna por escalar). \\
+
+		Por último, le sumamos $I$ para obtener $A = W(-pD) + I$, trasponemos, creamos el vector de $1$s $e$ y le pasamos $A$ y $e$ a nuestro método resolvedor de sistemas, que interpreta a las matrices como \textit{map} de filas. Por dentro, hará eliminiación gaussiana y substitución hacia atrás, métodos que serán explicados a continuación. \\
 
 		\subsubsection{Eliminación Gaussiana \textit{(gaussian elimination)}}
 
 
 
-		\subsubsection{\textit{Backwards Substitution} (substitución hacia atrás)}
+		\subsubsection{Substitución Hacia Atrás \textit{(backwards substitution)}}
 
 
 
