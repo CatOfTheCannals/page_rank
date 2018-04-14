@@ -35,6 +35,6 @@ endif()
 set(TEST_FILES Matrix_test.cpp Solver_test.cpp page_rank_test.cpp) # example_test.cpp Solver_test.cpp
 
 add_executable(correrTests ${TEST_FILES})
-target_link_libraries(correrTests metodos-tp1-base gtest gtest_main)
 
+target_link_libraries(correrTests metodos-tp1-base gtest_main gtest)
 

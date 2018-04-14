@@ -8,6 +8,7 @@ Matrix page_rank(Matrix W, Matrix C, double p) {
     assert(W.cols() == C.cols());
 
     Matrix id = Matrix::identity(W.rows());
+
     Matrix e(W.rows(), 1);
     for(int i = 0; i < e.rows(); i++) { //llenar e de unos
         e.setIndex(i, 0, 1);
@@ -24,6 +25,13 @@ Matrix page_rank(Matrix W, Matrix C, double p) {
 
     return x * normalization_coeff(x);
 
+    /*
+    auto res =  x * normalization_coeff(x);
+
+    std::cout << A.multiply(res) + res * -1 << std::endl;
+
+    return res
+    */
 }
 
 double normalization_coeff(Matrix column) {
@@ -35,4 +43,19 @@ double normalization_coeff(Matrix column) {
         sum += column(i,0);
     }
     return 1 / sum;
+}
+
+
+Matrix colSumDiag(const Matrix& W){
+    Matrix C(W.rows(), W.cols());
+    for(int j = 0; j < W.cols(); j ++){
+        double sum = 0;
+        for(int i = 0; i < W.rows(); i ++){
+            sum += W(i,j);
+        }
+        if(sum != 0){
+            C.setIndex(j,j,1/sum);
+        }
+    }
+    return C;
 }
