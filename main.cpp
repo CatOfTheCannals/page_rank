@@ -16,7 +16,7 @@ double epsilon = 0.00001;
 
 
 int main(int argc, char** argv){
-	
+
 	if (argc != 3){
 		cout << endl<<"	Unable to run program" << endl;
 		cout << "	Three parameters are expected:    program_name.exe  in_file.txt  p_number" << endl;
@@ -115,6 +115,6 @@ int main(int argc, char** argv){
 	//std::tuple<Sparse_matrix, Sparse_matrix> salida_gauss = gauss_elimination(W); // no soy muy fan de los nombres. EG es hacer la triangulación. para mi debería llamarse "gaussAndBackSub" o "solve". y "salida_gauss" capaz "res"
 	//*********** Fin triangulo A **************
   
-  return 1;
+  return 0;
 }
 

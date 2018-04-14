@@ -32,7 +32,7 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
     include_directories("${gtest_SOURCE_DIR}/include")
 endif()
 
-set(TEST_FILES Matrix_test.cpp Solver_test.cpp) # example_test.cpp Solver_test.cpp
+set(TEST_FILES Matrix_test.cpp Solver_test.cpp page_rank_test.cpp) # example_test.cpp Solver_test.cpp
 
 add_executable(correrTests ${TEST_FILES})
 target_link_libraries(correrTests metodos-tp1-base gtest gtest_main)

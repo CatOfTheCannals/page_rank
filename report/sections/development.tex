@@ -44,17 +44,47 @@
 
 		La cantidad de enlaces será usada para verificación, la cantidad de páginas la usaremos para definir el tamaño de la matriz de conectividad y, a medida que vayamos leyendo los enlaces, escribiremos $1$ en la posición de $W$ correspondiente, al tiempo que sumaremos $1$ al contador ubicado en la fila $i$ del vector $c$ de grados. \\
 
-		Luego, para representar la matriz $-pD$, usaremos un \textit{vector<double>} en el que solo almacenaremos los elementos de su diagonal (pues el resto son $0$). \\
+		Luego, para representar la matriz $-pD$, usaremos un \textit{vector$<$double$>$} en el que solo almacenaremos los elementos de su diagonal (pues el resto son $0$). \\
 
-		Para multiplicar (por derecha) a $W$ por $-pD$, haremos un ciclo que recorrerá el vector en el que almacenamos $-pD$, multiplicando en casa paso a la columna de $W$ correspondiente. Para esto usará el método público de nuestra implementación de matriz dispersa $multColByScalar$ (multiplicar columna por escalar). \\
+		Para multiplicar (por derecha) a $W$ por $-pD$, haremos un ciclo que recorrerá el vector en el que almacenamos $-pD$, multiplicando en cada paso a la columna de $W$ correspondiente. Para esto, usará el método público de nuestra implementación de matriz dispersa: $multColByScalar$ (multiplicar columna por escalar). \\
 
-		Por último, le sumamos $I$ para obtener $A = W(-pD) + I$, trasponemos, creamos el vector de $1$s $e$ y le pasamos $A$ y $e$ a nuestro método resolvedor de sistemas, que interpreta a las matrices como \textit{map} de filas. Por dentro, hará eliminiación gaussiana y substitución hacia atrás, métodos que serán explicados a continuación. \\
+		Por último, le sumamos $I$ para obtener $A = W(-pD) + I$, trasponemos, creamos el vector de $1$s $e$ y le pasamos $A$ y $e$ a nuestro método resolvedor de sistemas, que interpreta a las matrices como \textit{map} de filas. Por dentro, el resolvedor hará eliminiación gaussiana y substitución hacia adelante y hacia atrás, métodos que serán explicados a continuación. \\
 
 		\subsubsection{Eliminación Gaussiana \textit{(gaussian elimination)}}
 
+			El algoritmo de eliminación gaussiana factoriza a una matriz A en dos matrices: L triangular inferior con $1$s en la diagonal y $U$ triangular superior, tal que $A = LU$. \\
 
+			Forma parte de la rutina resolvedora de sistemas del programa, porque llevar a una matriz a esta forma facilita mucho su resolución. \\
 
-		\subsubsection{Substitución Hacia Atrás \textit{(backwards substitution)}}
+			No todas las matrices tienen factorización $A=LU$. Por lo que el algoritmo de eliminación gaussiana tal como está planteado (sin pivoteo o naíf) no tendría, en principio, por qué funcionar. \\
 
+			En este caso, su funcionamiento está garantizado porque la matriz $A$ es estrictamente diagonal dominante (en particular, por columnas). \\
 
+		\subsubsection{Substitución Hacia Adelante y Hacia Atrás \textit{(forwards and backwards substitution)}}
+
+			Una ecuación matricial de la forma $Lx = b$ o $Ux = b$ (L triangular inferior, U triangular superior) es fácilmente soluble mediante un método iterativo llamado sustitución hacia adelante (o sustitución hacia atrás, respectivamente). \\
+
+			En este proceso, por ejemplo para matrices triangulares inferiores, uno primero soluciona $x_1$ (el primer elemento del vector columna de incógnitas), luego usa $x_1$ para encontrar $x_2$ en la ecuación siguiente (por eso \textit{hacia adelante}) y así sucesivamente hasta $x_n$. \\
+
+			La primera ecuación del sistema $Lx = b$: \\
+
+			$l_{1,1} x_{1} = b_{1} => x_{1} = \frac{b_{1}}{l_{1,1}}$ \qquad (primer paso de la substitución hacia adelante) \\
+
+			Para matrices triangulares superiores, el proceso es análogo, pero reemplazando primero $x_n$ y hasta $x_1$ (hacia atrás). \\
+
+			Para resolver el sistema de Page Rank, luego de obtener la factorización LU de nuestra matriz A: \\
+
+			$Ax = b <=> LUx = b$ \\
+
+			Para evitar los problemas numéricos que podría traer calcular la inversa de la matriz L, vamos a aplicar la siguiente sustitución: \\
+
+			$Ux = y$ \\
+
+			Entonces el sistema a resolver quedará escrito de la siguiente manera: \\
+
+			$Ly = b$ \\
+
+			Donde podemos usar sustitución hacia adelante para obtener $y$, y finalmente resolver $x$ haciendo sustitución hacia atrás en el sistema: \\
+
+			$Ux = y$ \\
 
