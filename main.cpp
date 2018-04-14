@@ -80,23 +80,36 @@ int main(int argc, char** argv){
 	//***********fin armar matrices -pD y E************
 
 	
+	//*********** Calculo A = I + ( W  * (-pD) ), descarto resultados menores a epsilon  ************
 	
-	//*********** Calculo A =  W  * (-pD), descarto resultados menores a epsilon  ************
-		
+	Sparse_matrix I = Sparse_matrix(pages, pages);
+
+	for (int i = 1; i<= pages; i++){
+		I.setIndex(i,i,1);
+	}
+	 
+
 	for (int j = 1; j<= pages; j++){
 		W.multColByScalar( j, minusPD[j-1]);
 	}
 	
+	
+	
+	//Sparse_matrix A = I+  W;
+	//cout<< A<<endl<<endl<<endl;
+	
 	//*********** Fin calculo A =  W  y (-pD), descarto resultados menores a epsilon  ************
+  
+	
 
-	// falta sumarle I
+
   
 	//*********** Guardo A por FILAS, luego Triangulo A **************
 	
+//	cout<< W<<endl <<endl <<endl;
 	W.transpose(); // ¿capaz estaría bueno que a esta altura se llamase A en vez de W?
-	//map_of_rows = true;
 	
-	//cout<< W<<endl <<endl <<endl;
+//	cout<< W<<endl <<endl <<endl;
 	
 	
 	//std::tuple<Sparse_matrix, Sparse_matrix> salida_gauss = gauss_elimination(W); // no soy muy fan de los nombres. EG es hacer la triangulación. para mi debería llamarse "gaussAndBackSub" o "solve". y "salida_gauss" capaz "res"
