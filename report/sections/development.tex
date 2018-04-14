@@ -62,3 +62,29 @@
 
 		\subsubsection{Substitución Hacia Adelante y Hacia Atrás \textit{(forwards and backwards substitution)}}
 
+			Una ecuación matricial de la forma $Lx = b$ o $Ux = b$ (L triangular inferior, U triangular superior) es fácilmente soluble mediante un método iterativo llamado sustitución hacia adelante (o sustitución hacia atrás, respectivamente). \\
+
+			En este proceso, por ejemplo para matrices triangulares inferiores, uno primero soluciona $x_1$ (el primer elemento del vector columna de incógnitas), luego usa $x_1$ para encontrar $x_2$ en la ecuación siguiente (por eso \textit{hacia adelante}) y así sucesivamente hasta $x_n$. \\
+
+			La primera ecuación del sistema $Lx = b$: \\
+
+			$l_{1,1} x_{1} = b_{1} => x_{1} = \frac{b_{1}}{l_{1,1}}$ \qquad (primer paso de la substitución hacia adelante) \\
+
+			Para matrices triangulares superiores, el proceso es análogo, pero reemplazando primero $x_n$ y hasta $x_1$ (hacia atrás). \\
+
+			Para resolver el sistema de Page Rank, luego de obtener la factorización LU de nuestra matriz A: \\
+
+			$Ax = b <=> LUx = b$ \\
+
+			Para evitar los problemas numéricos que podría traer calcular la inversa de la matriz L, vamos a aplicar la siguiente sustitución: \\
+
+			$Ux = y$ \\
+
+			Entonces el sistema a resolver quedará escrito de la siguiente manera: \\
+
+			$Ly = b$ \\
+
+			Donde podemos usar sustitución hacia adelante para obtener $y$, y finalmente resolver $x$ haciendo sustitución hacia atrás en el sistema: \\
+
+			$Ux = y$ \\
+
