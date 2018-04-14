@@ -16,7 +16,7 @@ double epsilon = 0.00001;
 
 
 int main(int argc, char** argv){
-	
+
 	if (argc != 3){
 		cout << endl<<"	Unable to run program" << endl;
 		cout << "	Three parameters are expected:    program_name.exe  in_file.txt  p_number" << endl;
