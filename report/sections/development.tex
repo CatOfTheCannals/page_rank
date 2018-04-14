@@ -44,15 +44,15 @@
 
 		La cantidad de enlaces será usada para verificación, la cantidad de páginas la usaremos para definir el tamaño de la matriz de conectividad y, a medida que vayamos leyendo los enlaces, escribiremos $1$ en la posición de $W$ correspondiente, al tiempo que sumaremos $1$ al contador ubicado en la fila $i$ del vector $c$ de grados. \\
 
-		Luego, para representar la matriz $-pD$, usaremos un \textit{vector<double>} en el que solo almacenaremos los elementos de su diagonal (pues el resto son $0$). \\
+		Luego, para representar la matriz $-pD$, usaremos un \textit{vector$<$double$>$} en el que solo almacenaremos los elementos de su diagonal (pues el resto son $0$). \\
 
-		Para multiplicar (por derecha) a $W$ por $-pD$, haremos un ciclo que recorrerá el vector en el que almacenamos $-pD$, multiplicando en casa paso a la columna de $W$ correspondiente. Para esto usará el método público de nuestra implementación de matriz dispersa $multColByScalar$ (multiplicar columna por escalar). \\
+		Para multiplicar (por derecha) a $W$ por $-pD$, haremos un ciclo que recorrerá el vector en el que almacenamos $-pD$, multiplicando en cada paso a la columna de $W$ correspondiente. Para esto, usará el método público de nuestra implementación de matriz dispersa: $multColByScalar$ (multiplicar columna por escalar). \\
 
-		Por último, le sumamos $I$ para obtener $A = W(-pD) + I$, trasponemos, creamos el vector de $1$s $e$ y le pasamos $A$ y $e$ a nuestro método resolvedor de sistemas, que interpreta a las matrices como \textit{map} de filas. Por dentro, hará eliminiación gaussiana y substitución hacia atrás, métodos que serán explicados a continuación. \\
+		Por último, le sumamos $I$ para obtener $A = W(-pD) + I$, trasponemos, creamos el vector de $1$s $e$ y le pasamos $A$ y $e$ a nuestro método resolvedor de sistemas, que interpreta a las matrices como \textit{map} de filas. Por dentro, el resolvedor hará eliminiación gaussiana y substitución hacia atrás, métodos que serán explicados a continuación. \\
 
 		\subsubsection{Eliminación Gaussiana \textit{(gaussian elimination)}}
 
-
+			
 
 		\subsubsection{Substitución Hacia Atrás \textit{(backwards substitution)}}
 
