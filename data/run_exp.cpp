@@ -53,14 +53,22 @@ int main(int argc, char** argv) {
     std::cout << "randomChainMatrix:" << std::endl<< l << std::endl;
 
     Matrix m = conectionsPerColumnRandomMatrix(5,4);
-    std::cout << "conectionsPerColumnRandomMatrix:" << std::endl<< m << std::endl;
+    std::cout << "conectionsPerColumnRandomMatrix4:" << std::endl<< m << std::endl;
 
     Matrix n = conectionsPerColumnRandomMatrix(5,3);
-    std::cout << "conectionsPerColumnRandomMatrix:" << std::endl<< n << std::endl;
+    std::cout << "conectionsPerColumnRandomMatrix3:" << std::endl<< n << std::endl;
 
     Matrix o = conectionsPerColumnRandomMatrix(5,2);
-    std::cout << "conectionsPerColumnRandomMatrix:" << std::endl<< o << std::endl;
+    std::cout << "conectionsPerColumnRandomMatrix2:" << std::endl<< o << std::endl;
 
+    Matrix p = conectionsPerRowRandomMatrix(5,4);
+    std::cout << "conectionsPerRowRandomMatrix4:" << std::endl<< p << std::endl;
+
+    Matrix q = conectionsPerColumnRandomMatrix(5,3);
+    std::cout << "conectionsPerRowRandomMatrix3:" << std::endl<< q << std::endl;
+
+    Matrix r = conectionsPerColumnRandomMatrix(5,2);
+    std::cout << "conectionsPerRowRandomMatrix2:" << std::endl<< r << std::endl;
 
 
 }

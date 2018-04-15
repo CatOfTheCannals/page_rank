@@ -17,12 +17,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7311a443-f964-4301-a77a-e5bddf14f5ea" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/randomMatrix.cpp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/randomMatrix.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/googletest-src" afterPath="$PROJECT_DIR$/test/googletest-src" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/CMakeLists.txt" afterPath="$PROJECT_DIR$/data/CMakeLists.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/correrExp" afterPath="$PROJECT_DIR$/data/correrExp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/randomMatrix.cpp" afterPath="$PROJECT_DIR$/data/randomMatrix.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/randomMatrix.h" afterPath="$PROJECT_DIR$/data/randomMatrix.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/run_exp.cpp" afterPath="$PROJECT_DIR$/data/run_exp.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tp1_metodos.cbp" afterPath="$PROJECT_DIR$/tp1_metodos.cbp" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/CMakeFiles/" />
@@ -38,11 +36,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="run_exp.cpp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="run_exp.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data/run_exp.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="551">
-              <caret line="61" column="68" lean-forward="false" selection-start-line="61" selection-start-column="68" selection-end-line="61" selection-end-column="68" />
+            <state relative-caret-position="611">
+              <caret line="72" column="0" lean-forward="true" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -53,7 +51,7 @@
       <file leaf-file-name="Matrix.hpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Matrix.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="151">
+            <state relative-caret-position="95">
               <caret line="35" column="9" lean-forward="false" selection-start-line="35" selection-start-column="9" selection-end-line="35" selection-end-column="9" />
               <folding />
             </state>
@@ -70,11 +68,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="randomMatrix.cpp" pinned="false" current-in-tab="false">
+      <file leaf-file-name="randomMatrix.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/data/randomMatrix.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="80">
-              <caret line="48" column="1" lean-forward="true" selection-start-line="48" selection-start-column="1" selection-end-line="48" selection-end-column="1" />
+            <state relative-caret-position="-136">
+              <caret line="72" column="106" lean-forward="false" selection-start-line="72" selection-start-column="106" selection-end-line="72" selection-end-column="106" />
               <folding>
                 <element signature="e#39#64#0" expanded="true" />
               </folding>
@@ -85,8 +83,8 @@
       <file leaf-file-name="randomMatrix.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data/randomMatrix.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="10" column="72" lean-forward="false" selection-start-line="10" selection-start-column="72" selection-end-line="10" selection-end-column="72" />
+            <state relative-caret-position="220">
+              <caret line="11" column="66" lean-forward="false" selection-start-line="11" selection-start-column="66" selection-end-line="11" selection-end-column="66" />
               <folding />
             </state>
           </provider>
@@ -121,8 +119,8 @@
         <option value="$PROJECT_DIR$/src/randomMatrix.cpp" />
         <option value="$PROJECT_DIR$/data/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/data/randomMatrix.h" />
-        <option value="$PROJECT_DIR$/data/randomMatrix.cpp" />
         <option value="$PROJECT_DIR$/data/run_exp.cpp" />
+        <option value="$PROJECT_DIR$/data/randomMatrix.cpp" />
       </list>
     </option>
   </component>
@@ -484,12 +482,12 @@
       <workItem from="1522851571837" duration="6148000" />
       <workItem from="1522863871424" duration="4126000" />
       <workItem from="1523463018465" duration="40000" />
-      <workItem from="1523738840306" duration="19438000" />
+      <workItem from="1523738840306" duration="22594000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="29752000" />
+    <option name="totallyTimeSpent" value="32908000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1537" height="912" extended-state="6" />
@@ -655,8 +653,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/data/randomMatrix.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="10" column="72" lean-forward="false" selection-start-line="10" selection-start-column="72" selection-end-line="10" selection-end-column="72" />
+        <state relative-caret-position="220">
+          <caret line="11" column="66" lean-forward="false" selection-start-line="11" selection-start-column="66" selection-end-line="11" selection-end-column="66" />
           <folding />
         </state>
       </provider>
@@ -669,9 +667,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/data/run_exp.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="611">
+          <caret line="72" column="0" lean-forward="true" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Matrix.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
+        <state relative-caret-position="95">
           <caret line="35" column="9" lean-forward="false" selection-start-line="35" selection-start-column="9" selection-end-line="35" selection-end-column="9" />
           <folding />
         </state>
@@ -679,20 +687,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/data/randomMatrix.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="48" column="1" lean-forward="true" selection-start-line="48" selection-start-column="1" selection-end-line="48" selection-end-column="1" />
+        <state relative-caret-position="-136">
+          <caret line="72" column="106" lean-forward="false" selection-start-line="72" selection-start-column="106" selection-end-line="72" selection-end-column="106" />
           <folding>
             <element signature="e#39#64#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/run_exp.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="551">
-          <caret line="61" column="68" lean-forward="false" selection-start-line="61" selection-start-column="68" selection-end-line="61" selection-end-column="68" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>

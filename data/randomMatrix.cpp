@@ -70,6 +70,26 @@ Matrix conectionsPerColumnRandomMatrix(int n, int connectionsPerColumn){
     return res;
 }
 
+Matrix conectionsPerRowRandomMatrix(int n, int connectionsPerRow){ //fixme:: no anda para todos los imputs
+    assert(0 < n);
+    assert(connectionsPerRow <= n-1);
+    Matrix res(n, n);
+    std::random_device rd;     // only used once to initialise (seed) engine
+    std::mt19937 rng(rd());    // random-number engine used (Mersenne-Twister in this case)
+    std::uniform_int_distribution<int> uni(0,n-1); // guaranteed unbiased
+    for (int i = 0; i < n; i++) {
+        int count = 0;
+        while(count < connectionsPerRow){
+            auto random_j = uni(rng);
+            if (random_j != i && res(i, random_j) != 1) {
+                res.setIndex(i, random_j, 1);
+                count++;
+            }
+        }
+        count = 0;
+    }
+    return res;
+}
 
 //diagonal + random. Diagonal + todos con la misma cantidad de links por fila, idem+ columna, misma cantidad de links por fila, por col
 //otra matriz, le das el tamaño y m->cantidad de enlaces que quiero distribuidos aleatoriamente
