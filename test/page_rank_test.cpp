@@ -61,8 +61,6 @@ protected:
 };
 
 TEST_F (pageRankTest, test_aleatorio){
-    std::cout << W << std::endl;
-    std::cout << C << std::endl;
 
     double p = 0.85;
 
@@ -78,5 +76,5 @@ TEST_F (pageRankTest, ciclicMatrix){
 
     Matrix C = colSumDiag(ciclic);
 
-    std::cout << page_rank(ciclic, C, p) << std::endl;
+    // std::cout << page_rank(ciclic, C, p) << std::endl;
 }

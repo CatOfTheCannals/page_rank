@@ -14,15 +14,44 @@ Matrix page_rank(Matrix W, Matrix C, double p) {
         e.setIndex(i, 0, 1);
     }
 
-    Matrix A = id + W.multiply(C * (-p)) ;
+    Matrix A = id + W.multiply(C * (-p));
+
+    Matrix L(W.rows(), W.cols());
+    Matrix U(W.rows(), W.cols())
+
+    Matrix y = forward_sub(L, e);
+    Matrix x = backward_sub(U, y);
+
+    /*
+    std::cout << "C" << std::endl;
+    std::cout << C << std::endl;
+    std::cout << "W" << std::endl;
+    std::cout << W << std::endl;
+
+    Matrix A = id + W.multiply(C * (-p));
+
+    std::cout << "A" << std::endl;
+    std::cout << A << std::endl;
+
 
     Matrix L(W.rows(), W.cols());
     Matrix U(W.rows(), W.cols());
     std::tie(L, U) = gauss_elimination(A);
 
+    std::cout << "L" << std::endl;
+    std::cout << L << std::endl;
+    std::cout << "U" << std::endl;
+    std::cout << U << std::endl;
+
     Matrix y = forward_sub(L, e);
     Matrix x = backward_sub(U, y);
 
+    std::cout << "y" << std::endl;
+    std::cout << y << std::endl;
+    std::cout << "x" << std::endl;
+    std::cout << x << std::endl;
+    */
+    
     return x * normalization_coeff(x);
 
     /*

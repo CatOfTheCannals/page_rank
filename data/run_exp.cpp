@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include "chrono"
 #include "../src/page_rank.h"
 
@@ -10,12 +12,18 @@ int main(int argc, char** argv) {
 
     auto begin = GET_TIME;
 
-    Matrix a(5,5);
-
-    std::cout << a << std::endl;
-
     auto end = GET_TIME;
 
-    std::cout << "time:" << GET_TIME_DELTA(begin, end) << std::endl;
+    std::ostringstream filename;
 
+    filename << "../../data/results/random_" << 5 << ".csv";
+
+    ofstream file ;
+
+    file.open(filename.str());
+
+
+    file << "time:" << GET_TIME_DELTA(begin, end) << std::endl;
+
+    file.close();
 }
