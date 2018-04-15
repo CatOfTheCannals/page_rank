@@ -53,6 +53,8 @@ public:
     
 	Sparse_matrix subMatrix(int i1, int i2, int j1, int j2);
 	std::tuple<int, int> shape() const;
+	
+	Sparse_matrix multiply(const Sparse_matrix b);
 //	std::tuple<int, int> maxCoeffAbs(const Sparse_matrix a);
 //	Sparse_matrix abs(const Sparse_matrix a) {
 
@@ -60,7 +62,7 @@ public:
 /*    void operator*(double scalar); //scalar multiplication
     Sparse_matrix getRow(int index);
     bool operator==(const Sparse_matrix& other) const; 
-    Sparse_matrix multiply(const Sparse_matrix b);
+    
     static Sparse_matrix identity(int rows, int cols);
     
 */
@@ -377,33 +379,30 @@ Sparse_matrix Sparse_matrix::subMatrix(int i1, int i2, int j1, int j2 ){
 
 
 
-/*
+
 Sparse_matrix Sparse_matrix::multiply(const Sparse_matrix b) { //TODO: add error handling (case: the sizes don't match)
     assert(this->_cols == b.rows());
+    
     Sparse_matrix result = Sparse_matrix(this->_rows, b.cols());
     for (int i = 0; i < this->rows(); ++i) {
         for (int j = 0; j < b.cols(); ++j) {
-            double temp = 0;
+            double temp = 0.0;
             for (int k = 0; k < this->_cols; ++k) {
+				//cout<<(*this)(i, k)<< "\t"<< b(k, j)<<"\t"<< (*this)(i, k) * b(k, j)<<endl;
                 temp = temp + (*this)(i, k) * b(k, j);
             }
+            cout<<temp<<endl;
             result.setIndex(i, j, temp);
             temp = 0;
         }
     }
+    cout<<result<<endl;
     return result;
+    
 }
 
-Sparse_matrix Sparse_matrix::identity(int rows, int cols){
-    assert(rows == cols);
-    assert(0 < rows);
-    Sparse_matrix res(rows, cols);
-    for(int i = 0; i < rows; i++){
-        res.setIndex(i, i, 1);
-    }
-    return res;
-}
-*/
+
+
 
 tuple<int, int> maxCoeffAbs(const Sparse_matrix a) {
 	int res_x = 1;

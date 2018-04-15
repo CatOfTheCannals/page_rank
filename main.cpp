@@ -98,7 +98,10 @@ int main(int argc, char** argv){
 	
 	A.transpose(); 
 	
+    Sparse_matrix result = Sparse_matrix(A.rows(), W.cols());
 	
+	A.multiply(W);
+//	cout<<A<<endl;
 	
 //	cout<<A<<endl<<endl<<endl;
 //	cout<<B<<endl;
