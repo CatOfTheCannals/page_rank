@@ -1,4 +1,103 @@
 \section{Apéndices}
-%\subsection{Apéndice A: Enunciado}
-%\input{enunciado}
+
+	\subsection{Apéndice A: Enunciado}
+		%\input{../Enunciado_TP1.pdf}
+	%\clearpage
+
+	\subsection{Apéndice B: Código fuente numericamente relevante}
+	\clearpage
+
+	\subsection{Apéndice C: Demostración $A = pWD + ez^{t}$}
+
+		Se quiere ver que $A = pWD + e z^{t}$ \\
+
+		Vamos a demostrar la igualdad para $1 \leq i \leq n$ y $1 \leq j \leq n$. \\
+
+		\[ \text{Sea $A \in \mathbb{R}^{nxn} /$ } a_{ij} =
+		        \begin{cases}
+		                (1-p)/n + (p \, w_{ij})         & \text{si } c_{j}  \neq 0 \\
+		                1    /n                         & \text{si } c_{j}   =   0
+		        \end{cases}
+		\]
+
+		\[ \text{y sea $D \in \mathbb{R}^{nxn}$ una matriz diagonal $/$ } d_{ij} =
+		        \begin{cases}
+		                1/c_j         & \text{si } c_{j}  \neq 0 \\
+		                1/n           & \text{si } c_{j}   =   0
+		        \end{cases}
+		\]
+
+		Como multiplicar por derecha por una matriz diagonal (en este caso $D$), es multiplicar a cada columna de $W$ por elementos de la diagonal de $D$, entonces: \\
+
+		\[ (pWD)_{ij} =
+		        \begin{cases}
+		                (p \, w_{ij})/c_j 	& \text{si } c_{j}  \neq 0 \\
+		                0 			& \text{si } c_{j}   =   0
+		        \end{cases}
+		\]
+
+		Notar que $p$ es un escalar, y la operación $WD$ se puede hacer porque ambas matrices pertenecen a $\mathbb{R}^{nxn}$ (ver las definiciones de las matrices en la introducción teórica o en el enunciado del trabajo práctico). \\
+
+		\[ \text{Sean }
+		        e       = \begin{pmatrix}
+		                        1 \\
+		                        \vdots \\
+		                        1
+		                \end  {pmatrix}
+		\qquad
+			\text{ y }
+		\qquad
+			z_{j} = \begin{cases}
+		                        (1-p)/n & \text{si } c_{j} \neq 0 \\
+		                         1   /n & \text{si } c_{j}   =  0
+				\end  {cases}
+		\]
+
+		Entonces $e z^{t}$ es una matriz en $\mathbb{R}^{nxn}$, con $z^{t}$ en cada fila: \\
+
+		\[
+		        e z^{t} 	= 	\begin{pmatrix}
+							1 \\
+							\vdots \\
+							1
+						\end  {pmatrix}
+						\begin{matrix}
+							\begin{pmatrix}z_1 & \hdots & z_n
+							\end  {pmatrix}\\\mbox{}
+						\end{matrix}
+					= 	\begin{pmatrix}
+							z^t 	\\
+							z^t 	\\
+							\vdots 	\\
+							z^t
+						\end  {pmatrix}
+		\]
+
+		\[
+			        ez^{t} = \begin{cases}
+						(1-p)/n & \text{si } c_{j} \neq 0 \\
+						 1   /n & \text{si } c_{j}   =  0
+					 \end  {cases}
+		\]
+
+		Entonces $pWD \in \mathbb{R}^{n}$ y $ez^{t} \in \mathbb{R}^{nxn} =>$ se pueden sumar. \\
+
+		Los valores de ambas dependen de $c_j => pWD+ez^t$ queda definida como:
+
+		\[
+			        pWD+ez^{t} = 	\begin{cases}
+							pw_{ij}/c_j+(1-p)/n & \text{si } c_{j} \neq 0 \\
+								     1   /n & \text{si } c_{j}   =  0
+						\end  {cases}
+		\]
+
+		Por conmutatividad de la suma en el caso $c_j \neq 0$ podemos ver que se trata efectivamente de la matriz $A$. \\
+
+		\qed
+
+	\clearpage
+
+	\subsection{Apéndice D: Aplicabilidad E.G., condicionamiento de la matriz $(I-pWD)$ e influencia del valor $p$ en ello}
+
+	\clearpage
 
