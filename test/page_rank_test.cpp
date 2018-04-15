@@ -41,7 +41,6 @@ protected:
 
 
         for(int i = 0; i < 5; i++) { //fill cyclic matrix
-            std::cout << i % 5 << " " << (i + 1) % 5 << std::endl;
             ciclic.setIndex(i % 5,(i + 1) % 5,1);
         }
 
