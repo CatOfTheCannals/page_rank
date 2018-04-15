@@ -1,4 +1,4 @@
-set(DATA_FILES run_exp.cpp)
+set(DATA_FILES run_exp.cpp randomMatrix.cpp)
 
 add_executable(correrExp ${DATA_FILES})
 
