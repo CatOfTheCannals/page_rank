@@ -27,6 +27,7 @@
 *.out
 *.app
 test/correrTests
+data/correrExp
 
 # Cosas de latex
 *.log
@@ -50,4 +51,8 @@ test/Makefile
 test/googletest-build/
 test/googletest-download/
 test/googletest-src/
+
+# CLion stuff? IDK
+.idea/workspace.xml
+tp1_metodos.cbp
 
