@@ -60,15 +60,15 @@
 
 			En este caso, su funcionamiento está garantizado porque la matriz $A$ es estrictamente diagonal dominante (en particular, por columnas). \\
 
-			\subsubsubsection{Implementación}
+			%\subsubsubsection{Implementación} % no such command :(
 
-				En un principio, implementamos y verificamos el funcionamiento de este método basándonos en una clase matriz previa más simple, implementada con un \textit{array}. \\
+				Con respecto a su implementación: en un principio, programamos y verificamos el funcionamiento de este método, basándonos en una clase matriz previa más simple, implementada con un \textit{array}. \\
 
-				Como todavía no sabíamos que la matriz $(I-pWD)$, por sus propiedades numéricas, tendría factorización LU sin pivoteo. Programamos eliminación gaussiana con pivoteo parcial. \\
+				Como todavía no sabíamos que la matriz $(I-pWD)$, por sus propiedades numéricas, tendría factorización LU sin pivoteo; programamos eliminación gaussiana con pivoteo parcial. \\ % acá tiene que ir una referencia al apéndice donde está la demostración de esto
 
-				Lo que hicimos luego, fue programar los mismos métodos públicos en la nueva clase matriz dispersa, para poder utilizar el mismo el algoritmo de eliminación gaussiana, sin hacerle demasiados cambios. \\
+				Lo que hicimos luego, fue programar los mismos métodos públicos que en la primera implentación de matriz (como \textit{array}), en la nueva clase matriz dispersa (\textit{map$<$int, map$<$int, double$>$ $>$}), para poder utilizar el mismo algoritmo de eliminación gaussiana, sin hacerle demasiados cambios. \\
 
-				Decidimos conservar el pivoteo parcial, ya que esto le otorga mayor estabilidad numérica a los cálculos. \\
+				Decidimos conservar el pivoteo parcial, ya que esto le otorga mayor estabilidad numérica a los cálculos. \\ % acá tiene que ir referencia a alguna fuente
 
 		\subsubsection{Substitución Hacia Adelante y Hacia Atrás \textit{(forwards and backwards substitution)}}
 
@@ -97,4 +97,6 @@
 			Donde podemos usar sustitución hacia adelante para obtener $y$, y finalmente resolver $x$ haciendo sustitución hacia atrás en el sistema: \\
 
 			$Ux = y$ \\
+
+			%\subsubsubsection{Implementación}
 
