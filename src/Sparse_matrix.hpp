@@ -52,19 +52,9 @@ public:
 
     friend std::ostream& operator<<(std::ostream& o, const Sparse_matrix& a);
 
-//	std::tuple<int, int> maxCoeffAbs(const Sparse_matrix a);
-//	Sparse_matrix abs(const Sparse_matrix a) {
-
-    // void operator*(double scalar); //scalar multiplication
-
     bool operator==(const Sparse_matrix& other) const;
 
-/*  Sparse_matrix getRow(int index);
-
-    
-    static Sparse_matrix identity(int rows, int cols);
-    
-*/
+	tuple<int, int> maxCoeff(const Sparse_matrix a) ;
 
 private:
 

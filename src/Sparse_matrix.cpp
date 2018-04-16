@@ -169,8 +169,6 @@ void Sparse_matrix::swapRows(int i1, int i2) {
     }
 }
 
-
-
 Sparse_matrix Sparse_matrix::getRow(int index) { //la unica fila de la matriz q devuelvo tiene el mismo indice columna q la original
     assert(map_of_rows== true);
     assert(1<= index<= this->_rows);
@@ -182,8 +180,6 @@ Sparse_matrix Sparse_matrix::getRow(int index) { //la unica fila de la matriz q 
     }
     return row;
 }
-
-
 
 void Sparse_matrix::setRow (int index, map<int, double> row){
     assert(map_of_rows== true);
@@ -315,24 +311,23 @@ Sparse_matrix Sparse_matrix::multiply(const Sparse_matrix b) { //TODO: add error
 
 }
 
-
-
-
-tuple<int, int> maxCoeffAbs(const Sparse_matrix a) {
+tuple<int, int> Sparse_matrix::maxCoeff(const Sparse_matrix a) {
     int res_x = 1;
     int res_y = 1;
     double max = a(1,1);
     s_matrix aux_mat = a.matrix();
-    for( it_s_matrix it_col = aux_mat.begin(); it_col != aux_mat.end(); it_col++){
-        for( map<int, double>::const_iterator it_row = (it_col->second).begin(); it_row != (it_col->second).end(); it_row++){
-            if (fabs(it_row->second) > max ){
-                max= fabs(it_row->second);
-                res_x = it_row->first;
-                res_y = it_col->first;
+    for( it_s_matrix it_1 = aux_mat.begin(); it_1 != aux_mat.end(); it_1++){
+        for( map<int, double>::const_iterator it_2 = (it_1->second).begin(); it_2 != (it_1->second).end(); it_2++){
+            if (it_2->second > max ){
+                max= it_2->second;
+                res_x = it_1->first;
+                res_y = it_2->first;
             }
         }
     }
-    return make_tuple(res_x, res_y);
+    tuple<int, int> res;
+    if(map_of_rows){ res = make_tuple(res_x, res_y); } else{ res = make_tuple(res_y, res_x); }
+    return res;
 }
 
 Sparse_matrix abs(const Sparse_matrix a) {
@@ -345,3 +340,6 @@ Sparse_matrix abs(const Sparse_matrix a) {
     }
     return mabs;
 }
+
+
+
