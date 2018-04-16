@@ -97,14 +97,7 @@ int main(int argc, char** argv){
 	
 	
 	A.transpose(); 
-	
-    Sparse_matrix result = Sparse_matrix(A.rows(), W.cols());
-	
-	A.multiply(W);
-//	cout<<A<<endl;
-	
-//	cout<<A<<endl<<endl<<endl;
-//	cout<<B<<endl;
+	  
 	
 	//std::tuple<Sparse_matrix, Sparse_matrix> salida_gauss = gauss_elimination(W); // no soy muy fan de los nombres. EG es hacer la triangulación. para mi debería llamarse "gaussAndBackSub" o "solve". y "salida_gauss" capaz "res"
 	//*********** Fin triangulo A **************
