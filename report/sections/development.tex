@@ -124,5 +124,13 @@
 
 				$det(A) = det(U) = \prod_{i=1}^{n} u_{ii} \neq 0 => u_{ii} \neq 0, \forall i$ \\
 
-				Y queda garantizado el funcionamiento del algoritmo también para estas matrices.
+				Y queda garantizado el funcionamiento del algoritmo también para estas matrices. \\
+
+		\subsubsection{Planteo de experimentos}
+
+Cadena: nos interesa la W con una diagonal todo en unos porque hace que la matriz D tenga todos los djj iguales, haciendo que p sea el unico factor de la eq de pagerank que determine en que página estará el navegante luego de n iteraciones (además de la cantidad de iteraciones). Si p (probabilidad de que salte a una página random) fuese 0 (no puede ser 0, pero si está muy cerca de cero), entoces lo unico que determinará donde estará el navegante luego de iteraciones será n y donde empieza el navegante.
+}
+Cadena y grafo completo: nos interesa tener una W que tiene una cadena muy grande (como la descripta arriba) y un grafo completo mucho más chico. De esta forma estamos representando dos islas de páginas que se señalan entre si: una en la que cáda página recive y envía un único link y otra, mucho más chica pero en la que todos los elementos envían y reciben links de todas las páginas del grafo. Con esto pretendemos que el peso de cada página del grafo sea mucho más grande que el la lista. Con ésto pretendemos experimentar hasta que punto importa el tamaño de la cadena (que se verá beneficiada por un p más alto -porque al saltear aleatoriamente tiene muchas más chances de caer en una página de la cadena (por tener la mayoría de las páginas de W en la cadena)) respecto del grafo completo. Es decir, para  diferentes p, podremos ver hasta donde importa el tamaño de la cadena respecto del peso de los elementos del grafo.
+Cadena no cerrada: idem cadena pero el último elemento no apunta al primero. Esperamos que el ranking quede (si el p es suficfientemente bajo): el último elemento, ... el primer elemento. Porque sin importar a que página salte o en que página esté, tiene mayor probabilidad de avanzar a la siguiente, entonces todas convergen a la última. Y cuando está en la última, sin importar el p, va a tener que saltar a una de las páginas de la lista con prob 1/n-1 (ver si en el enunciado dice 1/n o 1/n-1).
+Completa: Todas las págs deberían estar en la pos 1 del ranking page. (W tiene todas las pos igual a 1 -excepto diagonal-).
 
