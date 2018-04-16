@@ -12,19 +12,16 @@
 
 void randomMatrixExp(double p, int step, int n, int repetitions) {
 
-
-    bool tooLong = false;
-
     std::ostringstream filename;
-    filename << "../../data/results/random_matrix_n" << n << "_m_" << n * (n-1) << "_p_" << p << ".csv";
+    filename << "../../data/results/random_matrix_n_" << n << "_m_" << n * (n-1) << "_p_" << p << ".csv";
     ofstream file;
     file.open(filename.str());
 
     int i = 1;
     int j = 0;
 
-    while(i < n && !tooLong) {
-        while(j < i * (i - 1) && !tooLong) {
+    while(i < n) {
+        while(j < i * (i - 1)) {
 
             for(int k = 0; k < repetitions; k++ ) {
                 Matrix W =  randomMatrix(i,j);
@@ -40,9 +37,82 @@ void randomMatrixExp(double p, int step, int n, int repetitions) {
                     std::cout << "i: " << i << " j: " << j << " time it took: " << GET_TIME_DELTA(begin, end) << std::endl;
                 }
 
-                if (1000000000 < GET_TIME_DELTA(begin, end)) {
-                    tooLong = true;
+            }
+
+            j += step;
+        }
+
+        i += step;
+    }
+
+    file.close();
+}
+
+void randomChainMatrixExp(double p, int step, int n, int repetitions) {
+
+    std::ostringstream filename;
+    filename << "../../data/results/random_chain_matrix_n_" << n << "_m_" << n * (n-1) << "_p_" << p << ".csv";
+    ofstream file;
+    file.open(filename.str());
+
+    int i = 1;
+    int j = 0;
+
+    while(i < n) {
+        while(j < i * i - 2*i) {
+
+            for(int k = 0; k < repetitions; k++ ) {
+                Matrix W =  randomChainMatrix(i,j);
+                Matrix C = colSumDiag(W);
+
+                auto begin = GET_TIME;
+                page_rank(W, C, p);
+                auto end = GET_TIME;
+
+                file << i << "," << j << "," << GET_TIME_DELTA(begin, end) << std::endl;
+
+                if(!(j % 1000) && !k) {
+                    std::cout << "i: " << i << " j: " << j << " time it took: " << GET_TIME_DELTA(begin, end) << std::endl;
                 }
+
+            }
+
+            j += step;
+        }
+
+        i += step;
+    }
+
+    file.close();
+}
+
+void conectionsPerColumnRandomMatrixExp(double p, int step, int n, int repetitions) {
+
+    std::ostringstream filename;
+    filename << "../../data/results/connections_per_col_random_matrix_n_" << n << "_m_" << n * (n-1) << "_p_" << p << ".csv";
+    ofstream file;
+    file.open(filename.str());
+
+    int i = 1;
+    int j = 0;
+
+    while(i < n) {
+        while(j < i) {
+
+            for(int k = 0; k < repetitions; k++ ) {
+                Matrix W =  conectionsPerColumnRandomMatrix(i,j);
+                Matrix C = colSumDiag(W);
+
+                auto begin = GET_TIME;
+                page_rank(W, C, p);
+                auto end = GET_TIME;
+
+                file << i << "," << j << "," << GET_TIME_DELTA(begin, end) << std::endl;
+
+                if(!(j % 1000) && !k) {
+                    std::cout << "i: " << i << " Cj: " << j << " time it took: " << GET_TIME_DELTA(begin, end) << std::endl;
+                }
+
             }
 
             j += step;
@@ -58,15 +128,17 @@ void randomMatrixExp(double p, int step, int n, int repetitions) {
 int main(int argc, char** argv) {
     double p = 0.1;
     int step = 5;
-    int n = 100;
+    int n = 102;
     int repetitions = 5;
 
     for(int i = 1; i < 9; i++) {
         randomMatrixExp(p * i, step, n, repetitions);
 
+        randomChainMatrixExp(p * i, step, n, repetitions);
+
+        conectionsPerColumnRandomMatrixExp(p * i, step, n, repetitions);
+
     }
-
-
 }
 
 

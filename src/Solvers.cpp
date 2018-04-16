@@ -55,7 +55,7 @@ Matrix backward_sub(const Matrix& a, const Matrix& y)
     return x;
 }
 
-Matrix forward_sub(const Matrix& a, const Matrix& y)
+    Matrix forward_sub(const Matrix& a, const Matrix& y)
 {
     int rows_a, cols_a, rows_y, cols_y;
     std::tie(rows_a, cols_a) = a.shape();

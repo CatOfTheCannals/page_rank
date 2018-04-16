@@ -7,7 +7,8 @@ set(SOURCE_FILES
         src/empy_file.cpp
         src/Matrix.cpp
         src/Solvers.cpp
-        src/page_rank.cpp )
+        src/page_rank.cpp
+        src/Sparse_matrix.cpp)
 
 add_library(metodos-tp1-base ${SOURCE_FILES})
 
