@@ -55,11 +55,13 @@ public:
 	std::tuple<int, int> shape() const;
 	
 	Sparse_matrix multiply(const Sparse_matrix b);
+	void operator*(double scalar); //scalar multiplication
+	 
 //	std::tuple<int, int> maxCoeffAbs(const Sparse_matrix a);
 //	Sparse_matrix abs(const Sparse_matrix a) {
 
 
-/*    void operator*(double scalar); //scalar multiplication
+/*   
     Sparse_matrix getRow(int index);
     bool operator==(const Sparse_matrix& other) const; 
     
@@ -301,17 +303,16 @@ Sparse_matrix Sparse_matrix::operator+(const Sparse_matrix matrix) const { // ov
 }
 
 
-/*
+
 
 void Sparse_matrix::operator*(double scalar) {
-    for(int i=0; i < this->rows(); ++i){
-        for(int j=0; j < this->_cols; ++j){
-            this->setIndex(i, j, (*this)(i, j) * scalar);
-        }
-    }
-
+	for(auto const &it_1 : this->matrix()) {
+		for(auto const &it_2 : it_1.second) {
+			this-> setIndex(it_1.first, it_2.first,  it_2.second * scalar);
+		}
+	}
 }
-*/
+
 
 
 void Sparse_matrix::transpose() {
@@ -381,56 +382,57 @@ Sparse_matrix Sparse_matrix::subMatrix(int i1, int i2, int j1, int j2 ){
 
 
 Sparse_matrix Sparse_matrix::multiply(const Sparse_matrix b) { //TODO: add error handling (case: the sizes don't match)
-    assert(this->_cols == b.rows());
     
+    assert(this->_cols == b.rows());
     Sparse_matrix result = Sparse_matrix(this->_rows, b.cols());
-    for (int i = 0; i < this->rows(); ++i) {
-        for (int j = 0; j < b.cols(); ++j) {
+    for (int i = 1; i <= this->rows(); ++i) {
+        for (int j = 1; j <= b.cols(); ++j) {
             double temp = 0.0;
-            for (int k = 0; k < this->_cols; ++k) {
-				//cout<<(*this)(i, k)<< "\t"<< b(k, j)<<"\t"<< (*this)(i, k) * b(k, j)<<endl;
+            for (int k = 1; k <= this->_cols; ++k) {
                 temp = temp + (*this)(i, k) * b(k, j);
             }
-            cout<<temp<<endl;
             result.setIndex(i, j, temp);
-            temp = 0;
         }
     }
-    cout<<result<<endl;
-    return result;
-    
+    return result;    
 }
 
 
 
 
-tuple<int, int> maxCoeffAbs(const Sparse_matrix a) {
+tuple<int, int> maxCoeff(const Sparse_matrix a) {
 	int res_x = 1;
 	int res_y = 1;
     double max = a(1,1);
 	s_matrix aux_mat = a.matrix();
-	for( it_s_matrix it_col = aux_mat.begin(); it_col != aux_mat.end(); it_col++){
-		for( map<int, double>::const_iterator it_row = (it_col->second).begin(); it_row != (it_col->second).end(); it_row++){
-			if (fabs(it_row->second) > max ){
-				max= fabs(it_row->second);
-				res_x = it_row->first;
-				res_y = it_col->first;
+	for( it_s_matrix it_1 = aux_mat.begin(); it_1 != aux_mat.end(); it_1++){
+		for( map<int, double>::const_iterator it_2 = (it_1->second).begin(); it_2 != (it_1->second).end(); it_2++){
+			if (it_2->second > max ){
+				max= it_2->second;
+				res_x = it_1->first;
+				res_y = it_2->first;
 			}
 		}
 	}
-    return make_tuple(res_x, res_y);
+	tuple<int, int> res;
+	if(map_of_rows){ res = make_tuple(res_x, res_y); } else{ res = make_tuple(res_y, res_x); }
+    return res;
 }
+
+
 
 Sparse_matrix abs(const Sparse_matrix a) {
 
 	Sparse_matrix mabs = Sparse_matrix(a.rows(), a.cols());
-	for( map<int, map<int, double> >::const_iterator it_col = a.matrix().begin(); it_col != a.matrix().end(); it_col++){
-		for( map<int, double>::const_iterator it_row = (it_col->second).begin(); it_row != (it_col->second).end(); it_row++){
-			mabs.setIndex(it_col->first, it_row->first, fabs(it_row->second) );
+	
+	for(auto const &it_1 : a.matrix()) {
+		for(auto const &it_2 : it_1.second) {
+			mabs.setIndex(it_1.first, it_2.first, fabs(it_2.second) );
 		}
 	}
 	return mabs;
 }
+
 
 #endif //__DYN_MATRIX_HPP__}
 
