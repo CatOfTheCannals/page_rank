@@ -91,5 +91,24 @@ Matrix conectionsPerRowRandomMatrix(int n, int connectionsPerRow){ //fixme:: no 
     return res;
 }
 
+Matrix chainAndCompleteGraph(int n, int chainSize){
+    assert(chainSize >= 2); //n must be 5 or higher
+    assert( n - chainSize >= 3); //requirement in order to have a complete graph that isn't a chain.
+    Matrix res(n, n);
+    for (int i = 0; i+1 < chainSize; i++){
+        res.setIndex(i+1,i, 1);
+    }
+    res.setIndex(0, chainSize - 1, 1);
+    for (int i = chainSize; i < n ; i++){
+        for (int j = chainSize; j < n; j++){
+            if(j != i){
+                res.setIndex(i,j, 1);
+            }
+        }
+    }
+    return res;
+}
+
+
 //diagonal + random. Diagonal + todos con la misma cantidad de links por fila, idem+ columna, misma cantidad de links por fila, por col
 //otra matriz, le das el tamaño y m->cantidad de enlaces que quiero distribuidos aleatoriamente

@@ -70,5 +70,13 @@ int main(int argc, char** argv) {
     Matrix r = conectionsPerColumnRandomMatrix(5,2);
     std::cout << "conectionsPerRowRandomMatrix2:" << std::endl<< r << std::endl;
 
+    Matrix s = chainAndCompleteGraph(5,2);
+    std::cout << "chainAndCompleteGraph:" << std::endl<< s << std::endl;
+
+    Matrix t = chainAndCompleteGraph(10,5);
+    std::cout << "chainAndCompleteGraph:" << std::endl<< t << std::endl;
+
+    Matrix u = chainAndCompleteGraph(10,7);
+    std::cout << "chainAndCompleteGraph:" << std::endl<< u << std::endl;
 
 }

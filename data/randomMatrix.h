@@ -10,6 +10,8 @@ Matrix randomMatrix(int n, int numberOfConnections);
 Matrix randomChainMatrix(int n, int numberOfConnections);
 Matrix conectionsPerColumnRandomMatrix(int n, int connectionsPerColumn);
 Matrix conectionsPerRowRandomMatrix(int n, int connectionsPerRow);
+Matrix chainAndCompleteGraph(int n, int chainSize);
+
 
 
 
