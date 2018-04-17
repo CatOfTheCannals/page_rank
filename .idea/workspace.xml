@@ -16,13 +16,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7311a443-f964-4301-a77a-e5bddf14f5ea" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/correrExp" afterPath="$PROJECT_DIR$/data/correrExp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/randomMatrix.cpp" afterPath="$PROJECT_DIR$/data/randomMatrix.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/randomMatrix.h" afterPath="$PROJECT_DIR$/data/randomMatrix.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/run_exp.cpp" afterPath="$PROJECT_DIR$/data/run_exp.cpp" />
-    </list>
+    <list default="true" id="7311a443-f964-4301-a77a-e5bddf14f5ea" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/CMakeFiles/" />
     <ignored path="$PROJECT_DIR$/test/CMakeFiles/" />
@@ -230,7 +224,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../Algo2/2018/Taller/templates/alumnos" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -484,18 +478,17 @@
       <workItem from="1522863871424" duration="4126000" />
       <workItem from="1523463018465" duration="40000" />
       <workItem from="1523738840306" duration="22796000" />
-      <workItem from="1523830881158" duration="4350000" />
+      <workItem from="1523830881158" duration="5549000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="37460000" />
+    <option name="totallyTimeSpent" value="38659000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1537" height="912" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1773002" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1773002" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41388175" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
