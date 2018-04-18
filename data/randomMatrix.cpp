@@ -57,17 +57,39 @@ Matrix directedList(int n){
 Matrix completeColumnAndZeros(int n) {
     assert(0 < n);
     Matrix res(n, n);
-    for (int j = ; j < n; j++) {
-         res.setIndex(0, j, 1);
+    for (int j = 1; j < n; j++) {
+         res.setIndex(j, 0, 1);
     }
+    return res;
+}
+
+Matrix conectionsPerColumnRandomMatrix(int n, int connectionsPerColumn){ //NO
+    assert(0 < n);
+    assert(connectionsPerColumn <= n-1);
+    Matrix res(n, n);
+    std::random_device rd;     // only used once to initialise (seed) engine
+    std::mt19937 rng(rd());    // random-number engine used (Mersenne-Twister in this case)
+    std::uniform_int_distribution<int> uni(0,n-1); // guaranteed unbiased
+    for (int j = 0; j < n; j++) {
+        int count = 0;
+        while(count < connectionsPerColumn){
+            auto random_i = uni(rng);
+            if (random_i != j && res(random_i, j) != 1) {
+                res.setIndex(random_i, j, 1);
+                count++;
+            }
+        }
+        count = 0;
+    }
+
     return res;
 }
 
 Matrix completeColumnAndOneBack(int n){
     assert(0 < n);
     Matrix res(n, n);
-    for (int j = ; j < n; j++) {
-        res.setIndex(0, j, 1);
+    for (int j = 1; j < n; j++) {
+        res.setIndex(j, 0, 1);
     }
     if(n>1) {
         res.setIndex(0, 1, 1);
