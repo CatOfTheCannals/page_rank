@@ -9,4 +9,6 @@ double normalization_coeff(Matrix column);
 
 Matrix colSumDiag(const Matrix& W);
 
+Matrix onesVec(const int n);
+
 #endif //TP1_METODOS_PAGE_RANK_H

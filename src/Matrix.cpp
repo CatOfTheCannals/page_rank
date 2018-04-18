@@ -1,6 +1,5 @@
 #include "Matrix.hpp"
 
-
 int Matrix::rows() const{
         return _rows;
 }
@@ -57,9 +56,6 @@ Matrix Matrix::operator*(const double& scalar) const{
     }
     return res;
 }
-
-
-
 
 Matrix Matrix::transpose() {
     Matrix res(this->rows(), this->cols());

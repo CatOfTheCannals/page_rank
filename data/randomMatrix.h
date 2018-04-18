@@ -8,8 +8,9 @@
 #include  "../src/Matrix.hpp"
 Matrix randomMatrix(int n, int numberOfConnections);
 Matrix randomChainMatrix(int n, int numberOfConnections);
-Matrix conectionsPerColumnRandomMatrix(int n, int connectionsPerColumn);
-Matrix conectionsPerRowRandomMatrix(int n, int connectionsPerRow);
+Matrix directedList(int n);
+Matrix completeColumnAndZeros(int n);
+Matrix completeColumnAndOneBack(int n);
 Matrix chainAndCompleteGraph(int n, int chainSize);
 
 

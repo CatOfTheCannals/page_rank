@@ -38,7 +38,7 @@
 
 	\subsection{\textit{Page Rank} (ranking de Page/rango de página)}
 
-		Como vimos en la introducción teórica, para implementar Page Rank vamos a armar la matriz dispersa W, llamada \textit{de conectividad}, que contiene un 1 en la posición $(i,j)$ si la página \textit{j} enlaza a la página \textit{i}. \\
+		Como vimos en la introducción teórica, para implementar \textit{Page Rank} vamos a armar la matriz dispersa W, llamada \textit{de conectividad}, que contiene un 1 en la posición $(i,j)$ si la página \textit{j} enlaza a la página \textit{i}. \\
 
 		El programa recibirá por parámetro la ruta del archivo que contiene la información de las páginas: en la primera línea la cantidad de enlaces, en la segunda la cantidad de páginas, y en la tercera y las subsiguientes, dos números separados por un espacio, que representan que existe un enlace desde el primero hacia el segundo. \\
 
@@ -60,7 +60,18 @@
 
 			En este caso, su funcionamiento está garantizado porque la matriz $A$ es estrictamente diagonal dominante (en particular, por columnas). \\
 
-		\subsubsection{Substitución Hacia Adelante y Hacia Atrás \textit{(forwards and backwards substitution)}}
+			%\subsubsubsection{Implementación} % no such command :(
+			\quad \\
+
+				Con respecto a su implementación: en un principio, programamos y verificamos el funcionamiento de este método, basándonos en una clase matriz previa más simple, implementada con un \textit{array}. \\
+
+				Como todavía no sabíamos que la matriz $(I-pWD)$, por sus propiedades numéricas, tendría factorización LU sin pivoteo; programamos eliminación gaussiana con pivoteo parcial. \\ % acá tiene que ir una referencia al apéndice donde está la demostración de esto
+
+				Lo que hicimos luego, fue programar los mismos métodos públicos que en la primera implentación de matriz (como \textit{array}), en la nueva clase matriz dispersa (\textit{map$<$int, map$<$int, double$>$ $>$}), para poder utilizar el mismo algoritmo de eliminación gaussiana, sin hacerle demasiados cambios. \\
+
+				Decidimos conservar el pivoteo parcial, ya que esto le otorga mayor estabilidad numérica a los cálculos. \\ % acá tiene que ir referencia a alguna fuente
+
+		\subsubsection{Substitución Hacia Adelante y Hacia Atrás\\ \textit{(forwards and backwards substitution)}}
 
 			Una ecuación matricial de la forma $Lx = b$ o $Ux = b$ (L triangular inferior, U triangular superior) es fácilmente soluble mediante un método iterativo llamado sustitución hacia adelante (o sustitución hacia atrás, respectivamente). \\
 
@@ -87,4 +98,47 @@
 			Donde podemos usar sustitución hacia adelante para obtener $y$, y finalmente resolver $x$ haciendo sustitución hacia atrás en el sistema: \\
 
 			$Ux = y$ \\
+
+			%\subsubsubsection{Implementación}
+			\quad \\
+
+				Con respecto a su implementación: este método también lo programamos y lo probamos en un principio usando una clase matriz basada en un \textit{array}, que luego fue reemplazada por una clase matriz dispersa con los mismos métodos públicos. \\
+
+				Tanto cuando hacemos sustitución hacia adelante como hacia atrás, pasamos elementos de la diagonal de la matriz triangular dividiendo, con el fin de despejar los $x_i$. Por lo tanto, para garantizar que los algoritmos funcionen, necesitamos poder asegurar que los elementos de la diagonal de las matrices triangulares involucradas sean distintos a $0$. \\
+
+				Esto es cierto para la matriz $L$ triangular inferior, porque la matriz $L$ de la factorización $LU$ siempre tiene $1$s en la diagonal. \\
+
+				Para la matriz $U$ triangular superior, el argumento es un poco más complejo: sabemos que la matriz $A$ es inversible por ser estrictamente diagonal dominante. Luego: \\ % probar lo de edd=>inversible en un apéndice y poner una referencia acá
+
+				$det(A) = det(LU) = det(L)det(U) = 1.det(U) = det(U)$ \\
+
+				Además, como $U$ es triangular: \\
+
+				$det(U) = \prod_{i=1}^{n} u_{ii}$ \\
+
+				Y como $A$ es inversible: \\
+
+				$det(A) \neq 0$ \\
+
+				Por lo tanto: \\
+
+				$det(A) = det(U) = \prod_{i=1}^{n} u_{ii} \neq 0 => u_{ii} \neq 0, \forall i$ \\
+
+				Y queda garantizado el funcionamiento del algoritmo también para estas matrices. \\
+
+		\subsubsection{Planteo de mediciones experimentales}
+
+			Para entender mejor el funcionamiento de \textit{Page Rank}, vamos a proponer estudiar instancias de prueba con las siguientes familias de matrices de conectividad:\\
+
+			1) \underline{Ciclo}: nos interesa la $W$ con una diagonal todo en unos porque hace que la matriz $D$ tenga todos los $d_{jj}$ iguales, haciendo que $p$ sea el unico factor de la ecuación de \textit{Page Rank} que determine en que página estará el navegante luego de $n$ iteraciones (además de la cantidad de iteraciones). Si $p$ (probabilidad de que salte a una página al azar) fuese $0$ (no puede ser $0$, pero si está muy cerca de $0$), entoces lo único que determinará dónde estará el navegante luego de iteraciones será $n$ y donde empieza el navegante. \\
+
+			2) \underline{Ciclo y grafo completo}: nos interesa tener una $W$ que tiene un ciclo muy grande (como la descripta arriba) y un grafo completo mucho más chico. De esta forma, estamos representando dos islas de páginas que se señalan entre si: una en la que cáda página recibe y envía un único enlace y otra, mucho más chica pero en la que todos los elementos envían y reciben enlaces de todas las páginas del grafo. Con esto pretendemos que el peso de cada página del grafo sea mucho más grande que el de la lista. Con esto pretendemos experimentar hasta que punto importa el tamaño del ciclo (que se verá beneficiada por un $p$ más alto -porque al saltear aleatoriamente tiene muchas más chances de caer en una página de la ciclo (por tener la mayoría de las páginas de $W$ en el ciclo)) respecto del grafo completo. Es decir, para diferentes $p$, podremos ver hasta donde importa el tamaño del ciclo respecto del peso de los elementos del grafo. \\
+
+			3) \underline{Lista no-dirigida}: idem ciclo pero el último elemento no apunta al primero. Esperamos que el \textit{ranking} quede (si el $p$ es suficientemente bajo): el último elemento, ... el primer elemento. Porque sin importar a que página salte o en que página esté, tiene mayor probabilidad de avanzar a la siguiente, entonces todas convergen a la última. Y cuando está en la última, sin importar el $p$, va a tener que saltar a una de las páginas de la lista con probabilidad $1/n-1$.\\
+
+			4) \underline{Completa}: Todas las páginas deberían estar en la posición $1$ del \textit{ranking} Page. ($W$ tiene todas las posición igual a $1$ -excepto diagonal-).\\
+
+			5) \underline{Columna completa y el resto vacía}: hipótesis: la página que manda enlaces a todas las páginas, debe quedar última en el pagerank.
+
+			% Columna completa y un link apuntando a la pág que manda links:Tambien nos inetersa el caso anterior pero que la página que manda todos los liks tambien reciba un link. Hip la pág que envía los links es la única que recibe un link de una pág que recibe un link, entonces debería terminar con la pág que manda todos los links como numero uno e el ranking.
 
