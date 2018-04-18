@@ -3,6 +3,8 @@ digraph G {
 	overlap = scale;
 	splines = true;
 
+	"n - k << k" [shape=square];
+
 	subgraph Group1 {
 
 		1; 2; 3; "..."; "k-2"; "k-1"; "k"; 1;
