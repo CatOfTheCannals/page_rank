@@ -44,7 +44,26 @@ Matrix randomChainMatrix(int n, int numberOfConnections){
     return res;
 }
 
-Matrix conectionsPerColumnRandomMatrix(int n, int connectionsPerColumn){
+Matrix directedList(int n){
+    assert(0 < n);
+    Matrix res(n, n);
+    for(int i = 0; i+1 < n; i++){
+        res.setIndex(i+1,i, 1);
+    }
+    return res;
+}
+
+
+Matrix completeColumnAndZeros(int n) {
+    assert(0 < n);
+    Matrix res(n, n);
+    for (int j = 1; j < n; j++) {
+         res.setIndex(j, 0, 1);
+    }
+    return res;
+}
+
+Matrix conectionsPerColumnRandomMatrix(int n, int connectionsPerColumn){ //NO
     assert(0 < n);
     assert(connectionsPerColumn <= n-1);
     Matrix res(n, n);
@@ -63,6 +82,37 @@ Matrix conectionsPerColumnRandomMatrix(int n, int connectionsPerColumn){
         count = 0;
     }
 
+    return res;
+}
+
+Matrix completeColumnAndOneBack(int n){
+    assert(0 < n);
+    Matrix res(n, n);
+    for (int j = 1; j < n; j++) {
+        res.setIndex(j, 0, 1);
+    }
+    if(n>1) {
+        res.setIndex(0, 1, 1);
+        return res;
+    }
+}
+
+
+Matrix chainAndCompleteGraph(int n, int chainSize){
+    assert(chainSize >= 2); //n must be 5 or higher
+    assert( n - chainSize >= 3); //requirement in order to have a complete graph that isn't a chain.
+    Matrix res(n, n);
+    for (int i = 0; i+1 < chainSize; i++){
+        res.setIndex(i+1,i, 1);
+    }
+    res.setIndex(0, chainSize - 1, 1);
+    for (int i = chainSize; i < n ; i++){
+        for (int j = chainSize; j < n; j++){
+            if(j != i){
+                res.setIndex(i,j, 1);
+            }
+        }
+    }
     return res;
 }
 

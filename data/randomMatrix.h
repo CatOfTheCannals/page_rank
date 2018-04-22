@@ -8,7 +8,12 @@
 #include  "../src/Matrix.hpp"
 Matrix randomMatrix(int n, int numberOfConnections);
 Matrix randomChainMatrix(int n, int numberOfConnections);
-Matrix conectionsPerColumnRandomMatrix(int n, int connectionsPerColumn);
+Matrix directedList(int n);
+Matrix completeColumnAndZeros(int n);
+Matrix conectionsPerColumnRandomMatrix(int n, int connectionsPerColumn); //todo: volvió porque el main de run_exp.cpp la necesitaba (está comentouteada)
+Matrix completeColumnAndOneBack(int n);
+Matrix chainAndCompleteGraph(int n, int chainSize);
+
 
 
 

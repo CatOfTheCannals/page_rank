@@ -388,6 +388,12 @@
 		<Unit filename="/home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP1/Solucion/page_rank_tp1_metodos/src/Solvers.hpp">
 			<Option target="metodos-tp1-base"/>
 		</Unit>
+		<Unit filename="/home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP1/Solucion/page_rank_tp1_metodos/src/Sparse_matrix.cpp">
+			<Option target="metodos-tp1-base"/>
+		</Unit>
+		<Unit filename="/home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP1/Solucion/page_rank_tp1_metodos/src/Sparse_matrix.hpp">
+			<Option target="metodos-tp1-base"/>
+		</Unit>
 		<Unit filename="/home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP1/Solucion/page_rank_tp1_metodos/src/empy_file.cpp">
 			<Option target="metodos-tp1-base"/>
 		</Unit>
@@ -401,6 +407,9 @@
 			<Option target="correrTests"/>
 		</Unit>
 		<Unit filename="/home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP1/Solucion/page_rank_tp1_metodos/test/Solver_test.cpp">
+			<Option target="correrTests"/>
+		</Unit>
+		<Unit filename="/home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP1/Solucion/page_rank_tp1_metodos/test/Sparse_matrix_test.cpp">
 			<Option target="correrTests"/>
 		</Unit>
 		<Unit filename="/home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP1/Solucion/page_rank_tp1_metodos/test/googletest-src/googletest/src/gtest-all.cc">
