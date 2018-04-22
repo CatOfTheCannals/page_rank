@@ -1,6 +1,5 @@
 #include "Solvers.hpp"
 
-
 std::tuple<Matrix, Matrix> gauss_elimination(const Matrix& a)
 {
     assert(a.cols() == a.rows());
@@ -16,6 +15,7 @@ std::tuple<Matrix, Matrix> gauss_elimination(const Matrix& a)
             //swap it
             u.swapRows(i, max_coeff + i);
             l.swapRows(i, max_coeff + i);
+
             for (int r = i + 1; r < a.rows(); r++) {
                 if (u(r,i) != 0){
                     double rowMultiplicator = u(r,i) / u(i, i);
@@ -25,7 +25,6 @@ std::tuple<Matrix, Matrix> gauss_elimination(const Matrix& a)
                     }
                 }
             }
-
         }
     }
     Matrix id = Matrix::identity(a.rows());

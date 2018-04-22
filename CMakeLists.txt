@@ -8,7 +8,9 @@ set(SOURCE_FILES
         src/Matrix.cpp
         src/Solvers.cpp
         src/page_rank.cpp
-        src/Sparse_matrix.cpp)
+        src/Sparse_matrix.cpp
+        src/Sparse_solvers.cpp
+        src/Sparse_matrix_2.cpp src/sparse_page_rank.cpp src/sparse_page_rank.h)
 
 add_library(metodos-tp1-base ${SOURCE_FILES})
 

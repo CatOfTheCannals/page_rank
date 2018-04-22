@@ -1,0 +1,71 @@
+#include "Sparse_solvers.hpp"
+#include "Sparse_matrix_2.hpp"
+
+std::tuple<Sparse_matrix_2, Sparse_matrix_2> s_gauss_elimination(const Sparse_matrix_2& a) {
+    assert(a.cols() == a.rows());
+    auto u = a;
+
+    Sparse_matrix_2 l(a.rows(), a.cols());
+
+    for (int i = 1; i < a.cols(); i++) {
+        //find max coeff
+
+        Sparse_matrix_2 current_col = u.subMatrix(i , a.rows(), i , i);
+        int max_coeff = std::get<0>(current_col.abs().maxCoeff());
+
+        if (current_col(max_coeff) != 1) {
+            //swap it
+            u.swapRows(i, max_coeff + i - 1);
+            l.swapRows(i, max_coeff + i - 1);
+
+            for (int r = i + 1; r <= a.rows(); r++) {
+                if (u(r,i) != 0){
+                    double rowMultiplicator = u(r,i) / u(i, i);
+                    l.setIndex(r, i, rowMultiplicator);
+                    for (int c = i; c <= a.cols(); c++) {
+                        u.setIndex(r, c, u(r, c) - (u(i, c) * rowMultiplicator));
+                    }
+                }
+            }
+        }
+    }
+    Sparse_matrix_2 id = Sparse_matrix_2::identity(a.rows());
+    l = l + id;
+    return std::make_tuple(l, u);
+}
+
+Sparse_matrix_2 backward_sub(const Sparse_matrix_2& a, const Sparse_matrix_2& y) {
+    assert(a.rows() == a.cols() && a.cols() == y.rows() && y.cols() == 1);
+    Sparse_matrix_2 x(a.rows(), 1);
+
+    for (int i = a.rows() ; i > 0; i--) {
+        if(a(i,i) != 0) { // TODO: checkear si esta bien no hacer nada en este paso
+            auto temp_row = a.subMatrix(i, i, i, a.cols());
+            auto temp_col = x.subMatrix(i, y.rows() , 1, 1);
+            // std::cout << "temp_row: " << temp_row << std::endl;
+            // std::cout << "temp_col: " << temp_col << std::endl;
+
+            double temp_coeff = temp_row.multiply(temp_col)(1,1);
+
+            x.setIndex(i, 1, (y(i, 1) - temp_coeff) / a(i,i));
+        }
+    }
+
+    return x;
+}
+
+Sparse_matrix_2 forward_sub(const Sparse_matrix_2& a, const Sparse_matrix_2& y) {
+    assert(a.rows() == a.cols() && a.cols() == y.rows() && y.cols() == 1);
+    Sparse_matrix_2 x(a.rows(), 1);
+
+    for (int i = 1; i <= a.rows() ; i++) {
+        if(a(i,i) != 0) { // TODO: checkear si esta bien no hacer nada en este paso
+            auto temp_row = a.subMatrix(i, i, 1, i);
+            auto temp_col = x.subMatrix(1, i, 1, 1);
+            double temp_coeff = temp_row.multiply(temp_col)(1,1);
+            x.setIndex(i, 1, (y(i, 1) - temp_coeff) / a(i,i));
+        }
+
+    }
+    return x;
+}
