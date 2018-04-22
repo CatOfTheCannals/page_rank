@@ -53,6 +53,7 @@ test/googletest-download/
 test/googletest-src/
 
 # CLion stuff? IDK
+.idea/
 .idea/workspace.xml
 tp1_metodos.cbp
 
