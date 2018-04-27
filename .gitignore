@@ -28,6 +28,7 @@
 *.app
 test/correrTests
 data/correrExp
+main
 
 # Cosas de latex
 *.log
@@ -55,6 +56,8 @@ test/googletest-src/
 # CLion stuff? IDK
 .idea/
 .idea/workspace.xml
+
+# Codeblocks
 tp1_metodos.cbp
 
 # Graphviz output
