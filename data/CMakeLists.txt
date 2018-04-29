@@ -1,4 +1,4 @@
-set(DATA_FILES run_exp.cpp randomMatrix.cpp)
+set(DATA_FILES sparse_run_exp.cpp sparseRandomMatrix.cpp) # run_exp.cpp sparseRandomMatrix.cpp
 
 add_executable(correrExp ${DATA_FILES})
 
