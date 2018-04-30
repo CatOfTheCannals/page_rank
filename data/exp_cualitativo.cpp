@@ -2,75 +2,52 @@
 #include <fstream>
 #include <sstream>
 #include "chrono"
-#include "../src/page_rank.h"
+#include "../src/sparse_page_rank.h"
 #include "randomMatrix.h"
 
 
 using namespace std;
 
 
-int first_expected( Matrix W, string tipo ){
 
-	if (tipo == "chain"){
-		
-	}else if(tipo == "rnd"){
-		
-	}
-	return 2;
-}
-
-
-int first_ranked( Matrix W){
-
-	return 2;
-}
-
-
-void familia_randoms( double p, int n, int m, int cant) {
-
-    ostringstream filename;
-    filename << "../data/results/familia_randoms_p"<< p << "_n" << n << "_m" << m << ".csv";
-    ofstream outputFile;
-    outputFile.open(filename.str());
-	
-	
-	for(int i = 0; i < cant; i++) {
-	
-		Matrix W =randomMatrix(n,m);
-		Matrix C = colSumDiag(W);
-		
-		page_rank(W, C, p);
-		
-		outputFile << "Esperado: "<< first_expected(W, "rnd") <<"   Obtenido: " << first_ranked(W) << endl;
-		cout << W <<endl;
-	}
-    outputFile.close();
-}
-
-
-
-void familia_chain(double p, int n, int m, int cant){
+void familia_chain( double p, int max_matrix_dim){
 	
 	ostringstream filename;
-    filename << "../data/results/familia_chain_p"<< p << "_n" << n << "_m" << m << ".csv";
+    filename << "../data/results/familia_chain_p"<< p << "_maxDim" << max_matrix_dim << ".csv";
     ofstream outputFile;
     outputFile.open(filename.str());
 	
 	
-	for(int i = 0; i < cant; i++) {
-	
-		Matrix W =randomChainMatrix(n,m);
-		Matrix C = colSumDiag(W);
+	for(int i = 2; i <= max_matrix_dim; i++) {
 		
-		Matrix rec = page_rank(W, C, p);
-		
-		outputFile << "Esperado: "<< first_expected(W, "chain") <<"   Obtenido: " << first_ranked(W) << endl;
+		Sparse_matrix_2 W =randomChainMatrix(i,0); //cero conexiones extras
+		Sparse_matrix_2 C = colSumDiag(W);
+		Sparse_matrix_2 rec = page_rank(W, C, p);
+		outputFile << "W: "<< endl << W << endl << " Rank: " << endl << rec << endl;
 		
 	}
     outputFile.close();
 		
 }
 
+void familia_directed_list( double p, int max_matrix_dim){
+	
+	ostringstream filename;
+    filename << "../data/results/familia_directed_list_p"<< p << "_maxDim" << max_matrix_dim << ".csv";
+    ofstream outputFile;
+    outputFile.open(filename.str());
+	
+	for(int i = 2; i <= max_matrix_dim; i++) {
+		
+		Sparse_matrix_2 W = directedList(i); //cero conexiones extras
+		Sparse_matrix_2 C = colSumDiag(W);
+		Sparse_matrix_2 rec = page_rank(W, C, p);
+		outputFile << "W: "<< endl << W << endl << " Rank: " << endl << rec << endl;
+		
+	}
+    outputFile.close();
+	
+}
 
 
 int main(int argc, char** argv) { //espero recibir p y cant
@@ -78,21 +55,21 @@ int main(int argc, char** argv) { //espero recibir p y cant
  
 	if (argc != 4){
 		cout << endl<<"	Unable to run program" << endl;
-		cout << "	Four parameters are expected:    program_name.exe  p_number amount_of_instances_per_experiment dim_of_matrix" << endl;
+		cout << "	Four parameters are expected:    program_name.exe  p_number max_matrix_dim  number_of_instances" << endl;
 		return 1;
 	}
 	double p = atof(argv[1]);
-	int cant = atoi(argv[2]);
-	int matrix_dim = atoi(argv[3]);
+	int max_matrix_dim = atoi(argv[2]);
+	int instances = atoi(argv[3]);
 	
-	int max_conections = (matrix_dim * matrix_dim)-matrix_dim;
-	int min_conections = matrix_dim;
-	int conections = rand()%( max_conections - min_conections + 1); 
 	
-	familia_randoms(p, matrix_dim , conections, cant);
+//	int min_conections = matrix_dim;
+//	int conections = rand()%( max_conections - min_conections + 1); 
 	
-	familia_chain(p, matrix_dim, conections, cant);
 	
+	familia_chain(p, max_matrix_dim);
+	
+	familia_directed_list(p, max_matrix_dim);
 	
 	
 	return 1;

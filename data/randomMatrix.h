@@ -1,13 +1,12 @@
 #ifndef TP1_METODOS_RANDOMMATRIX_H
 #define TP1_METODOS_RANDOMMATRIX_H
 
-#include  "../src/Matrix.hpp"
-Matrix randomMatrix(int n, int numberOfConnections);
-Matrix randomChainMatrix(int n, int numberOfConnections);
-Matrix directedList(int n);
-Matrix completeColumnAndZeros(int n);
-Matrix conectionsPerColumnRandomMatrix(int n, int connectionsPerColumn); //todo: volvió porque el main de run_exp.cpp la necesitaba (está comentouteada)
-Matrix completeColumnAndOneBack(int n);
-Matrix chainAndCompleteGraph(int n, int chainSize);
+#include  "../src/Sparse_matrix_2.hpp"
+Sparse_matrix_2 randomMatrix(int n, int numberOfConnections);
+Sparse_matrix_2 randomChainMatrix(int n, int numberOfConnections);
+Sparse_matrix_2 directedList(int n);
+Sparse_matrix_2 completeColumnAndZeros(int n);
+Sparse_matrix_2 completeColumnAndOneBack(int n);
+Sparse_matrix_2 chainAndCompleteGraph(int n, int chainSize);
 
 #endif //TP1_METODOS_RANDOMMATRIX_H
