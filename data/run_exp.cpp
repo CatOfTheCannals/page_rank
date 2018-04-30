@@ -128,7 +128,7 @@ void randomChainMatrixExp(double p, int step, int n, int repetitions) {
 int main(int argc, char** argv) {
     double p = 0.5;
     int step = 1;
-    int n = 102;
+    int n = 10;
     int repetitions = 5;
 
     randomMatrixExp(p, step, n, repetitions);
