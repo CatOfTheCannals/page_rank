@@ -126,10 +126,12 @@ void randomChainMatrixExp(double p, int step, int n, int repetitions) {
 
 
 int main(int argc, char** argv) {
-    double p = 0.1;
-    int step = 5;
+    double p = 0.5;
+    int step = 1;
     int n = 102;
     int repetitions = 5;
+
+    randomMatrixExp(p, step, n, repetitions);
 
 //    for (int i = 1; i < 9; i++) {
 //        randomMatrixExp(p * i, step, n, repetitions);
@@ -160,6 +162,7 @@ int main(int argc, char** argv) {
 //    Matrix r = conectionsPerColumnRandomMatrix(5,2);
 //    std::cout << "conectionsPerRowRandomMatrix2:" << std::endl<< r << std::endl;
 
+    /*
     Matrix s = chainAndCompleteGraph(5,2);
     std::cout << "chainAndCompleteGraph:" << std::endl<< s << std::endl;
 
@@ -195,5 +198,5 @@ int main(int argc, char** argv) {
 
     Matrix e = completeColumnAndOneBack(10);
     std::cout << "completeColumnAndOneBack:" << std::endl<< e << std::endl;
-
+    */
 }
