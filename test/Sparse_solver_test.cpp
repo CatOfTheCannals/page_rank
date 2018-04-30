@@ -70,11 +70,11 @@ protected:
 
 TEST_F (sMockGaussInput, gaussElimFourByFour){
 
-    /*
+
         Sparse_matrix_2 l(fourByFour.rows(), fourByFour.cols());
         Sparse_matrix_2 u(fourByFour.rows(), fourByFour.cols());
         std::tie(l, u) = s_gauss_elimination(fourByFour);
-
+/*
         std::cout << "l" << std::endl;
         std::cout << l << std::endl;
 
@@ -89,9 +89,9 @@ TEST_F (sMockGaussInput, gaussElimFourByFour){
 
         std::cout << "difference" << std::endl;
         std::cout << fourByFour + l.multiply(u) * -1 << std::endl;
-
+*/
         ASSERT_TRUE(fourByFour.isApproximate(l.multiply(u)));
-        */
+
 }
 
 
@@ -106,7 +106,7 @@ TEST_F (sMockGaussInput, forwardSub){
     auto x = forward_sub(vt, y);
     ASSERT_TRUE(vt.multiply(x).isApproximate(y));
 }
-/*
+
 TEST_F (sMockGaussInput, findX){
 
     Sparse_matrix_2 p = Sparse_matrix_2::identity(3);
@@ -115,13 +115,12 @@ TEST_F (sMockGaussInput, findX){
 
     Sparse_matrix_2 l(fourByFour.rows(), fourByFour.cols());
     Sparse_matrix_2 u(fourByFour.rows(), fourByFour.cols());
-    std::tie(l, u) = gauss_elimination(fourByFour);
+    std::tie(l, u) = s_gauss_elimination(fourByFour);
     auto q = forward_sub(l, r);
     auto x = backward_sub(u, q);
 
 
-ASSERT_TRUE(fourByFour.multiply(x).isApproximate(r, 0.0001));
+ASSERT_TRUE(fourByFour.multiply(x).isApproximate(r));
 
 }
 
-*/

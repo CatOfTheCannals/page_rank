@@ -17,17 +17,18 @@ std::tuple<Sparse_matrix_2, Sparse_matrix_2> s_gauss_elimination(const Sparse_ma
             //swap it
             u.swapRows(i, max_coeff + i - 1);
             l.swapRows(i, max_coeff + i - 1);
+        }
 
-            for (int r = i + 1; r <= a.rows(); r++) {
-                if (u(r,i) != 0){
-                    double rowMultiplicator = u(r,i) / u(i, i);
-                    l.setIndex(r, i, rowMultiplicator);
-                    for (int c = i; c <= a.cols(); c++) {
-                        u.setIndex(r, c, u(r, c) - (u(i, c) * rowMultiplicator));
-                    }
+        for (int r = i + 1; r <= a.rows(); r++) {
+            if (u(r,i) != 0){
+                double rowMultiplicator = u(r,i) / u(i, i);
+                l.setIndex(r, i, rowMultiplicator);
+                for (int c = i; c <= a.cols(); c++) {
+                    u.setIndex(r, c, u(r, c) - (u(i, c) * rowMultiplicator));
                 }
             }
         }
+
     }
     Sparse_matrix_2 id = Sparse_matrix_2::identity(a.rows());
     l = l + id;
@@ -42,9 +43,6 @@ Sparse_matrix_2 backward_sub(const Sparse_matrix_2& a, const Sparse_matrix_2& y)
         if(a(i,i) != 0) { // TODO: checkear si esta bien no hacer nada en este paso
             auto temp_row = a.subMatrix(i, i, i, a.cols());
             auto temp_col = x.subMatrix(i, y.rows() , 1, 1);
-            // std::cout << "temp_row: " << temp_row << std::endl;
-            // std::cout << "temp_col: " << temp_col << std::endl;
-
             double temp_coeff = temp_row.multiply(temp_col)(1,1);
 
             x.setIndex(i, 1, (y(i, 1) - temp_coeff) / a(i,i));
