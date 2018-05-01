@@ -48,7 +48,7 @@ vector< pair<int, double> > orderByRank(Sparse_matrix_2 M){
 	
 	vector<pair<int, double> > res;
 	for(int i = 1; i <= M.rows(); i++ ){	
-		res.push_back(make_pair(i-1, M(i,1)) ) ;
+		res.push_back(make_pair(i, M(i,1)) ) ;
 	}
 	sort(res.begin(), res.end(), pairCompare);
 	return res;
@@ -83,7 +83,7 @@ void familia_directed_list( double p, int min_matrix_dim, int max_matrix_dim){
     filename << "../data/results/directed_list_p"<< p << "_minDim" << min_matrix_dim << "_maxDim" << max_matrix_dim << ".csv";
     ofstream outputFile;
     outputFile.open(filename.str());	
-	for(int i = 2; i <= max_matrix_dim; i++) {
+	for(int i = min_matrix_dim; i <= max_matrix_dim; i++) {
 		
 		Sparse_matrix_2 W = directedList(i); 
 		Sparse_matrix_2 C = colSumDiag(W);
