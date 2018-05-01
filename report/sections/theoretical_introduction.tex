@@ -59,7 +59,7 @@ $Rx = x$ \\
 
 Donde $D$ es la matriz diagonal con $d_{jj} = \frac{1}{c_j}$ (salvo cuando $c_j = 0$: en tal caso, $d_{jj} = 0$). \\
 
-Sin embargo, para modelar mejor el comportamiento de los usuarios de la web, vamos a introducir el modelo del \textit{navegante aleatorio}: la idea es que el usuario incia en una página cualquiera y luego sigue uno de sus enlaces con probabilidad $p$, o bien salta a una página al azar con probabilidad $1 - p$. Si la página actual no tiene enlaces, también salta a una página al azar (con probabilidad $1/n$). \\
+Sin embargo, para modelar mejor el comportamiento de los usuarios de la web, vamos a introducir el modelo del \textit{navegante aleatorio}: la idea es que el usuario inicia la navegación en una página cualquiera y luego sigue uno de sus enlaces con probabilidad $p$, o bien salta a una página al azar con probabilidad $1 - p$. Si la página actual no tiene enlaces, también salta a una página al azar (con probabilidad $1/n$). \\
 
 Para este nuevo modelo, vamos a definir la matriz $A \in \mathbb{R}^{nxn}$, donde la posición $a_{ij}$ representa la probabilidad de pasar a la página \textit{i} estando en la página \textit{j}, de la siguiente forma:
 
