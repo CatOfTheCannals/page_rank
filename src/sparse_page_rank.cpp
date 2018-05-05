@@ -9,7 +9,9 @@ Sparse_matrix_2 page_rank(Sparse_matrix_2 W, Sparse_matrix_2 C, double p) {
 
     Sparse_matrix_2 e = onesVec(W.rows()); // O(n)
 
-    Sparse_matrix_2 A = id + W.multiply(C * (-p));
+    Sparse_matrix_2 A = id + W.multiply(C * (-p)); //O(n+m)
+    // C * constante son n operaciones
+    // W * diagonal son O(max{n,m}) operaciones
 
     Sparse_matrix_2 L(W.rows(), W.cols());
     Sparse_matrix_2 U(W.rows(), W.cols());
@@ -69,7 +71,7 @@ double normalization_coeff(Sparse_matrix_2 column) {
 }
 
 
-Sparse_matrix_2 colSumDiag(const Sparse_matrix_2& W){
+Sparse_matrix_2 colSumDiag(const Sparse_matrix_2& W){ //O(n^2)
     Sparse_matrix_2 C(W.rows(), W.cols());
     for(int j = 1; j <= W.cols(); j ++){
         double sum = 0;

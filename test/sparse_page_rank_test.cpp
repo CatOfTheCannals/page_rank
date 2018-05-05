@@ -51,7 +51,7 @@ TEST_F (pageRankTest, test_aleatorio){
 
     // std::cout << page_rank(W, C, p) << std::endl;
 
-    // ASSERT_TRUE(page_rank(W, C, p).isApproximate(test_aleatorio_out));
+    ASSERT_TRUE (page_rank(W, C, p).isApproximate(test_aleatorio_out));
 }
 
 TEST_F (pageRankTest, ciclicSparse_matrix_2){
