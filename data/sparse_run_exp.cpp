@@ -17,17 +17,15 @@ void randomMatrixExp(double p, int step, int n, int repetitions) {
     ofstream file;
     file.open(filename.str());
 
-    int i = 1;
-    int j = 0;
+    for(int k = 0; k < repetitions; k++ ) {
 
-    while(i < n) {
+        int i = 1;
+        int j = 0;
+        while(i < n) {
 
-        j = 0;
-        while(j < i * (i - 1)) {
+            j = 0;
+            while(j < i * (i - 1)) {
 
-            std::cout << "i: " << i << "j: " << j << std::endl;
-
-            for(int k = 0; k < repetitions; k++ ) {
                 Sparse_matrix_2 W = sparseRandomMatrix(i, j);
                 Sparse_matrix_2 C = colSumDiag(W);
 
@@ -41,12 +39,11 @@ void randomMatrixExp(double p, int step, int n, int repetitions) {
                     std::cout << "i: " << i << " j: " << j << " time it took: " << GET_TIME_DELTA(begin, end) << std::endl;
                 }
 
+                j += step;
             }
 
-            j += step;
+            i += step;
         }
-
-        i += step;
     }
 
     file.close();
@@ -55,9 +52,8 @@ void randomMatrixExp(double p, int step, int n, int repetitions) {
 
 int main(int argc, char** argv) {
     double p = 0.5;
-    int step = 1;
-    int n = 10;
-    int repetitions = 5;
-
+    int step = 3;
+    int n = 100;
+    int repetitions = 15;
     randomMatrixExp(p, step, n, repetitions);
 }

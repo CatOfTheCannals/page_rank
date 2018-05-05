@@ -28,7 +28,17 @@ void Sparse_matrix_2::setIndex(int i, int j, double value) {
     if(_epsilon < fabs(value)) {
         _matrix[i][j] = value;
     } else {
-        _matrix[i][j] = 0;
+        if((*this)(i,j) != 0) {
+            //borrar el numero de la fila
+            auto it = _matrix.find(i);
+            auto vec_it = it->second.find(j);
+            it->second.erase(vec_it);
+            // ver si la fila quedo vacia, en caso afirmativo hacerla PIJA
+            if(it->second.size() == 0) {
+                _matrix.erase(it);
+            }
+        }
+
     }
 }
 
