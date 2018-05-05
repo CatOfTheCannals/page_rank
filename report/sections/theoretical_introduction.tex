@@ -49,13 +49,17 @@ Es decir que, cuando existe un enlace desde \textit{j} hacia \textit{i} y el gra
 
 Finalmente, calculamos el puntaje $x_i$ de la página \textit{i} como: \\
 
-$ x_i = \sum_{j=1}^{n} \frac{x_j}{c_j} w_{ij} $ \\
+\begin{equation}
+	x_i = \sum_{j=1}^{n} \frac{x_j}{c_j} w_{ij}
+\end{equation}
 
 (Notar que el puntaje de una página depende del puntaje de las otras.) \\
 
 Entonces, definiendo $R = WD$, el sistema a resolver quedaría: \\
 
-$Rx = x$ \\
+\begin{equation}
+	Rx = x
+\end{equation}
 
 Donde $D$ es la matriz diagonal con $d_{jj} = \frac{1}{c_j}$ (salvo cuando $c_j = 0$: en tal caso, $d_{jj} = 0$). \\
 
@@ -72,7 +76,9 @@ Para este nuevo modelo, vamos a definir la matriz $A \in \mathbb{R}^{nxn}$, dond
 
 Entonces el sistema a resolver será el siguiente: \\
 
-$Ax = x$ \\
+\begin{equation}
+	Ax = x
+\end{equation}
 
 donde tomaremos por convención al vector $x$ como de norma 1. \\
 
@@ -99,7 +105,9 @@ Para resolver este sistema, vamos a llevarlo a un sistema lineal equivalente. A 
 
 Y el sistema lineal a resolver es el siguiente: \\
 
-$(I - p W D) x = \gamma e$ \\
+\begin{equation}
+	(I - p W D) x = \gamma e
+\end{equation}
 
 Para este trabajo, vamos a suponer $\gamma = 1$. \\
 

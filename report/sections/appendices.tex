@@ -123,7 +123,9 @@
 
 		El \textit{Page Rank} es la solución al sistema $Ax=x$. La matriz $A$ puede reescribirse como $A=pWD+ez^{z}$ por lo visto en el apéndice C. Sean la matriz $D$ y los vectores columna $e$ y $z$. \\
 
-		$Ax=x <=> 0 = x-Ax <=> 0 = (I-A)x <=> 0 = [I - (pWD+ez^{t})]x <=> ez^{t}x = (I-pWD)x$ \\
+		\begin{equation}
+			Ax=x <=> 0 = x-Ax <=> 0 = (I-A)x <=> 0 = [I - (pWD+ez^{t})]x <=> ez^{t}x = (I-pWD)x
+		\end{equation}
 
 		Suponemos $z^{t}x = 1 => (I-pWD)x = e$. \\
 
@@ -131,23 +133,31 @@
 
 		Se quiere ver que $A$ es EDDc para garantizar la aplicabilidad de la eliminación gaussiana, es decir que: \\
 
-		$|a_{jj}| > \sum^{n}_{i=1, i \neq j} |a_{ij}|$ para $j = 1, \hdots, n$ \\
+		\begin{equation}
+			|a_{jj}| > \sum^{n}_{i=1, i \neq j} |a_{ij}| \text{para} j = 1, \hdots, n
+		\end{equation}
 
 		Es decir, que la suma en módulo de los elementos de la columna (excepto del elemento en la diagonal), es menor al módulo del elemento de la diagonal correspondiente a esa columna. \\
 
-		$|a_{jj}| = a_{jj} = 1 \forall j = 1, \hdots, n$ \\
+		\begin{equation}
+			|a_{jj}| = a_{jj} = 1 \forall j = 1, \hdots, n
+		\end{equation}
 
 		Pues $(-pWD)_{jj} = 0$ y $I_{jj} = 1, \forall j$, entonces $(-pWD + I)_{jj} = a_{jj} = 0 + 1 = 1$ \\
 
 		Entonces tenemos: \\
 
-		$|a_{jj}| = 1 > \sum_{i=1, i \neq j}^{n} |a_{ij}|, \forall j = 1, \hdots, n$ \\
+		\begin{equation}
+			|a_{jj}| = 1 > \sum_{i=1, i \neq j}^{n} |a_{ij}|, \forall j = 1, \hdots, n
+		\end{equation}
 
 		Como la sumatoria de la desigualdad de arriba excluye explicitamente a los elementos de la diagonal, podemos no considerar a la matriz diagonal $I$ como parte de ella. \\
 
 		Por otro lado, por ser una sumatoria de módulos, podemos desestimar el signo negativo. También, por no depender de la sumatoria, podemos sacar a la $p$ fuera de ella. Entonces: \\
 
-		$\sum_{i=1, i \neq j}^{n} |a_{ij}| = \sum_{i=1, i \neq j}^{n} |I-pWD| = p \sum_{i=1, i \neq j}^{n} WD$ \\
+		\begin{equation}
+			\sum_{i=1, i \neq j}^{n} |a_{ij}| = \sum_{i=1, i \neq j}^{n} |I-pWD| = p \sum_{i=1, i \neq j}^{n} WD
+		\end{equation}
 
 		Notar que $w_{i,j} \geq 0 \forall i,j = 1, \hdots, n$ y $d_{ij} \geq 0 \forall i,j = 1, \hdots, n$. \\
 
@@ -159,9 +169,11 @@
 
 		Si $c_{j} \neq 0 => d_{jj} = \frac{1}{c_{j}}$. Además $c_{j} = \sum_{i=1}^{n} w_{ij}$. Entonces:\\
 
-		$ p \sum_{i=1, i \neq j}^{n} (WD)_{j} = p \sum_{i=1, i \neq j}^{n} (w \frac{1}{c_{j}})_{j} =
-		  p \sum_{i=1, i \neq j}^{n} w_{ij} \frac{1}{c_j} = p \sum_{i=1, i \neq j}^{n} \frac{1}{\sum_{i=1}^{n} w_{ij}} =
-		  p 1 = p													$ \\
+		\begin{equation}
+			p \sum_{i=1, i \neq j}^{n} (WD)_{j} = p \sum_{i=1, i \neq j}^{n} (w \frac{1}{c_{j}})_{j} =
+			p \sum_{i=1, i \neq j}^{n} w_{ij} \frac{1}{c_j} = p \sum_{i=1, i \neq j}^{n} \frac{1}{\sum_{i=1}^{n} w_{ij}} =
+			p 1 = p
+		\end{equation}
 
 		y por definición $0 \leq p \leq 1 \text{(por ser una probabilidad)} \therefore \sum_{i=1, i \neq j}^{n} |I-pWD| < 1$ \\
 
