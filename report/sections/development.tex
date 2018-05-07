@@ -14,11 +14,15 @@
 
 		Concretamente, notamos que la matriz de conectividad $W$ era multiplicada (por derecha) por una matriz diagonal y luego se le sumaba una matriz identidad $I$: \\
 
-		$(I - pWD) x = [W (-pD) + I] x = e$ \\
+		\begin{equation}
+			(I - pWD) x = [W (-pD) + I] x = e
+		\end{equation}
 
 		Multiplicar a $W$ por una matriz diagonal $-pD$, es equivalente a multiplicar a cada columna $\vec{w}_i$ de $W$ por el escalar que está en la diagonal de $-pD$: \\
 
-		$ W (-pD) = \left( \vec{w}_1 \vec{w}_2 \hdots \vec{w}_n \right) (-pD) = \left( -p d_{11} \vec{w}_1 \quad -p d_{22} \vec{w}_2 \quad \hdots \quad -p d_{nn} \vec{w}_n \right)$ \\
+		\begin{equation}
+			W (-pD) = \left( \vec{w}_1 \vec{w}_2 \hdots \vec{w}_n \right) (-pD) = \left( -p d_{11} \vec{w}_1 \quad -p d_{22} \vec{w}_2 \quad \hdots \quad -p d_{nn} \vec{w}_n \right)
+		\end{equation}
 
 		Viendo esto, pensamos que sería bueno tener alguna estructura que contuviera a \textit{las columnas} de $W$, para poder pedirlas en $O(1)$ y multiplicar fácilmente a cada una por un mismo escalar. \\
 
@@ -26,11 +30,15 @@
 
 		Por otro lado, para la triangulación del sistema lineal mediante el algoritmo de Eliminación Gaussiana, lo que sucede es más bien lo opuesto: cada paso del algoritmo es equivalente a \textit{pre}multiplicar (multiplicar por izquierda) al sistema $(I - pWD) x = e$ por un matriz elemental $E_{(i,j)}$ distinta. Estas matrices son como la matriz identidad, pero poseen un elemento distinto de $0$ en la posición $(i,j)$. \\
 
-		$ (I - pWD) x = e <=> E_{(n,n-1)} \hdots E_{(2,1)} (I - pWD) x = E_{(n,n-1)} \hdots E_{(2,1)} e $ \\
+		\begin{equation}
+			(I - pWD) x = e <=> E_{(n,n-1)} \hdots E_{(2,1)} (I - pWD) x = E_{(n,n-1)} \hdots E_{(2,1)} e
+		\end{equation}
 
 		Esto, a su vez, es equivalente a hacer operaciones con las filas. Por ejemplo, si $E_{(2,1)}$ tiene un escalar $m_{2,1} \neq 0$ en la posición $(2,1)$, premultiplicar $E_{(2,1)}$ por $(I - pWD)$ será modificar la segunda fila de $(I - pWD)$ de manera tal que: \\
 
-		$fila_{2}(I-pWD) = m_{2,1} *  fila_{1}(I-pWD) + fila_{2}(I-pWD)$ \\
+		\begin{equation}
+			fila_{2}(I-pWD) = m_{2,1} *  fila_{1}(I-pWD) + fila_{2}(I-pWD)
+		\end{equation}
 
 		Esto nos hizo pensar que, para hacer estas operaciones, sería más fácil tener a la matriz como \textit{map} \underline{de filas}. \\
 
@@ -79,25 +87,35 @@
 
 			La primera ecuación del sistema $Lx = b$: \\
 
-			$l_{1,1} x_{1} = b_{1} => x_{1} = \frac{b_{1}}{l_{1,1}}$ \qquad (primer paso de la substitución hacia adelante) \\
+			\begin{equation}
+				l_{1,1} x_{1} = b_{1} => x_{1} = \frac{b_{1}}{l_{1,1}} \qquad \text{(primer paso de la substitución hacia adelante)}
+			\end{equation}
 
 			Para matrices triangulares superiores, el proceso es análogo, pero reemplazando primero $x_n$ y hasta $x_1$ (hacia atrás). \\
 
 			Para resolver el sistema de Page Rank, luego de obtener la factorización LU de nuestra matriz A: \\
 
-			$Ax = b <=> LUx = b$ \\
+			\begin{equation}
+				Ax = b <=> LUx = b
+			\end{equation}
 
 			Para evitar los problemas numéricos que podría traer calcular la inversa de la matriz L, vamos a aplicar la siguiente sustitución: \\
 
-			$Ux = y$ \\
+			\begin{equation}
+				Ux = y
+			\end{equation}
 
 			Entonces el sistema a resolver quedará escrito de la siguiente manera: \\
 
-			$Ly = b$ \\
+			\begin{equation}
+				Ly = b
+			\end{equation}
 
 			Donde podemos usar sustitución hacia adelante para obtener $y$, y finalmente resolver $x$ haciendo sustitución hacia atrás en el sistema: \\
 
-			$Ux = y$ \\
+			\begin{equation}
+				Ux = y
+			\end{equation}
 
 			%\subsubsubsection{Implementación}
 			\quad \\
@@ -110,19 +128,27 @@
 
 				Para la matriz $U$ triangular superior, el argumento es un poco más complejo: sabemos que la matriz $A$ es inversible por ser estrictamente diagonal dominante. Luego: \\ % probar lo de edd=>inversible en un apéndice y poner una referencia acá
 
-				$det(A) = det(LU) = det(L)det(U) = 1.det(U) = det(U)$ \\
+				\begin{equation}
+					det(A) = det(LU) = det(L)det(U) = 1.det(U) = det(U)
+				\end{equation}
 
 				Además, como $U$ es triangular: \\
 
-				$det(U) = \prod_{i=1}^{n} u_{ii}$ \\
+				\begin{equation}
+					det(U) = \prod_{i=1}^{n} u_{ii}
+				\end{equation}
 
 				Y como $A$ es inversible: \\
 
-				$det(A) \neq 0$ \\
+				\begin{equation}
+					det(A) \neq 0
+				\end{equation}
 
 				Por lo tanto: \\
 
-				$det(A) = det(U) = \prod_{i=1}^{n} u_{ii} \neq 0 => u_{ii} \neq 0, \forall i$ \\
+				\begin{equation}
+					det(A) = det(U) = \prod_{i=1}^{n} u_{ii} \neq 0 => u_{ii} \neq 0, \forall i
+				\end{equation}
 
 				Y queda garantizado el funcionamiento del algoritmo también para estas matrices. \\
 
