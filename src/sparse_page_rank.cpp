@@ -20,8 +20,7 @@ Sparse_matrix_2 page_rank(Sparse_matrix_2 W, Sparse_matrix_2 C, double p) {
 
     Sparse_matrix_2 y = forward_sub(L, e);
     Sparse_matrix_2 x = backward_sub(U, y);
-
-    /*
+/*
     std::cout << "C" << std::endl;
     std::cout << C << std::endl;
     std::cout << "W" << std::endl;
@@ -48,17 +47,17 @@ Sparse_matrix_2 page_rank(Sparse_matrix_2 W, Sparse_matrix_2 C, double p) {
     std::cout << y << std::endl;
     std::cout << "x" << std::endl;
     std::cout << x << std::endl;
-    */
-
+*/
     return x * normalization_coeff(x); // O(n)
 
-    /*
+/*
     auto res =  x * normalization_coeff(x);
 
-    std::cout << "solution: " << A.multiply(res) + res * -1 << std::endl;
+    std::cout << "res " << res << std::endl;
 
-    return res;
-    */
+    //std::cout << "solution: " << A.multiply(res) + res * -1 << std::endl;
+
+    return res; */
 }
 
 double normalization_coeff(Sparse_matrix_2 column) {

@@ -49,11 +49,9 @@ TEST_F (pageRankTest, test_aleatorio){
 
     Sparse_matrix_2 C = colSumDiag(W);
 
-    // std::cout << page_rank(W, C, p) << std::endl;
-
     ASSERT_TRUE (page_rank(W, C, p).isApproximate(test_aleatorio_out));
 }
-
+/*
 TEST_F (pageRankTest, ciclicSparse_matrix_2){
     double p = 0.85;
 
@@ -62,4 +60,4 @@ TEST_F (pageRankTest, ciclicSparse_matrix_2){
     std::cout << "ciclic: " << std::endl << ciclic << std::endl;
 
     std::cout << page_rank(ciclic, C, p) << std::endl;
-}
+}*/

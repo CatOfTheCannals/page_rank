@@ -1,18 +1,16 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <stdlib.h>
+#include <stdio.h>
+#include <cstdlib>
 #include <string>
 #include <string.h>
-#include <vector>
 
-//#include "src/Matrix.hpp"
-#include "src/Sparse_matrix.hpp"
-#include "src/Solvers.hpp"
+#include "src/sparse_page_rank.h"
 
 using namespace std;
 
-bool map_of_rows = false; // indica si la matriz está guardada por filas o por columnas.
-double epsilon = 0.00001;
 
 
 int main(int argc, char** argv){
@@ -25,13 +23,20 @@ int main(int argc, char** argv){
 	
 	// leo el archivo de test -->la entrada i,j indica un 1 en la posicion [j][i]
 
+	std::cout << "argv[0]: " << argv[0] << std::endl;
+	std::cout << "argv[1]: " << argv[1] << std::endl;
+	std::cout << "argv[2]: " << argv[2] << std::endl;
+
 	string inFile(argv[1]);
-	string outFile (strcat(argv[1], ".out"));
-	double p = atof(argv[2]);
-	
+	string outFile(argv[1]);
+	outFile += ".out";
+	double p = std::atof(argv[2]);
+
+	std::cout << "outFile: " << outFile << std::endl;
+	std::cout << "p: " << p << std::endl;
+
 	string line;
 	int pagecount, links, i, j;
-	map_of_rows= false;
 	ifstream f_test(inFile);
 	
     if ( f_test.is_open() ){ f_test >> pagecount >> links;} 
@@ -47,60 +52,20 @@ int main(int argc, char** argv){
 	
 	
 	//********* levanto W (POR COLUMNAS) y armo C al mismo tiempo ***********
-	Sparse_matrix W = Sparse_matrix(pagecount, pagecount);
-	vector<int> C (pagecount, 0);
+	Sparse_matrix_2 W = Sparse_matrix_2(pagecount, pagecount);
 	while( getline(f_test, line) ){ //asumo que el archivo de entrada no termina con salto de linea (en ese caso se vuelve a cargar en W y se suma uno de más a C )
 		istringstream lineStream(line);
-		lineStream >> j >> i;
+		lineStream >> i >> j;
 		W.setIndex(i, j, 1);
-		C[i-1] ++ ;//el vector esta indexado a partir de cero
 	}
-	
 	f_test.close();
+	auto C = colSumDiag(W);
 	
 	//***********fin levantar W************
 	
-
+	auto output_rank = page_rank(W, C, p);
 	
-	//***********armo matrices -pD y E************
-	
-
-	vector<double> minusPD(pagecount, 0.0);
-	
-	for (int i = 0; i< pagecount; i++){ 
-		if (C[i]!=0) { //si C es igual a cero , D es cero
-			minusPD[i] = -(p/C[i]);
-		}
-	}
-	
-	vector<int> E (pagecount, 1);
-	
-	
-	//***********fin armar matrices -pD y E************
-
-
-	
-	//*********** Calculo A = I + ( W  * (-pD) ), descarto resultados menores a epsilon  ************
-	
-	Sparse_matrix I = Sparse_matrix::identity(pagecount);
-	
-	W.preMultiplyByDiagMatrix(minusPD);
-	
-	Sparse_matrix A = Sparse_matrix(pagecount, pagecount);
-
-	A = I + W;
-	//*********** Fin calculo A =  W  y (-pD), descarto resultados menores a epsilon  ************
-  
-
-  
-	//*********** Guardo A por FILAS, luego Triangulo A **************
-	
-	
-	A.transpose(); 
-	  
-	
-	//std::tuple<Sparse_matrix, Sparse_matrix> salida_gauss = gauss_elimination(W); // no soy muy fan de los nombres. EG es hacer la triangulación. para mi debería llamarse "gaussAndBackSub" o "solve". y "salida_gauss" capaz "res"
-	//*********** Fin triangulo A **************
+	std::cout << output_rank << std::endl;
   
   return 0;
 }
