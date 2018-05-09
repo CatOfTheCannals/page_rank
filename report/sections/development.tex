@@ -31,7 +31,7 @@
 		Por otro lado, para la triangulación del sistema lineal mediante el algoritmo de Eliminación Gaussiana, lo que sucede es más bien lo opuesto: cada paso del algoritmo es equivalente a \textit{pre}multiplicar (multiplicar por izquierda) al sistema $(I - pWD) x = e$ por un matriz elemental $E_{(i,j)}$ distinta. Estas matrices son como la matriz identidad, pero poseen un elemento distinto de $0$ en la posición $(i,j)$. \\
 
 		\begin{equation}
-			(I - pWD) x = e <=> E_{(n,n-1)} \hdots E_{(2,1)} (I - pWD) x = E_{(n,n-1)} \hdots E_{(2,1)} e
+			(I - pWD) x = e \Leftrightarrow E_{(n,n-1)} \hdots E_{(2,1)} (I - pWD) x = E_{(n,n-1)} \hdots E_{(2,1)} e
 		\end{equation}
 
 		Esto, a su vez, es equivalente a hacer operaciones con las filas. Por ejemplo, si $E_{(2,1)}$ tiene un escalar $m_{2,1} \neq 0$ en la posición $(2,1)$, premultiplicar $E_{(2,1)}$ por $(I - pWD)$ será modificar la segunda fila de $(I - pWD)$ de manera tal que: \\
@@ -96,7 +96,7 @@
 			Para resolver el sistema de Page Rank, luego de obtener la factorización LU de nuestra matriz A: \\
 
 			\begin{equation}
-				Ax = b <=> LUx = b
+				Ax = b \Leftrightarrow LUx = b
 			\end{equation}
 
 			Para evitar los problemas numéricos que podría traer calcular la inversa de la matriz L, vamos a aplicar la siguiente sustitución: \\
