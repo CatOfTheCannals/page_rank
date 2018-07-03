@@ -4,6 +4,7 @@
 # Meanwhile...
 
 rm 	Makefile
+rm  CMakeCache.txt
 rm 	gtest.pc
 rm 	gtest_main.pc
 rm 	test/Makefile
