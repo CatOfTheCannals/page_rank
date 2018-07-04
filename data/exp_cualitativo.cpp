@@ -3,6 +3,7 @@
 #include <sstream>
 #include <algorithm>
 #include <vector>
+#include <utility>
 #include "chrono"
 #include "../src/sparse_page_rank.h"
 #include "randomMatrix.h"
@@ -35,10 +36,18 @@ bool pairCompare( const pair<int, double>& x, const pair<int, double>& y ){
 }
 
 
-std::ostream& operator<<(std::ostream& o, const vector<pair<int, double>> & v){
-	
+std::ostream& operator<<(std::ostream& o, const pair< vector<pair<int, double>> , int > & p){
+	vector<pair<int, double>> v = p.first;
+	int max_dim = p.second;
+	for(int j = 0 ; j< max_dim; j++){
+			o << '\t' ;
+	}
+	o << "Rank:"<<endl;
     for(int i = 0 ; i< v.size(); i++){
-			o << v[i].first <<  '\t' << v[i].second << endl;
+		for(int j = 0 ; j< max_dim; j++){
+			o << '\t' ;
+		}
+		o << v[i].first <<  '\t' << v[i].second << endl;
 	}      
     return o;
 }
@@ -69,7 +78,8 @@ void familia_chain( double p, int min_matrix_dim, int max_matrix_dim){
 		Sparse_matrix_2 C = colSumDiag(W);
 		Sparse_matrix_2 res = page_rank(W, C, p);
 		
-		outputFile << "W: "<< endl << W << endl << " Rank: " << endl << orderByRank(res) << endl;	
+		outputFile << "W: "<< endl << W << endl ;
+		outputFile << make_pair(orderByRank(res), max_matrix_dim ) << endl;	
 	}
     outputFile.close();
 		
@@ -88,7 +98,8 @@ void familia_directed_list( double p, int min_matrix_dim, int max_matrix_dim){
 		Sparse_matrix_2 W = directedList(i); 
 		Sparse_matrix_2 C = colSumDiag(W);
 		Sparse_matrix_2 res = page_rank(W, C, p);		
-		outputFile << "W: "<< endl << W << endl << " Rank: " << endl << orderByRank(res) << endl;		
+		outputFile << "W: "<< endl << W << endl ;
+		outputFile << make_pair(orderByRank(res), max_matrix_dim ) << endl;	
 	}
     outputFile.close();
 	
@@ -106,7 +117,8 @@ void familia_completeColumnAndZeros(double p, int min_matrix_dim, int max_matrix
 		Sparse_matrix_2 W = completeColumnAndZeros(i); 
 		Sparse_matrix_2 C = colSumDiag(W);
 		Sparse_matrix_2 res = page_rank(W, C, p);
-		outputFile << "W: "<< endl << W << endl << " Rank: " << endl << orderByRank(res) << endl;	
+		outputFile << "W: "<< endl << W << endl;
+		outputFile << make_pair(orderByRank(res), max_matrix_dim ) << endl;	
 	}
     outputFile.close();
 
@@ -124,7 +136,8 @@ void familia_completeColumnAndOneBack(double p, int min_matrix_dim, int max_matr
 		Sparse_matrix_2 W = completeColumnAndOneBack(i); 
 		Sparse_matrix_2 C = colSumDiag(W);
 		Sparse_matrix_2 res = page_rank(W, C, p);
-		outputFile << "W: "<< endl << W << endl << " Rank: " << endl << orderByRank(res) << endl;
+		outputFile << "W: "<< endl << W << endl;
+		outputFile << make_pair(orderByRank(res), max_matrix_dim ) << endl;	
 	}
     outputFile.close();
 }
@@ -153,21 +166,24 @@ void familia_chainAndCompleteGraph(double p, int min_matrix_dim, int max_matrix_
 		Sparse_matrix_2 C1 = colSumDiag(W1);
 		Sparse_matrix_2 rec1 = page_rank(W1, C1, p);
 		
-		outputFile1 << "W: "<< endl << W1 << endl << " Rank: " << endl << orderByRank(rec1) << endl;
+		outputFile1 << "W: "<< endl << W1 << endl;
+		outputFile1 << make_pair(orderByRank(rec1), max_matrix_dim ) << endl;	
 		
 		
 		Sparse_matrix_2 W2 = chainAndCompleteGraph(i, max(2, i*5/9) ); 
 		Sparse_matrix_2 C2 = colSumDiag(W2);
 		Sparse_matrix_2 rec2 = page_rank(W2, C2, p);
 		
-		outputFile2 << "W: "<< endl << W2 << endl << " Rank: " << endl << orderByRank(rec2) << endl;
+		outputFile2 << "W: "<< endl << W2 << endl;
+		outputFile2 << make_pair(orderByRank(rec2), max_matrix_dim ) << endl;	
 		
 		
 		Sparse_matrix_2 W3 = chainAndCompleteGraph(i, max(2, i*1/2) ); 
 		Sparse_matrix_2 C3 = colSumDiag(W3);
 		Sparse_matrix_2 rec3 = page_rank(W3, C3, p);
 		
-		outputFile3 << "W: "<< endl << W3 << endl << " Rank: " << endl << orderByRank(rec3) << endl;
+		outputFile3 << "W: "<< endl << W3 << endl ;
+		outputFile3 << make_pair(orderByRank(rec3), max_matrix_dim ) << endl;	
 		
 	}
     outputFile1.close();
