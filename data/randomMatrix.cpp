@@ -5,10 +5,10 @@ Sparse_matrix_2 randomMatrix(int n, int numberOfConnections){
     assert(numberOfConnections <= (n*n)-n);
     Sparse_matrix_2 res(n, n);
     std::random_device rd;     // only used once to initialise (seed) engine
-    int cont = 0;
+    int cont = 1;
     while(cont < numberOfConnections){
         std::mt19937 rng(rd());    // random-number engine used (Mersenne-Twister in this case)
-        std::uniform_int_distribution<int> uni(0,n-1); // guaranteed unbiased
+        std::uniform_int_distribution<int> uni(1,n); // guaranteed unbiased
         auto random_i = uni(rng);
         auto random_j = uni(rng);
         if(random_i != random_j && res(random_i,random_j) != 1){
@@ -24,16 +24,16 @@ Sparse_matrix_2 randomChainMatrix(int n, int numberOfConnections){
     assert(numberOfConnections <= (n*n)-2*n);
     Sparse_matrix_2 res(n, n);
     std::random_device rd;     // only used once to initialise (seed) engine
-    for(int i = 0; i+1 < n; i++){
+    for(int i = 1; i <= n; i++){
         res.setIndex(i+1,i, 1);
     }
     if(n>1) {
-        res.setIndex(0, n - 1, 1);
+        res.setIndex(1, n , 1);
     }
     int cont = 0;
     while(cont < numberOfConnections){
         std::mt19937 rng(rd());    // random-number engine used (Mersenne-Twister in this case)
-        std::uniform_int_distribution<int> uni(0,n-1); // guaranteed unbiased
+        std::uniform_int_distribution<int> uni(1,n); // guaranteed unbiased
         auto random_i = uni(rng);
         auto random_j = uni(rng);
         if(random_i != random_j && res(random_i,random_j) != 1){
@@ -47,7 +47,7 @@ Sparse_matrix_2 randomChainMatrix(int n, int numberOfConnections){
 Sparse_matrix_2 directedList(int n){
     assert(0 < n);
     Sparse_matrix_2 res(n, n);
-    for(int i = 0; i+1 < n; i++){
+    for(int i = 1; i<= n; i++){
         res.setIndex(i+1,i, 1);
     }
     return res;
@@ -57,8 +57,8 @@ Sparse_matrix_2 directedList(int n){
 Sparse_matrix_2 completeColumnAndZeros(int n) {
     assert(0 < n);
     Sparse_matrix_2 res(n, n);
-    for (int j = 1; j < n; j++) {
-         res.setIndex(j, 0, 1);
+    for (int j = 1; j <= n; j++) {
+         res.setIndex(j, 1, 1);
     }
     return res;
 }
@@ -68,11 +68,11 @@ Sparse_matrix_2 completeColumnAndZeros(int n) {
 Sparse_matrix_2 completeColumnAndOneBack(int n){
     assert(0 < n);
     Sparse_matrix_2 res(n, n);
-    for (int j = 1; j < n; j++) {
-        res.setIndex(j, 0, 1);
+    for (int j = 1; j <= n; j++) {
+        res.setIndex(j, 1, 1);
     }
     if(n>1) {
-        res.setIndex(0, 1, 1);
+        res.setIndex(1, 2, 1);
         return res;
     }
 }
@@ -82,12 +82,12 @@ Sparse_matrix_2 chainAndCompleteGraph(int n, int chainSize){
     assert(chainSize >= 2); //n must be 5 or higher
     assert( n - chainSize >= 3); //requirement in order to have a complete graph that isn't a chain.
     Sparse_matrix_2 res(n, n);
-    for (int i = 0; i+1 < chainSize; i++){
+    for (int i = 1; i+1 < chainSize; i++){
         res.setIndex(i+1,i, 1);
     }
-    res.setIndex(0, chainSize - 1, 1);
-    for (int i = chainSize; i < n ; i++){
-        for (int j = chainSize; j < n; j++){
+    res.setIndex(1, chainSize - 1, 1);
+    for (int i = chainSize; i <=n ; i++){
+        for (int j = chainSize; j <= n; j++){
             if(j != i){
                 res.setIndex(i,j, 1);
             }
