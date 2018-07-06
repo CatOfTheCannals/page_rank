@@ -63,3 +63,6 @@ tp1_metodos.cbp
 # Graphviz output
 report/img/graphs/*.png
 
+# ?
+test.txt
+
