@@ -60,6 +60,9 @@ Sparse_matrix_2 completeColumnAndZeros(int n) {
     for (int j = 1; j <= n; j++) {
          res.setIndex(j, 1, 1);
     }
+    for (int j = 1; j <= n; j++) {
+         res.setIndex(j, j, 0);
+    }
     return res;
 }
 
@@ -70,6 +73,9 @@ Sparse_matrix_2 completeColumnAndOneBack(int n){
     Sparse_matrix_2 res(n, n);
     for (int j = 1; j <= n; j++) {
         res.setIndex(j, 1, 1);
+    }
+    for (int j = 1; j <= n; j++) {
+         res.setIndex(j, j, 0);
     }
     if(n>1) {
         res.setIndex(1, 2, 1);
