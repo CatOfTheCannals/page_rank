@@ -1,0 +1,36 @@
+Subject: 	Re: [TP1] Giudice; Grenier; Junqueras; Pyrih
+Date: 		Fri, 27 Apr 2018 22:19:22 -0300
+From: 		Métodos Numéricos DC-FCEN <metnum.lab@gmail.com>
+To: 		Franco Pyrih <fpyrih@bl.fcen.uba.ar>
+CC: 		Carlos Giudice <carlosr.giudice@gmail.com>, Juan Junqueras <junquerasjuan@gmail.com>, Michelle Grenier <michelle.grenier@hotmail.com>
+
+
+Hola! Les envío las correcciones.
+
+Resumen: bien (podría ir después del índice)
+Introducción teórica:
+	- Definición del "aporte" - el tercer caso está incluido en el segundo.
+	- ¿Por qué el sistema queda Rx = x? Lo mismo para Ax = x
+	- La parte de (I - pWD) es un enfoque para resolver el modelo planteado. Eso puede ir en la sección de desarrollo. De paso, el enunciado pide que justifiquen por qué el planteo de ese sistema es equivalente al sistema Ax = x.
+	- ¿Por qué pueden asumir gamma = 1?
+
+Desarrollo:
+	- Sobre la doble representación de filas/columnas. Si en vez de armar W y después calcular I-pWD, arman directamente I-pWD, se ahorran este paso. Alternativamente, implementar el producto por una matriz diagonal para una matriz por filas no es costoso (ni difícil). Podemos charlarlo en persona esto si quieren.
+	- Calcular la LU entera no era necesario y es más costoso, pero si ya lo hicieron está bien.
+	- EG: justifiquen que EED => tiene LU. 
+	- "El pivoteo parcial le otorga mayor estabilidad numérica a los cálculos" -> esto es falso.
+	- Los Experimentos planteados están bien
+
+Generales:
+	- LaTeX: usen \equation{} en vez de párrafos en math mode. Usen \Leftrightarrow en vez de <=>. Usen el paquete listings (o cualquiera similar) para poner código, en vez de screenshots.
+
+Viene bien el trabajo, sólo falta completarlo.
+
+En cuanto al código: agreguen instrucciones para compilarlo siempre que sean algo distinto a correr 'make'. El código pasa los tests en tiempo razonable, esa parte está aprobada.
+
+Cualquier cosa que quieran charlar, lo vemos la clase que viene.
+
+Saludos,
+
+Nico
+
