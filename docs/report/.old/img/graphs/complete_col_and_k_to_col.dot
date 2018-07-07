@@ -3,7 +3,7 @@ digraph G {
 	overlap = scale;
 	splines = true;
 
-	j; 1; 2; 3; "..."; k; " ... "; "n-2"; "n-1"; "n"; 
+	j; 1; 2; 3; "..."; k; " ... "; "n-2"; "n-1"; "n";
 
 	j -> 1;
 	j -> 2;
