@@ -32,7 +32,7 @@ los resultados quedan en ../data/results/
 
 bool pairCompare( const pair<int, double>& x, const pair<int, double>& y ){
 	
-	return x.second < y.second;
+	return x.second > y.second;
 }
 
 

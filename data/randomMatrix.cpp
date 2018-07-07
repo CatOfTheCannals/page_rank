@@ -88,7 +88,7 @@ Sparse_matrix_2 chainAndCompleteGraph(int n, int chainSize){
     assert(chainSize >= 2); //n must be 5 or higher
     assert( n - chainSize >= 3); //requirement in order to have a complete graph that isn't a chain.
     Sparse_matrix_2 res(n, n);
-    for (int i = 1; i+1 < chainSize; i++){
+    for (int i = 1; i+1 <= chainSize; i++){
         res.setIndex(i+1,i, 1);
     }
     res.setIndex(1, chainSize - 1, 1);
@@ -98,6 +98,9 @@ Sparse_matrix_2 chainAndCompleteGraph(int n, int chainSize){
                 res.setIndex(i,j, 1);
             }
         }
+    }
+    for (int j = 1; j <= n; j++) {
+         res.setIndex(j, j, 0);
     }
     return res;
 }
