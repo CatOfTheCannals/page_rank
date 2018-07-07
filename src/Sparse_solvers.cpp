@@ -10,7 +10,7 @@ std::tuple<Sparse_matrix_2, Sparse_matrix_2> s_gauss_elimination(const Sparse_ma
     for (int i = 1; i < a.cols(); i++) { //n veces
         //find max coeff
 
-        Sparse_matrix_2 current_col = u.subMatrix(i , a.rows(), i , i); // vector de tamaño i
+        Sparse_matrix_2 current_col = u.subMatrix(i , a.rows(), i , i); // vector de tamanio i
         int max_coeff = std::get<0>(current_col.abs().maxCoeff());
 
         if (current_col(max_coeff) != 1) { // O(1)
@@ -68,3 +68,4 @@ Sparse_matrix_2 forward_sub(const Sparse_matrix_2& a, const Sparse_matrix_2& y) 
     }
     return x;
 }
+
