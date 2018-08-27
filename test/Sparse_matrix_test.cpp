@@ -10,7 +10,6 @@ class mockSparseMatrices : public ::testing::Test {
 protected:
     virtual void SetUp() {
 
-
         e.setIndex(5, 3, 6);
         e.setIndex(5, 1, 4);
         e.setIndex(5, 2, 5);
@@ -46,7 +45,7 @@ protected:
         l.setIndex(3, 1, -8);
         l.setIndex(3, 2, 1);
         l.setIndex(3, 3, 1);
-/*
+
         g.setIndex(3, 3, 1);
         g.setIndex(3, 1, 2);
         g.setIndex(3, 2, 3);
@@ -56,7 +55,6 @@ protected:
         g.setIndex(2, 1, 7);
         g.setIndex(2, 2, 8);
         g.setIndex(2, 3, 9);
-*/
 
         /*
         std::cout << "Test Sparse_matrix_vom initialized:" << std::endl;
