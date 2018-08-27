@@ -9,6 +9,12 @@
 #include <map>
 #include <math.h>
 
+#include "chrono"
+
+#define GET_TIME std::chrono::high_resolution_clock::now()
+#define GET_TIME_DELTA(begin, end) \
+     std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count()
+
 using namespace std;
 
 typedef map<int, double>::const_iterator it_s_vec;
@@ -47,6 +53,7 @@ public:
     std::tuple<int, int> maxCoeff();
     Sparse_matrix_2 abs();
     bool isApproximate(const Sparse_matrix_2 b) const;
+    static Sparse_matrix_2 random_matrix(int height, int width);
 
     /*
     std::tuple<int, int> shape() const;
@@ -58,11 +65,13 @@ public:
     bool isApproximate(const Sparse_matrix_2 b, double epsilon) const;
      */
 
+    s_matrix _matrix; //pointer of type int to the location of the Sparse_matrix_2.
+
 private:
     int _rows;
     int _cols;
-    s_matrix _matrix; //pointer of type int to the location of the Sparse_matrix_2.
-    double _epsilon = 0.0000001;
+
+    double _epsilon = 0.00000001;
 };
 
 ;

@@ -6,6 +6,12 @@
 
 #include "../src/Sparse_solvers.hpp"
 
+#include "chrono"
+
+#define GET_TIME std::chrono::high_resolution_clock::now()
+#define GET_TIME_DELTA(begin, end) \
+     std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count()
+
 Sparse_matrix_2 page_rank(Sparse_matrix_2 W, Sparse_matrix_2 C, double p);
 
 double normalization_coeff(Sparse_matrix_2 column);

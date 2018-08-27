@@ -43,15 +43,16 @@ protected:
 
 };
 
+/*
 TEST_F (pageRankTest, test_aleatorio){
 
     double p = 0.85;
 
     Sparse_matrix_2 C = colSumDiag(W);
 
-    ASSERT_TRUE (page_rank(W, C, p).isApproximate(test_aleatorio_out));
+    std::cout << "output errors: " << page_rank(W, C, p) + test_aleatorio_out * (-1) << std::endl;
 }
-/*
+
 TEST_F (pageRankTest, ciclicSparse_matrix_2){
     double p = 0.85;
 
@@ -61,3 +62,54 @@ TEST_F (pageRankTest, ciclicSparse_matrix_2){
 
     std::cout << page_rank(ciclic, C, p) << std::endl;
 }*/
+
+TEST_F (pageRankTest, random_gen_test){
+
+    double p = 0.85;
+
+    Sparse_matrix_2 W(Sparse_matrix_2::random_matrix(500, 500));
+
+    Sparse_matrix_2 C = colSumDiag(W);
+
+    Sparse_matrix_2 Cp = C * p;
+
+    // page_rank(W, C, p);
+
+    int i, j = 0;
+    double val;
+
+    auto begin = GET_TIME;
+    Sparse_matrix_2 res(W.rows(), Cp.cols());
+    Sparse_matrix_2 row(1,W.cols());
+    Sparse_matrix_2 col(1,Cp.cols());
+    auto end = GET_TIME;
+    std::cout << "'create_stuff_time': " << GET_TIME_DELTA(begin, end) << std::endl;
+
+    begin = GET_TIME;
+    bool if_guard = W._matrix.find(i) != W._matrix.end() && Cp._matrix.find(j) != Cp._matrix.end();
+    end = GET_TIME;
+    std::cout << "'if_guard_time': " << GET_TIME_DELTA(begin, end) << std::endl;
+
+
+    if(if_guard) {
+        begin = GET_TIME;
+        row._matrix[1] = W._matrix.find(i)->second;
+        col._matrix[1] = Cp._matrix.find(j)->second;
+        end = GET_TIME;
+        std::cout << "'get_row_and_col_time': " << GET_TIME_DELTA(begin, end) << std::endl;
+
+        begin = GET_TIME;
+        val = dotProd(row, col);
+        end = GET_TIME;
+        std::cout << "'dot_prod_time': " << GET_TIME_DELTA(begin, end) << std::endl;
+
+    } else {
+        val = 0;
+    }
+
+    begin = GET_TIME;
+    res.setIndex(i, j, val);
+    end = GET_TIME;
+    std::cout << "'set_index_time': " << GET_TIME_DELTA(begin, end) << std::endl;
+
+}

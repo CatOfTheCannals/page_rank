@@ -138,8 +138,12 @@ Sparse_matrix_2 Sparse_matrix_2::multiply(const Sparse_matrix_2 b) const{
         return res;
     }
 
+    auto begin = GET_TIME;
     Sparse_matrix_2 bt = b.transpose(); //esto me sirve para tener las columnas de b almazenadas en las filas de bt
+    auto end = GET_TIME;
+    std::cout << "'transpose_time': " << GET_TIME_DELTA(begin, end) << std::endl;
 
+    begin = GET_TIME;
     double val;
     for (int i = 1; i <= res.rows(); ++i) {
         for (int j = 1; j <= res.cols(); ++j) {
@@ -156,6 +160,10 @@ Sparse_matrix_2 Sparse_matrix_2::multiply(const Sparse_matrix_2 b) const{
             res.setIndex(i, j, val);
         }
     }
+    end = GET_TIME;
+    std::cout << "'mult_time': " << GET_TIME_DELTA(begin, end) << std::endl;
+
+
     return res;
 }
 
@@ -243,6 +251,19 @@ bool Sparse_matrix_2::isApproximate(const Sparse_matrix_2 b) const {
         }
     }
     return true;
+}
+
+Sparse_matrix_2 Sparse_matrix_2::random_matrix(int height, int width){
+    Sparse_matrix_2 random_matrix(height, width);
+    for(int i = 0; i < random_matrix.rows(); i++){
+        for(int j = 0; j < random_matrix.cols(); j++){
+            if(i != j && rand() % 9) {
+                random_matrix.setIndex(i, j, 1); //matrix density of %90
+            }
+
+        }
+    }
+    return random_matrix;
 }
 
 /*

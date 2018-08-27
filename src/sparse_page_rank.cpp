@@ -9,17 +9,37 @@ Sparse_matrix_2 page_rank(Sparse_matrix_2 W, Sparse_matrix_2 C, double p) {
 
     Sparse_matrix_2 e = onesVec(W.rows()); // O(n)
 
-    Sparse_matrix_2 A = id + W.multiply(C * (-p)); //O(n+m)
+    auto begin = GET_TIME;
+    Sparse_matrix_2 W_mult_Cp = W.multiply(C * (-p));
+    auto end = GET_TIME;
+    std::cout << "'matmul_time': " << GET_TIME_DELTA(begin, end) << std::endl;
+
+
+    begin = GET_TIME;
+    Sparse_matrix_2 A = id + W_mult_Cp;
+    end = GET_TIME;
+    std::cout << "'matadd_time': " << GET_TIME_DELTA(begin, end) << std::endl;
     // C * constante son n operaciones
     // W * diagonal son O(max{n,m}) operaciones
 
     Sparse_matrix_2 L(W.rows(), W.cols());
     Sparse_matrix_2 U(W.rows(), W.cols());
 
+    begin = GET_TIME;
     std::tie(L, U) = s_gauss_elimination(A);
+    end = GET_TIME;
+    std::cout << "'gauss_elim_time': " << GET_TIME_DELTA(begin, end) << std::endl;
 
+    begin = GET_TIME;
     Sparse_matrix_2 y = forward_sub(L, e);
+    end = GET_TIME;
+    std::cout << "'forward_sub_time': " << GET_TIME_DELTA(begin, end) << std::endl;
+
+    begin = GET_TIME;
     Sparse_matrix_2 x = backward_sub(U, y);
+    end = GET_TIME;
+    std::cout << "'backward_back_time': " << GET_TIME_DELTA(begin, end) << std::endl;
+
 /*
     std::cout << "C" << std::endl;
     std::cout << C << std::endl;

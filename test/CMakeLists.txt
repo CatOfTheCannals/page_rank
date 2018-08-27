@@ -32,7 +32,7 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
     include_directories("${gtest_SOURCE_DIR}/include")
 endif()
 
-set(TEST_FILES Sparse_solver_test.cpp sparse_page_rank_test.cpp Sparse_matrix_test.cpp) # Matrix_test.cpp Solver_test.cpp page_rank_test.cpp
+set(TEST_FILES Sparse_matrix_test.cpp) # Sparse_solver_test.cpp sparse_page_rank_test.cpp Matrix_test.cpp Solver_test.cpp page_rank_test.cpp
 
 add_executable(correrTests ${TEST_FILES})
 

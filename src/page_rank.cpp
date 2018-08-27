@@ -1,4 +1,3 @@
-
 #include "page_rank.h"
 
 
@@ -11,13 +10,28 @@ Matrix page_rank(Matrix W, Matrix C, double p) {
 
     Matrix e = onesVec(W.rows());
 
-    Matrix A = id + W.multiply(C * (-p));
+    auto begin = GET_TIME;
+    Matrix W_mult_Cp = W.multiply(C * (-p));
+    auto end = GET_TIME;
+    std::cout << "matmul time: " << GET_TIME_DELTA(begin, end) << std::endl;
+
+    begin = GET_TIME;
+    Matrix A = id + W_mult_Cp;
+    end = GET_TIME;
+    std::cout << "matadd time: " << GET_TIME_DELTA(begin, end) << std::endl;
 
     Matrix L(W.rows(), W.cols());
     Matrix U(W.rows(), W.cols());
 
+    begin = GET_TIME;
     Matrix y = forward_sub(L, e);
+    end = GET_TIME;
+    std::cout << "forward sub time: " << GET_TIME_DELTA(begin, end) << std::endl;
+
+    begin = GET_TIME;
     Matrix x = backward_sub(U, y);
+    end = GET_TIME;
+    std::cout << "forward sub time: " << GET_TIME_DELTA(begin, end) << std::endl;
 
     /*
     std::cout << "C" << std::endl;

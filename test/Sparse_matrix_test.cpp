@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "gtest/gtest.h"
 
-#include "../src/Sparse_matrix_2.hpp"
+#include "../src/Sparse_matrix_vom.hpp"
 
 // --------- SET UP --------------
 class mockSparseMatrices : public ::testing::Test {
@@ -59,7 +59,7 @@ protected:
 */
 
         /*
-        std::cout << "Test Sparse_matrix_2 initialized:" << std::endl;
+        std::cout << "Test Sparse_matrix_vom initialized:" << std::endl;
         std::cout << "e:" << std::endl;
         std::cout << e << std::endl;
         std::cout << "m:" << std::endl;
@@ -70,10 +70,10 @@ protected:
     }
 
 
-    Sparse_matrix_2 e = Sparse_matrix_2(5,3);
-    Sparse_matrix_2 m = Sparse_matrix_2(3,3);
-    Sparse_matrix_2 l = Sparse_matrix_2(3,3);
-    Sparse_matrix_2 g = Sparse_matrix_2(3,3);
+    Sparse_matrix_vom e = Sparse_matrix_vom(5,3);
+    Sparse_matrix_vom m = Sparse_matrix_vom(3,3);
+    Sparse_matrix_vom l = Sparse_matrix_vom(3,3);
+    Sparse_matrix_vom g = Sparse_matrix_vom(3,3);
 
 };
 
@@ -83,13 +83,13 @@ TEST_F (mockSparseMatrices, getIndex){
 
     g.setIndex(1, 1, 7);
     ASSERT_EQ(7, g(1,1));
-    g.setIndex(1, 1, 0.0001);
+    g.setIndex(1, 1, 0.00000001);
     ASSERT_EQ(0, g(1,1));
 }
 
 TEST_F (mockSparseMatrices, copyConstructor){
 
-    Sparse_matrix_2 e_copy(e);
+    Sparse_matrix_vom e_copy(e);
     for (std::size_t i = 1; i < e.rows(); i++) {
         for (std::size_t j = 1; j < e.cols(); j++) {
             ASSERT_EQ(e_copy(i, j), e(i, j));
@@ -131,7 +131,7 @@ TEST_F (mockSparseMatrices, swapRows){
     ASSERT_EQ(e_row_2, e.getRow(i1));
 }
 
-TEST_F (mockSparseMatrices, subMatrix){ // FIXME: este test solo checkea que la funcion subSparse_matrix_2 obtiene rows adecuadamente
+TEST_F (mockSparseMatrices, subMatrix){ // FIXME: este test solo checkea que la funcion subSparse_matrix_vom obtiene rows adecuadamente
     for (std::size_t i = 1; i < e.rows(); i++) {
         auto e_row = e.getRow(i);
         auto e_sub = e.subMatrix(i,i,1, e.cols());
@@ -140,13 +140,13 @@ TEST_F (mockSparseMatrices, subMatrix){ // FIXME: este test solo checkea que la 
 }
 
 TEST_F (mockSparseMatrices, Sparse_matrix_matmul){
-    Sparse_matrix_2 r = e.multiply(m);
+    Sparse_matrix_vom r = e.multiply(m);
     ASSERT_EQ(r.rows(),e.rows()); //TODO: check if the test ends with this assertion
     ASSERT_EQ(r.cols(),m.cols());
     //ASSERT_EQ(9*6+5+6,r(1,1)); //TODO:check if this possition is calculated correctly.
     ASSERT_EQ(3*7+1+8,r(1,1));
 
-    Sparse_matrix_2 id = Sparse_matrix_2::identity(m.rows());
+    Sparse_matrix_vom id = Sparse_matrix_vom::identity(m.rows());
 
     ASSERT_EQ(m, m.multiply(id));
 }
@@ -162,7 +162,7 @@ TEST_F (mockSparseMatrices, maxCoeff){
 }
 
 TEST_F (mockSparseMatrices, abs){
-    Sparse_matrix_2 l_copy(l);
+    Sparse_matrix_vom l_copy(l);
     l_copy.setIndex(3, 1, 8);
     ASSERT_EQ(l_copy, l.abs());
 }
