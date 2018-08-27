@@ -59,20 +59,20 @@ protected:
             fourByFour.setIndex(4, 3, 2);
             fourByFour.setIndex(4, 4, 4);
     }
-    Sparse_matrix_2 g = Sparse_matrix_2(3,3);
-    Sparse_matrix_2 v = Sparse_matrix_2(3,3);
-    Sparse_matrix_2 y = Sparse_matrix_2(3,1);
-    Sparse_matrix_2 r = Sparse_matrix_2(4,1);
-    Sparse_matrix_2 z = Sparse_matrix_2(3,1);
-    Sparse_matrix_2 fourByFour = Sparse_matrix_2(4,4);
+    Sparse_matrix_vom g = Sparse_matrix_vom(3,3);
+    Sparse_matrix_vom v = Sparse_matrix_vom(3,3);
+    Sparse_matrix_vom y = Sparse_matrix_vom(3,1);
+    Sparse_matrix_vom r = Sparse_matrix_vom(4,1);
+    Sparse_matrix_vom z = Sparse_matrix_vom(3,1);
+    Sparse_matrix_vom fourByFour = Sparse_matrix_vom(4,4);
 };
 
 
 TEST_F (sMockGaussInput, gaussElimFourByFour){
 
 
-        Sparse_matrix_2 l(fourByFour.rows(), fourByFour.cols());
-        Sparse_matrix_2 u(fourByFour.rows(), fourByFour.cols());
+        Sparse_matrix_vom l(fourByFour.rows(), fourByFour.cols());
+        Sparse_matrix_vom u(fourByFour.rows(), fourByFour.cols());
         std::tie(l, u) = s_gauss_elimination(fourByFour);
 /*
         std::cout << "l" << std::endl;
@@ -109,12 +109,12 @@ TEST_F (sMockGaussInput, forwardSub){
 
 TEST_F (sMockGaussInput, findX){
 
-    Sparse_matrix_2 p = Sparse_matrix_2::identity(3);
-    p.swapRows(0, 2);
-    p.swapRows(0, 1);
+    Sparse_matrix_vom p = Sparse_matrix_vom::identity(3);
+    p.swapRows(1, 3);
+    p.swapRows(1, 2);
 
-    Sparse_matrix_2 l(fourByFour.rows(), fourByFour.cols());
-    Sparse_matrix_2 u(fourByFour.rows(), fourByFour.cols());
+    Sparse_matrix_vom l(fourByFour.rows(), fourByFour.cols());
+    Sparse_matrix_vom u(fourByFour.rows(), fourByFour.cols());
     std::tie(l, u) = s_gauss_elimination(fourByFour);
     auto q = forward_sub(l, r);
     auto x = backward_sub(u, q);

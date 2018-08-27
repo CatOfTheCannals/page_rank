@@ -10,6 +10,7 @@ int Sparse_matrix_vom::cols() const {
 
 double Sparse_matrix_vom::operator()(int row_idx, int col_idx) const {
     assert(1<= row_idx <= this->_rows && 1<= col_idx <= this->_cols);
+    row_idx = row_idx - 1;
     auto row = _matrix[row_idx];
     if (row.size() == 0){
         return 0;
@@ -26,14 +27,12 @@ double Sparse_matrix_vom::operator()(int row_idx, int col_idx) const {
 void Sparse_matrix_vom::setIndex(int i, int j, double value) {
     assert(1<= i <= this->_rows && 1<= j <= this->_cols);
     if(_epsilon < fabs(value)) {
-        _matrix[i][j] = value;
+        _matrix[i-1][j] = value;
     } else {
         if((*this)(i,j) != 0) {
             //borrar el numero de la fila
-            auto row = _matrix[i];
-            auto vec_it = row.find(j);
-            row.erase(vec_it);
-            // ver si la fila quedo vacia, en caso afirmativo hacerla PIJA
+            auto vec_it = _matrix[i-1].find(j);
+            _matrix[i-1].erase(vec_it);
         }
 
     }
@@ -53,8 +52,8 @@ Sparse_matrix_vom Sparse_matrix_vom::operator+(const Sparse_matrix_vom& m) const
 
 Sparse_matrix_vom Sparse_matrix_vom::operator*(const double& scalar) const{
     Sparse_matrix_vom res = Sparse_matrix_vom(_rows, _cols);
-    for(int i = 0; i < _matrix.size(); i++) {
-        for(auto const &it_2 : _matrix[i]) {
+    for(int i = 1; i <= _matrix.size(); i++) {
+        for(auto const &it_2 : _matrix[i-1]) {
             int j = it_2.first;
             res.setIndex(i, j, (*this)(i, j) * scalar);
         }
@@ -67,8 +66,8 @@ bool Sparse_matrix_vom::operator==(const Sparse_matrix_vom& other) const {
         return false;
     }
     else {
-        for (int i = 0; i < this->rows(); ++i) {
-            for (int j = 0; j < this->cols(); ++j) {
+        for (int i = 1; i <= this->rows(); ++i) {
+            for (int j = 1; j <= this->cols(); ++j) {
                 if((*this)(i,j) != other(i,j)) {
                     return false;
                 }
@@ -80,13 +79,17 @@ bool Sparse_matrix_vom::operator==(const Sparse_matrix_vom& other) const {
 
 Sparse_matrix_vom Sparse_matrix_vom::getRow(int index) const{
     assert(1<= index<= this->_rows);
-    Sparse_matrix_vom row (1, this->_cols);
-    row._matrix[1] = this->_matrix[index];
+    index = index - 1;
+    Sparse_matrix_vom row(1, this->_cols);
+    row._matrix[0] = _matrix[index];
     return row;
 }
 
 
 void Sparse_matrix_vom::swapRows(int i1, int i2) {
+    assert(1<= i1 <= this->_rows && 1<= i2 <= this->_rows);
+    i1 = i1 - 1;
+    i2 = i2 - 1;
     _matrix[i1].swap(_matrix[i2]);
 }
 
@@ -94,6 +97,11 @@ Sparse_matrix_vom Sparse_matrix_vom::subMatrix(int i1, int i2, int j1, int j2) c
     assert(i1 <= i2 && j1 <= j2);
     assert(0 < i1  &&  i2 <= _rows);
     assert(0 < j1  &&  j2 <= _cols);
+
+    assert(1<= i1 <= this->_rows && 1<= i2 <= this->_rows);
+    i1 = i1 - 1;
+    i2 = i2 - 1;
+
     int res_rows = i2 - i1 + 1;
     int res_cols = j2 - j1 + 1;
     Sparse_matrix_vom res = Sparse_matrix_vom(res_rows, res_cols);
@@ -142,10 +150,8 @@ Sparse_matrix_vom Sparse_matrix_vom::multiply(const Sparse_matrix_vom b) const{
     for (int i = 1; i <= res.rows(); ++i) {
         for (int j = 1; j <= res.cols(); ++j) {
 
-            Sparse_matrix_vom row(1,this->cols());
-            Sparse_matrix_vom col(1,bt.cols());
-            row._matrix[1] = _matrix[i];
-            col._matrix[1] = _matrix[j];
+            auto row(this->getRow(i));
+            auto col(bt.getRow(j));
 
             val = dotProd(row, col);
             res.setIndex(i, j, val);
@@ -163,9 +169,9 @@ double dotProd(const Sparse_matrix_vom u, const Sparse_matrix_vom w) {
     assert(u._matrix.size()== 1 && w._matrix.size()== 1);
 
     double sum = 0;
-    s_vec u_map = u._matrix[1]; // quiero la fila de u
+    s_vec u_map = u._matrix[0]; // quiero la fila de u
     for(auto &iv : u_map) { // itero los pares indice valor de u
-        auto w_map = w._matrix[1]; // quiero la fila de w
+        auto w_map = w._matrix[0]; // quiero la fila de w
         auto w_map_it = w_map.find(iv.first);// si w tiene valores en el mismo indice que estoy viendo de u
         if(w_map_it != w_map.end()) {
             sum += iv.second * w_map_it->second;
@@ -174,10 +180,10 @@ double dotProd(const Sparse_matrix_vom u, const Sparse_matrix_vom w) {
     return sum;
 }
 Sparse_matrix_vom Sparse_matrix_vom::transpose() const{
-    s_matrix b_col;
+    s_matrix b_col(_cols);
     for( int i = 0; i <_matrix.size(); i++){
         for( auto it_col = _matrix[i].begin(); it_col != _matrix[i].end(); it_col++){
-            b_col[it_col->first][i] = it_col->second;
+            b_col[it_col->first - 1][i + 1] = it_col->second;
         }
     }
     Sparse_matrix_vom bt(this->cols(), this->rows());
@@ -201,9 +207,8 @@ std::tuple<int, int> Sparse_matrix_vom::maxCoeff() {
         for( auto it_col = _matrix[i].begin(); it_col != _matrix[i].end(); it_col++){
             if(maxVal < it_col->second) {
                 maxVal = it_col->second;
-                res_x = i;
+                res_x = i + 1;
                 res_y = it_col->first;
-
             }
         }
     }
@@ -212,13 +217,12 @@ std::tuple<int, int> Sparse_matrix_vom::maxCoeff() {
 
 Sparse_matrix_vom Sparse_matrix_vom::abs() {
     Sparse_matrix_vom mabs = Sparse_matrix_vom(_rows, _cols);
-    for( int i = 0; i <_matrix.size(); i++){
-        for( auto it_col = _matrix[i].begin(); it_col != _matrix[i].end(); it_col++){
+    for( int i = 1; i <= _matrix.size(); i++){
+        for( auto it_col = _matrix[i-1].begin(); it_col != _matrix[i-1].end(); it_col++){
             int j = it_col->first;
             mabs.setIndex(i, j, fabs(it_col->second));
         }
     }
-
     return mabs;
 }
 
@@ -247,8 +251,8 @@ bool Sparse_matrix_vom::isApproximate(const Sparse_matrix_vom b) const {
 
 Sparse_matrix_vom Sparse_matrix_vom::random_matrix(int height, int width){
     Sparse_matrix_vom random_matrix(height, width);
-    for(int i = 0; i < random_matrix.rows(); i++){
-        for(int j = 0; j < random_matrix.cols(); j++){
+    for(int i = 1; i <= random_matrix.rows(); i++){
+        for(int j = 1; j <= random_matrix.cols(); j++){
             if(i != j && rand() % 9) {
                 random_matrix.setIndex(i, j, 1); //matrix density of %90
             }

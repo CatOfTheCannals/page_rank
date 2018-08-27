@@ -1,16 +1,16 @@
 #include "Sparse_solvers.hpp"
-#include "Sparse_matrix_2.hpp"
+#include "Sparse_matrix_vom.hpp"
 
-std::tuple<Sparse_matrix_2, Sparse_matrix_2> s_gauss_elimination(const Sparse_matrix_2& a) {
+std::tuple<Sparse_matrix_vom, Sparse_matrix_vom> s_gauss_elimination(const Sparse_matrix_vom& a) {
     assert(a.cols() == a.rows());
     auto u = a;
 
-    Sparse_matrix_2 l(a.rows(), a.cols());
+    Sparse_matrix_vom l(a.rows(), a.cols());
 
     for (int i = 1; i < a.cols(); i++) { //n veces
         //find max coeff
 
-        Sparse_matrix_2 current_col = u.subMatrix(i , a.rows(), i , i); // vector de tamanio i
+        Sparse_matrix_vom current_col = u.subMatrix(i , a.rows(), i , i); // vector de tamanio i
         int max_coeff = std::get<0>(current_col.abs().maxCoeff());
 
         if (current_col(max_coeff) != 1) { // O(1)
@@ -30,14 +30,14 @@ std::tuple<Sparse_matrix_2, Sparse_matrix_2> s_gauss_elimination(const Sparse_ma
         }
 
     }
-    Sparse_matrix_2 id = Sparse_matrix_2::identity(a.rows());
+    Sparse_matrix_vom id = Sparse_matrix_vom::identity(a.rows());
     l = l + id;
     return std::make_tuple(l, u);
 }
 
-Sparse_matrix_2 backward_sub(const Sparse_matrix_2& a, const Sparse_matrix_2& y) {
+Sparse_matrix_vom backward_sub(const Sparse_matrix_vom& a, const Sparse_matrix_vom& y) {
     assert(a.rows() == a.cols() && a.cols() == y.rows() && y.cols() == 1);
-    Sparse_matrix_2 x(a.rows(), 1);
+    Sparse_matrix_vom x(a.rows(), 1);
 
     for (int i = a.rows() ; i > 0; i--) {
         if(a(i,i) != 0) { // TODO: checkear si esta bien no hacer nada en este paso
@@ -53,9 +53,9 @@ Sparse_matrix_2 backward_sub(const Sparse_matrix_2& a, const Sparse_matrix_2& y)
     return x;
 }
 
-Sparse_matrix_2 forward_sub(const Sparse_matrix_2& a, const Sparse_matrix_2& y) {
+Sparse_matrix_vom forward_sub(const Sparse_matrix_vom& a, const Sparse_matrix_vom& y) {
     assert(a.rows() == a.cols() && a.cols() == y.rows() && y.cols() == 1);
-    Sparse_matrix_2 x(a.rows(), 1);
+    Sparse_matrix_vom x(a.rows(), 1);
 
     for (int i = 1; i <= a.rows() ; i++) {
         if(a(i,i) != 0) { // TODO: checkear si esta bien no hacer nada en este paso

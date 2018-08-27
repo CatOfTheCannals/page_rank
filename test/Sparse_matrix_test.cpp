@@ -81,7 +81,7 @@ TEST_F (mockSparseMatrices, getIndex){
 
     g.setIndex(1, 1, 7);
     ASSERT_EQ(7, g(1,1));
-    g.setIndex(1, 1, 0.00000001);
+    g.setIndex(1, 1, 0.000000001);
     ASSERT_EQ(0, g(1,1));
 }
 

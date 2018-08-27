@@ -12,13 +12,13 @@
 #define GET_TIME_DELTA(begin, end) \
      std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count()
 
-Sparse_matrix_2 page_rank(Sparse_matrix_2 W, Sparse_matrix_2 C, double p);
+Sparse_matrix_vom page_rank(Sparse_matrix_vom W, Sparse_matrix_vom C, double p);
 
-double normalization_coeff(Sparse_matrix_2 column);
+double normalization_coeff(Sparse_matrix_vom column);
 
-Sparse_matrix_2 colSumDiag(const Sparse_matrix_2& W);
+Sparse_matrix_vom colSumDiag(const Sparse_matrix_vom& W);
 
-Sparse_matrix_2 onesVec(const int n);
+Sparse_matrix_vom onesVec(const int n);
 
 #endif //TP1_METODOS_PAGE_RANK_H
 

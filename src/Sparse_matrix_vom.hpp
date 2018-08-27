@@ -28,7 +28,13 @@ public:
     Sparse_matrix_vom(int rows, int cols) {
         _rows = rows;
         _cols = cols;
-        _matrix = s_matrix(_rows + 1);
+        _matrix = s_matrix(_rows);
+    }
+
+    Sparse_matrix_vom(int rows, int cols, s_matrix matrix) {
+        _rows = rows;
+        _cols = cols;
+        _matrix = matrix;
     }
 
     Sparse_matrix_vom(const Sparse_matrix_vom & other) = default;

@@ -7,12 +7,12 @@
 #include <iostream>
 #include <tuple>
 
-#include "Sparse_matrix_2.hpp"
+#include "Sparse_matrix_vom.hpp"
 
-std::tuple<Sparse_matrix_2, Sparse_matrix_2> s_gauss_elimination(const Sparse_matrix_2& a);
+std::tuple<Sparse_matrix_vom, Sparse_matrix_vom> s_gauss_elimination(const Sparse_matrix_vom& a);
 
-Sparse_matrix_2 backward_sub(const Sparse_matrix_2& a, const Sparse_matrix_2& y);
+Sparse_matrix_vom backward_sub(const Sparse_matrix_vom& a, const Sparse_matrix_vom& y);
 
-Sparse_matrix_2 forward_sub(const Sparse_matrix_2& a, const Sparse_matrix_2& y);
+Sparse_matrix_vom forward_sub(const Sparse_matrix_vom& a, const Sparse_matrix_vom& y);
 
 #endif //TP1_METODOS_SPARSE_SOLVERS_H

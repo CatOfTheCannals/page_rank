@@ -24,7 +24,7 @@ protected:
         W.setIndex(4,3,1);
         W.setIndex(4,5,1);
 
-        for(int i = 1; i <= 5; i++) { //fill cyclic Sparse_matrix_2
+        for(int i = 1; i <= 5; i++) { //fill cyclic Sparse_matrix_vom
             ciclic.setIndex((i % 5) + 1,((i + 1) % 5)+1,1);
         }
 
@@ -35,43 +35,44 @@ protected:
         test_aleatorio_out.setIndex(5,1,0.281437);
     }
 
-    Sparse_matrix_2 test_aleatorio_out = Sparse_matrix_2(5,1);
-    Sparse_matrix_2 W = Sparse_matrix_2(5,5);
-    Sparse_matrix_2 C = Sparse_matrix_2(5,5);
+    Sparse_matrix_vom test_aleatorio_out = Sparse_matrix_vom(5,1);
+    Sparse_matrix_vom W = Sparse_matrix_vom(5,5);
+    Sparse_matrix_vom C = Sparse_matrix_vom(5,5);
 
-    Sparse_matrix_2 ciclic = Sparse_matrix_2(5,5);
+    Sparse_matrix_vom ciclic = Sparse_matrix_vom(5,5);
 
 };
 
-/*
+
 TEST_F (pageRankTest, test_aleatorio){
 
     double p = 0.85;
 
-    Sparse_matrix_2 C = colSumDiag(W);
+    Sparse_matrix_vom C = colSumDiag(W);
 
     std::cout << "output errors: " << page_rank(W, C, p) + test_aleatorio_out * (-1) << std::endl;
 }
 
-TEST_F (pageRankTest, ciclicSparse_matrix_2){
+TEST_F (pageRankTest, ciclicSparse_matrix_vom){
     double p = 0.85;
 
-    Sparse_matrix_2 C = colSumDiag(ciclic);
+    Sparse_matrix_vom C = colSumDiag(ciclic);
 
     std::cout << "ciclic: " << std::endl << ciclic << std::endl;
 
     std::cout << page_rank(ciclic, C, p) << std::endl;
-}*/
+}
 
+/*
 TEST_F (pageRankTest, random_gen_test){
 
     double p = 0.85;
 
-    Sparse_matrix_2 W(Sparse_matrix_2::random_matrix(500, 500));
+    Sparse_matrix_vom W(Sparse_matrix_vom::random_matrix(500, 500));
 
-    Sparse_matrix_2 C = colSumDiag(W);
+    Sparse_matrix_vom C = colSumDiag(W);
 
-    Sparse_matrix_2 Cp = C * p;
+    Sparse_matrix_vom Cp = C * p;
 
     // page_rank(W, C, p);
 
@@ -79,9 +80,9 @@ TEST_F (pageRankTest, random_gen_test){
     double val;
 
     auto begin = GET_TIME;
-    Sparse_matrix_2 res(W.rows(), Cp.cols());
-    Sparse_matrix_2 row(1,W.cols());
-    Sparse_matrix_2 col(1,Cp.cols());
+    Sparse_matrix_vom res(W.rows(), Cp.cols());
+    Sparse_matrix_vom row(1,W.cols());
+    Sparse_matrix_vom col(1,Cp.cols());
     auto end = GET_TIME;
     std::cout << "'create_stuff_time': " << GET_TIME_DELTA(begin, end) << std::endl;
 
@@ -112,4 +113,4 @@ TEST_F (pageRankTest, random_gen_test){
     end = GET_TIME;
     std::cout << "'set_index_time': " << GET_TIME_DELTA(begin, end) << std::endl;
 
-}
+}*/
