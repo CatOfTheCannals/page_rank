@@ -1,5 +1,6 @@
 # page_rank_tp1_metodos
-
+Link del informe en OverLeaf:
+https://www.overleaf.com/17618777pywgphbhcbds#/66872127/
 ## para compilar con cmake desde la terminal:
 
 `cmake .` en la carpeta principal del repo. esto crea los "Makefiles" (necesarios para poder usar `make`)
