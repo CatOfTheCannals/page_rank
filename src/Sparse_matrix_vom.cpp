@@ -143,7 +143,7 @@ Sparse_matrix_vom Sparse_matrix_vom::multiply(const Sparse_matrix_vom b) const{
     auto begin = GET_TIME;
     Sparse_matrix_vom bt = b.transpose(); //esto me sirve para tener las columnas de b almazenadas en las filas de bt
     auto end = GET_TIME;
-    std::cout << "'transpose_time': " << GET_TIME_DELTA(begin, end) << std::endl;
+    // std::cout << "'transpose_time': " << GET_TIME_DELTA(begin, end) << std::endl;
 
     begin = GET_TIME;
     double val;
@@ -158,7 +158,7 @@ Sparse_matrix_vom Sparse_matrix_vom::multiply(const Sparse_matrix_vom b) const{
         }
     }
     end = GET_TIME;
-    std::cout << "'mult_time': " << GET_TIME_DELTA(begin, end) << std::endl;
+    // std::cout << "'mult_time': " << GET_TIME_DELTA(begin, end) << std::endl;
 
 
     return res;

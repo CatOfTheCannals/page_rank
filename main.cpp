@@ -52,7 +52,7 @@ int main(int argc, char** argv){
 	
 	
 	//********* levanto W (POR COLUMNAS) y armo C al mismo tiempo ***********
-	Sparse_matrix_2 W = Sparse_matrix_2(pagecount, pagecount);
+	Sparse_matrix_vom W = Sparse_matrix_vom(pagecount, pagecount);
 	while( getline(f_test, line) ){ //asumo que el archivo de entrada no termina con salto de linea (en ese caso se vuelve a cargar en W y se suma uno de más a C )
 		istringstream lineStream(line);
 		lineStream >> i >> j;
