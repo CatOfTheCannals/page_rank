@@ -7,7 +7,7 @@ def generateMatrix(dim, qty, name, g = lambda x, y : x != y ):
     for p,q in used_pairs:
 	s+= str(p)+" "+str(q)+"\n"
     with open(name, 'w') as f:
-	f.write(s)
+	    f.write(s)
 args = sys.argv[1:]
 #dim, qty, name
 generateMatrix(int(args[0]),int(args[1]),args[2])	
