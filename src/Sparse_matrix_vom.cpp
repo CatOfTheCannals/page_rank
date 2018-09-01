@@ -133,7 +133,7 @@ std::ostream& operator<<(std::ostream& o, const Sparse_matrix_vom& a) {
     return o;
 }
 
-Sparse_matrix_vom Sparse_matrix_vom::multiply(const Sparse_matrix_vom b) const{
+Sparse_matrix_vom Sparse_matrix_vom::multiply(const Sparse_matrix_vom &b) const{
 
     Sparse_matrix_vom res(this->rows(), b.cols());
     if(this->_matrix.size() == 0 || b._matrix.size() == 0) { // alguno de los inputs es matriz de ceros?
@@ -164,7 +164,7 @@ Sparse_matrix_vom Sparse_matrix_vom::multiply(const Sparse_matrix_vom b) const{
     return res;
 }
 
-double dotProd(const Sparse_matrix_vom u, const Sparse_matrix_vom w) {
+double dotProd(const Sparse_matrix_vom &u, const Sparse_matrix_vom &w) {
     assert(u.rows()== 1 && w.rows()== 1);
     assert(u._matrix.size()== 1 && w._matrix.size()== 1);
 
@@ -235,7 +235,7 @@ double Sparse_matrix_vom::operator()(int idx) const {//solo si mi matriz es un v
     if (this->_cols == 1 ){return (*this)(idx,1);}
 }
 
-bool Sparse_matrix_vom::isApproximate(const Sparse_matrix_vom b) const {
+bool Sparse_matrix_vom::isApproximate(const Sparse_matrix_vom &b) const {
     Sparse_matrix_vom a_copy = (*this);
     Sparse_matrix_vom b_copy = b;
     auto diff = (a_copy + b_copy * (-1)).abs();

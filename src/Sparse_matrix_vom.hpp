@@ -51,13 +51,13 @@ public:
     Sparse_matrix_vom getRow(int index) const;
     friend std::ostream& operator<<(std::ostream& o, const Sparse_matrix_vom& a);
     Sparse_matrix_vom subMatrix(int i1, int i2, int j1, int j2) const;
-    Sparse_matrix_vom multiply(const Sparse_matrix_vom b) const;
+    Sparse_matrix_vom multiply(const Sparse_matrix_vom& b) const;
     Sparse_matrix_vom transpose() const;
-    friend double dotProd(const Sparse_matrix_vom u, const Sparse_matrix_vom w);
+    friend double dotProd(const Sparse_matrix_vom& u, const Sparse_matrix_vom& w);
     static Sparse_matrix_vom identity(int n);
     std::tuple<int, int> maxCoeff();
     Sparse_matrix_vom abs();
-    bool isApproximate(const Sparse_matrix_vom b) const;
+    bool isApproximate(const Sparse_matrix_vom& b) const;
     static Sparse_matrix_vom random_matrix(int height, int width);
 
     /*

@@ -7,6 +7,12 @@
 #include <string>
 #include <string.h>
 
+#include "chrono"
+
+#define GET_TIME std::chrono::high_resolution_clock::now()
+#define GET_TIME_DELTA(begin, end) \
+     std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count()
+
 #include "src/sparse_page_rank.h"
 
 using namespace std;
@@ -52,6 +58,8 @@ int main(int argc, char** argv){
 	
 	
 	//********* levanto W (POR COLUMNAS) y armo C al mismo tiempo ***********
+	auto begin = GET_TIME;
+
 	Sparse_matrix_vom W = Sparse_matrix_vom(pagecount, pagecount);
 	while( getline(f_test, line) ){ //asumo que el archivo de entrada no termina con salto de linea (en ese caso se vuelve a cargar en W y se suma uno de más a C )
 		istringstream lineStream(line);
@@ -60,10 +68,16 @@ int main(int argc, char** argv){
 	}
 	f_test.close();
 	auto C = colSumDiag(W);
-	
+
+	auto end = GET_TIME;
+	std::cout << "load time: " << GET_TIME_DELTA(begin, end) << std::endl;
 	//***********fin levantar W************
-	
+
+	begin = GET_TIME;
 	auto output_rank = page_rank(W, C, p);
+	end = GET_TIME;
+	std::cout << "page rank time: " << GET_TIME_DELTA(begin, end) << std::endl;
+
 	
 	std::cout << output_rank << std::endl;
   
