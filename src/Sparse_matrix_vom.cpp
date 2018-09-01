@@ -24,9 +24,18 @@ double Sparse_matrix_vom::operator()(int row_idx, int col_idx) const {
     }
 }
 
+bool Sparse_matrix_vom::is_significant(double value){
+    if(value < 0){
+        return value < _epsilon;
+    }
+    else {
+        return value > _epsilon;
+    }
+}
+
 void Sparse_matrix_vom::setIndex(int i, int j, double value) {
     assert(1<= i <= this->_rows && 1<= j <= this->_cols);
-    if(_epsilon < fabs(value)) {
+    if(is_significant(value)) {
         _matrix[i-1][j] = value;
     } else {
         if((*this)(i,j) != 0) {
@@ -133,7 +142,7 @@ std::ostream& operator<<(std::ostream& o, const Sparse_matrix_vom& a) {
     return o;
 }
 
-Sparse_matrix_vom Sparse_matrix_vom::multiply(const Sparse_matrix_vom b) const{
+Sparse_matrix_vom Sparse_matrix_vom::multiply(const Sparse_matrix_vom& b) const{
 
     Sparse_matrix_vom res(this->rows(), b.cols());
     if(this->_matrix.size() == 0 || b._matrix.size() == 0) { // alguno de los inputs es matriz de ceros?
