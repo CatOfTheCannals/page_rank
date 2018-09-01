@@ -78,7 +78,7 @@ private:
     int _rows;
     int _cols;
     s_matrix _matrix; //pointer of type int to the location of the Sparse_matrix_vom.
-    double _epsilon = 0.000001;
+    double _epsilon = 0.00001;
 
 };
 
