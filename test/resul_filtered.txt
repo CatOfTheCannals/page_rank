@@ -1,0 +1,4 @@
+[ RUN      ] sMockGaussInput.gaussElimFourByFour
+[       OK ] sMockGaussInput.gaussElimFourByFour (1 ms)
+'gauss_elim_time': 253085
+'gauss_elim_time': 178949
