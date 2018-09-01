@@ -9,17 +9,17 @@ std::tuple<Sparse_matrix_vom, Sparse_matrix_vom> s_gauss_elimination(const Spars
 
     for (int i = 1; i < a.cols(); i++) { //n veces
         //find max coeff
-
-        Sparse_matrix_vom current_col = u.subMatrix(i , a.rows(), i , i); // vector de tamanio i
+        
+        Sparse_matrix_vom current_col = u.subMatrix(i , a.rows(), i , i); // vector of size i
         int max_coeff = std::get<0>(current_col.abs().maxCoeff());
 
         if (current_col(max_coeff) != 1) { // O(1)
             //swap it
             u.swapRows(i, max_coeff + i - 1);
             l.swapRows(i, max_coeff + i - 1);
-        }
-
-        for (int r = i + 1; r <= a.rows(); r++) { //n - i veces
+        } 
+		
+        for (int r = i + 1; r <= a.rows(); r++) { //n - i 
             if (u(r,i) != 0) {
                 double rowMultiplicator = u(r,i) / u(i, i);
                 l.setIndex(r, i, rowMultiplicator);

@@ -9,7 +9,7 @@ int Sparse_matrix_vom::cols() const {
 }
 
 double Sparse_matrix_vom::operator()(int row_idx, int col_idx) const {
-    assert(1<= row_idx <= this->_rows && 1<= col_idx <= this->_cols);
+    assert(1<= row_idx && row_idx <= this->_rows && 1<= col_idx && col_idx <= this->_cols);
     row_idx = row_idx - 1;
     auto row = _matrix[row_idx];
     if (row.size() == 0){
@@ -34,7 +34,7 @@ bool Sparse_matrix_vom::is_significant(double value){
 }
 
 void Sparse_matrix_vom::setIndex(int i, int j, double value) {
-    assert(1<= i <= this->_rows && 1<= j <= this->_cols);
+    assert(1<= i && i <= this->_rows && 1<= j && j <= this->_cols);
     if(is_significant(value)) {
         _matrix[i-1][j] = value;
     } else {
@@ -87,7 +87,7 @@ bool Sparse_matrix_vom::operator==(const Sparse_matrix_vom& other) const {
 }
 
 Sparse_matrix_vom Sparse_matrix_vom::getRow(int index) const{
-    assert(1<= index<= this->_rows);
+    assert(1<= index && index <= this->_rows);
     index = index - 1;
     Sparse_matrix_vom row(1, this->_cols);
     row._matrix[0] = _matrix[index];
@@ -96,7 +96,7 @@ Sparse_matrix_vom Sparse_matrix_vom::getRow(int index) const{
 
 
 void Sparse_matrix_vom::swapRows(int i1, int i2) {
-    assert(1<= i1 <= this->_rows && 1<= i2 <= this->_rows);
+    assert(1<= i1 && i1 <= this->_rows && 1<= i2 && i2 <= this->_rows);
     i1 = i1 - 1;
     i2 = i2 - 1;
     _matrix[i1].swap(_matrix[i2]);
@@ -107,7 +107,7 @@ Sparse_matrix_vom Sparse_matrix_vom::subMatrix(int i1, int i2, int j1, int j2) c
     assert(0 < i1  &&  i2 <= _rows);
     assert(0 < j1  &&  j2 <= _cols);
 
-    assert(1<= i1 <= this->_rows && 1<= i2 <= this->_rows);
+    assert(1<= i1 && i1 <= this->_rows && 1<= i2 && i2 <= this->_rows);
     i1 = i1 - 1;
     i2 = i2 - 1;
 
@@ -173,7 +173,7 @@ Sparse_matrix_vom Sparse_matrix_vom::multiply(const Sparse_matrix_vom& b) const{
     return res;
 }
 
-double dotProd(const Sparse_matrix_vom u, const Sparse_matrix_vom w) {
+double dotProd(const Sparse_matrix_vom& u, const Sparse_matrix_vom& w) {
     assert(u.rows()== 1 && w.rows()== 1);
     assert(u._matrix.size()== 1 && w._matrix.size()== 1);
 
@@ -189,7 +189,7 @@ double dotProd(const Sparse_matrix_vom u, const Sparse_matrix_vom w) {
     return sum;
 }
 Sparse_matrix_vom Sparse_matrix_vom::transpose() const{
-    s_matrix b_col(_cols);
+    s_matrix b_col = s_matrix(_cols);
     for( int i = 0; i <_matrix.size(); i++){
         for( auto it_col = _matrix[i].begin(); it_col != _matrix[i].end(); it_col++){
             b_col[it_col->first - 1][i + 1] = it_col->second;
@@ -201,7 +201,7 @@ Sparse_matrix_vom Sparse_matrix_vom::transpose() const{
 }
 
 Sparse_matrix_vom Sparse_matrix_vom::identity(int n) {
-    Sparse_matrix_vom id(n,n);
+    Sparse_matrix_vom id = Sparse_matrix_vom(n,n);
     for(int i = 1; i <= n ; i++) {
         id.setIndex(i,i,1);
     }
@@ -241,7 +241,7 @@ double Sparse_matrix_vom::operator()(int idx) const {//solo si mi matriz es un v
     //si tengo una sola fila, idx es el indice columna
     if (this->_rows == 1 ){return (*this)(1,idx);}
     //si tengo una sola columna, idx es el indice fila
-    if (this->_cols == 1 ){return (*this)(idx,1);}
+    else{return (*this)(idx,1);}
 }
 
 bool Sparse_matrix_vom::isApproximate(const Sparse_matrix_vom b) const {

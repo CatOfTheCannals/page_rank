@@ -51,13 +51,14 @@ public:
     Sparse_matrix_vom getRow(int index) const;
     friend std::ostream& operator<<(std::ostream& o, const Sparse_matrix_vom& a);
     Sparse_matrix_vom subMatrix(int i1, int i2, int j1, int j2) const;
-    Sparse_matrix_vom multiply(const Sparse_matrix_vom b) const;
+    Sparse_matrix_vom multiply(const Sparse_matrix_vom& b) const;
     Sparse_matrix_vom transpose() const;
-    friend double dotProd(const Sparse_matrix_vom u, const Sparse_matrix_vom w);
+    friend double dotProd(const Sparse_matrix_vom& u, const Sparse_matrix_vom& w);
     static Sparse_matrix_vom identity(int n);
     std::tuple<int, int> maxCoeff();
     Sparse_matrix_vom abs();
     bool isApproximate(const Sparse_matrix_vom b) const;
+    bool is_significant(double value);
     static Sparse_matrix_vom random_matrix(int height, int width);
 
     /*
@@ -76,9 +77,10 @@ private:
     int _rows;
     int _cols;
     s_matrix _matrix; //pointer of type int to the location of the Sparse_matrix_vom.
-    double _epsilon = 0.00000001;
+    double _epsilon = 0.000001;
+
 };
 
-;
+
 
 #endif //TP1_METODOS_SPARSE_MATRIX_vom_H
