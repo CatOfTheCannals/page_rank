@@ -261,7 +261,7 @@ Sparse_matrix_vom Sparse_matrix_vom::random_matrix(int height, int width){
     Sparse_matrix_vom random_matrix(height, width);
     for(int i = 1; i <= random_matrix.rows(); i++){
         for(int j = 1; j <= random_matrix.cols(); j++){
-            if(i != j && rand() % 9) {
+            if(i != j && !(rand() % 9)) {
                 random_matrix.setIndex(i, j, 1); //matrix density of %90
             }
 
