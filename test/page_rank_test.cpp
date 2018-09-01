@@ -4,7 +4,7 @@
 #include <string>
 #include <stdlib.h>
 #include "gtest/gtest.h"
-#include "../src/page_rank.h"
+#include "../src/page_rank.h"	
 
 // --------- SET UP --------------
 class pageRankTest : public ::testing::Test {
@@ -61,7 +61,7 @@ protected:
 
 TEST_F (pageRankTest, test_aleatorio){
 
-    double p = 0.85;
+    double p = 0.85; //test
 
     Matrix C = colSumDiag(W);
 
@@ -77,3 +77,4 @@ TEST_F (pageRankTest, ciclicMatrix){
 
     // std::cout << page_rank(ciclic, C, p) << std::endl;
 }
+

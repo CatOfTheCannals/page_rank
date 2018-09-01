@@ -10,6 +10,15 @@ int Sparse_matrix_vom::cols() const {
 
 double Sparse_matrix_vom::operator()(int row_idx, int col_idx) const {
     assert(1<= row_idx && row_idx <= this->_rows && 1<= col_idx && col_idx <= this->_cols);
+    int i = row_idx;
+    int j = col_idx;
+    i--;
+    if (_matrix[i].find(j) != _matrix[i].end()){
+        return (*_matrix[i].find(j)).second;
+    } else {
+        return 0;
+    }
+    /*
     row_idx = row_idx - 1;
     auto row = _matrix[row_idx];
     if (row.size() == 0){
@@ -21,7 +30,7 @@ double Sparse_matrix_vom::operator()(int row_idx, int col_idx) const {
         } else {
             return vec_it->second;
         }
-    }
+    } */
 }
 
 bool Sparse_matrix_vom::is_significant(double value){
@@ -35,16 +44,12 @@ bool Sparse_matrix_vom::is_significant(double value){
 
 void Sparse_matrix_vom::setIndex(int i, int j, double value) {
     assert(1<= i && i <= this->_rows && 1<= j && j <= this->_cols);
-    if(is_significant(value)) {
-        _matrix[i-1][j] = value;
-    } else {
-        if((*this)(i,j) != 0) {
-            //borrar el numero de la fila
-            auto vec_it = _matrix[i-1].find(j);
-            _matrix[i-1].erase(vec_it);
-        }
-
-    }
+	if (is_significant(value)){
+		    _matrix[i-1][j] = value;
+		} else {
+		    if (is_significant( _matrix[i-1][j] )){
+		        _matrix[i-1].erase(j);
+		    }}
 }
 
 Sparse_matrix_vom Sparse_matrix_vom::operator+(const Sparse_matrix_vom& m) const { // overloading operator +

@@ -8,7 +8,6 @@
 #include <tuple>
 #include <map>
 #include <math.h>
-
 #include "chrono"
 
 #define GET_TIME std::chrono::high_resolution_clock::now()
@@ -28,13 +27,15 @@ public:
     Sparse_matrix_vom(int rows, int cols) {
         _rows = rows;
         _cols = cols;
-        _matrix = s_matrix(_rows);
+		map<int,double> col;
+        _matrix = vector<map<int,double> >(rows, col);
     }
 
     Sparse_matrix_vom(int rows, int cols, s_matrix matrix) {
         _rows = rows;
         _cols = cols;
-        _matrix = matrix;
+		map<int,double> col;
+        _matrix = vector<map<int,double> >(rows, col);
     }
 
     Sparse_matrix_vom(const Sparse_matrix_vom & other) = default;

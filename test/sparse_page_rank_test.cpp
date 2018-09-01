@@ -114,3 +114,41 @@ TEST_F (pageRankTest, random_gen_test){
     std::cout << "'set_index_time': " << GET_TIME_DELTA(begin, end) << std::endl;
 
 }*/
+
+TEST_F (pageRankTest, test_15_segs_sparse){
+    cout << "Starting benchmark." << endl; 
+    string line;
+	int pagecount, links, i, j;
+	ifstream f_test("test_pseudo_15_segs.txt");
+	
+    if ( f_test.is_open() ){ f_test >> pagecount >> links;} 
+    else { cout << "--- \n Unable to open file. \n---" << endl; }
+	
+	/**/ // leo config, no afecta matriz
+	getline(f_test, line);	
+	istringstream lineStream(line);
+	lineStream >> i >> j;
+	/**/ // fin basura
+	
+	//********* levanto W (POR COLUMNAS) y armo C al mismo tiempo ***********
+	auto begin = GET_TIME;
+
+	Sparse_matrix_vom W = Sparse_matrix_vom(pagecount, pagecount);
+	while( getline(f_test, line) ){ 
+    //asumo que el archivo de entrada no termina con salto de linea (en ese caso se vuelve a cargar en W y se suma uno de más a C )
+		istringstream lineStream(line);
+		lineStream >> i >> j;
+		W.setIndex(i, j, 1);
+	}
+	f_test.close();
+	auto C = colSumDiag(W);
+
+	auto end = GET_TIME;
+	std::cout << "load time: " << GET_TIME_DELTA(begin, end) << std::endl;
+	//***********fin levantar W************
+
+	begin = GET_TIME;
+	auto output_rank = page_rank(W, C, 0.9);
+	end = GET_TIME;
+	std::cout << "page rank time: " << GET_TIME_DELTA(begin, end) << std::endl;
+}
