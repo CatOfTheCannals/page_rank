@@ -143,7 +143,6 @@ std::ostream& operator<<(std::ostream& o, const Sparse_matrix_vom& a) {
 }
 
 Sparse_matrix_vom Sparse_matrix_vom::multiply(const Sparse_matrix_vom& b) const{
-
     Sparse_matrix_vom res(this->rows(), b.cols());
     if(this->_matrix.size() == 0 || b._matrix.size() == 0) { // alguno de los inputs es matriz de ceros?
         return res;
@@ -152,7 +151,7 @@ Sparse_matrix_vom Sparse_matrix_vom::multiply(const Sparse_matrix_vom& b) const{
     auto begin = GET_TIME;
     Sparse_matrix_vom bt = b.transpose(); //esto me sirve para tener las columnas de b almazenadas en las filas de bt
     auto end = GET_TIME;
-    std::cout << "'transpose_time': " << GET_TIME_DELTA(begin, end) << std::endl;
+    // std::cout << "'transpose_time': " << GET_TIME_DELTA(begin, end) << std::endl;
 
     begin = GET_TIME;
     double val;
@@ -167,7 +166,7 @@ Sparse_matrix_vom Sparse_matrix_vom::multiply(const Sparse_matrix_vom& b) const{
         }
     }
     end = GET_TIME;
-    std::cout << "'mult_time': " << GET_TIME_DELTA(begin, end) << std::endl;
+    // std::cout << "'mult_time': " << GET_TIME_DELTA(begin, end) << std::endl;
 
 
     return res;
@@ -244,7 +243,7 @@ double Sparse_matrix_vom::operator()(int idx) const {//solo si mi matriz es un v
     else{return (*this)(idx,1);}
 }
 
-bool Sparse_matrix_vom::isApproximate(const Sparse_matrix_vom b) const {
+bool Sparse_matrix_vom::isApproximate(const Sparse_matrix_vom &b) const {
     Sparse_matrix_vom a_copy = (*this);
     Sparse_matrix_vom b_copy = b;
     auto diff = (a_copy + b_copy * (-1)).abs();

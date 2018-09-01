@@ -172,7 +172,7 @@ double dotProd(const Sparse_matrix_2 u, const Sparse_matrix_2 w) {
     assert(u._matrix.size()== 1 && w._matrix.size()== 1);
 
     double sum = 0;
-    s_vec u_map = u._matrix.find(1)->second; // quiero la fila de u
+    s_vec_slow u_map = u._matrix.find(1)->second; // quiero la fila de u
     for(auto &iv : u_map) { // itero los pares indice valor de u
         auto w_map = w._matrix.find(1)->second; // quiero la fila de w
         auto w_map_it = w_map.find(iv.first);// si w tiene valores en el mismo indice que estoy viendo de u
@@ -183,7 +183,7 @@ double dotProd(const Sparse_matrix_2 u, const Sparse_matrix_2 w) {
     return sum;
 }
 Sparse_matrix_2 Sparse_matrix_2::transpose() const{
-    s_matrix b_col;
+    s_matrix_slow b_col;
     for( auto it_row = this->_matrix.begin(); it_row != this->_matrix.end(); it_row++){
         for( auto it_col = (it_row->second).begin(); it_col != (it_row->second).end(); it_col++){
             b_col[it_col->first][it_row->first] = it_col->second;

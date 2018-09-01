@@ -17,10 +17,10 @@
 
 using namespace std;
 
-typedef map<int, double>::const_iterator it_s_vec;
-typedef map<int, double> s_vec;
-typedef map<int, map<int, double> >::iterator it_s_matrix;
-typedef map<int, map<int, double> > s_matrix;
+typedef map<int, double>::const_iterator it_s_vec_slow;
+typedef map<int, double> s_vec_slow;
+typedef map<int, map<int, double> >::iterator it_s_matrix_slow;
+typedef map<int, map<int, double> > s_matrix_slow;
 
 class Sparse_matrix_2 {
 public:
@@ -28,7 +28,7 @@ public:
     Sparse_matrix_2(int rows, int cols) {
         _rows = rows;
         _cols = cols;
-        s_matrix _matrix;
+        s_matrix_slow _matrix;
     }
 
     Sparse_matrix_2(const Sparse_matrix_2 & other) = default;
@@ -65,7 +65,7 @@ public:
     bool isApproximate(const Sparse_matrix_2 b, double epsilon) const;
      */
 
-    s_matrix _matrix; //pointer of type int to the location of the Sparse_matrix_2.
+    s_matrix_slow _matrix; //pointer of type int to the location of the Sparse_matrix_2.
 
 private:
     int _rows;

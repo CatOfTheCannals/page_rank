@@ -26,8 +26,8 @@ void randomMatrixExp(double p, int step, int n, int repetitions) {
             j = 0;
             while(j < i * (i - 1)) {
 
-                Sparse_matrix_2 W = sparseRandomMatrix(i, j);
-                Sparse_matrix_2 C = colSumDiag(W);
+                Sparse_matrix_vom W = sparseRandomMatrix(i, j);
+                Sparse_matrix_vom C = colSumDiag(W);
 
                 auto begin = GET_TIME;
                 page_rank(W, C, p);

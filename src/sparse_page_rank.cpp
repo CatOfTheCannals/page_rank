@@ -1,6 +1,6 @@
 #include "sparse_page_rank.h"
 
-Sparse_matrix_vom page_rank(Sparse_matrix_vom W, Sparse_matrix_vom C, double p) {
+Sparse_matrix_vom page_rank(Sparse_matrix_vom &W, Sparse_matrix_vom &C, double p) {
     assert(W.rows() == W.cols());
     assert(W.rows() == C.rows());
     assert(W.cols() == C.cols());
@@ -9,6 +9,23 @@ Sparse_matrix_vom page_rank(Sparse_matrix_vom W, Sparse_matrix_vom C, double p) 
 
     Sparse_matrix_vom e = onesVec(W.rows()); // O(n)
 
+    /*
+    Sparse_matrix_vom W_mult_Cp = W.multiply(C * (-p));
+
+    Sparse_matrix_vom A = id + W_mult_Cp;
+
+    Sparse_matrix_vom L(W.rows(), W.cols());
+    Sparse_matrix_vom U(W.rows(), W.cols());
+
+    std::tie(L, U) = s_gauss_elimination(A);
+
+    Sparse_matrix_vom y = forward_sub(L, e);
+
+    Sparse_matrix_vom x = backward_sub(U, y);
+
+    return x * normalization_coeff(x); // O(n)
+
+*/
     auto begin = GET_TIME;
     Sparse_matrix_vom W_mult_Cp = W.multiply(C * (-p));
     auto end = GET_TIME;
@@ -19,8 +36,6 @@ Sparse_matrix_vom page_rank(Sparse_matrix_vom W, Sparse_matrix_vom C, double p) 
     Sparse_matrix_vom A = id + W_mult_Cp;
     end = GET_TIME;
     std::cout << "'matadd_time': " << GET_TIME_DELTA(begin, end) << std::endl;
-    // C * constante son n operaciones
-    // W * diagonal son O(max{n,m}) operaciones
 
     Sparse_matrix_vom L(W.rows(), W.cols());
     Sparse_matrix_vom U(W.rows(), W.cols());
@@ -40,6 +55,7 @@ Sparse_matrix_vom page_rank(Sparse_matrix_vom W, Sparse_matrix_vom C, double p) 
     end = GET_TIME;
     std::cout << "'backward_back_time': " << GET_TIME_DELTA(begin, end) << std::endl;
 
+    return x * normalization_coeff(x); // O(n)
 /*
     std::cout << "C" << std::endl;
     std::cout << C << std::endl;
@@ -67,10 +83,10 @@ Sparse_matrix_vom page_rank(Sparse_matrix_vom W, Sparse_matrix_vom C, double p) 
     std::cout << y << std::endl;
     std::cout << "x" << std::endl;
     std::cout << x << std::endl;
-*/
+
     return x * normalization_coeff(x); // O(n)
 
-/*
+
     auto res =  x * normalization_coeff(x);
 
     std::cout << "res " << res << std::endl;
@@ -80,7 +96,7 @@ Sparse_matrix_vom page_rank(Sparse_matrix_vom W, Sparse_matrix_vom C, double p) 
     return res; */
 }
 
-double normalization_coeff(Sparse_matrix_vom column) {
+double normalization_coeff(Sparse_matrix_vom &column) {
     assert(column.cols() == 1);
     double sum = 0;
     for(int i = 1; i <= column.rows(); i++) {
@@ -90,7 +106,7 @@ double normalization_coeff(Sparse_matrix_vom column) {
 }
 
 
-Sparse_matrix_vom colSumDiag(const Sparse_matrix_vom& W){ //O(n^2)
+Sparse_matrix_vom colSumDiag(const Sparse_matrix_vom &W){ //O(n^2)
     Sparse_matrix_vom C(W.rows(), W.cols());
     for(int j = 1; j <= W.cols(); j ++){
         double sum = 0;
