@@ -1,9 +1,9 @@
 #include "randomMatrix.h"
 #include <random>
-Sparse_matrix_2 randomMatrix(int n, int numberOfConnections){
+Sparse_matrix_vom randomMatrix(int n, int numberOfConnections){
     assert(0 < n);
     assert(numberOfConnections <= (n*n)-n);
-    Sparse_matrix_2 res(n, n);
+    Sparse_matrix_vom res(n, n);
     std::random_device rd;     // only used once to initialise (seed) engine
     int cont = 1;
     while(cont < numberOfConnections){
@@ -19,10 +19,10 @@ Sparse_matrix_2 randomMatrix(int n, int numberOfConnections){
     return res;
 }
 
-Sparse_matrix_2 randomChainMatrix(int n, int numberOfConnections){
+Sparse_matrix_vom randomChainMatrix(int n, int numberOfConnections){
     assert(0 < n);
     assert(numberOfConnections <= (n*n)-2*n);
-    Sparse_matrix_2 res(n, n);
+    Sparse_matrix_vom res(n, n);
     std::random_device rd;     // only used once to initialise (seed) engine
     for(int i = 1; i <= n; i++){
         res.setIndex(i+1,i, 1);
@@ -44,9 +44,9 @@ Sparse_matrix_2 randomChainMatrix(int n, int numberOfConnections){
     return res;
 }
 
-Sparse_matrix_2 directedList(int n){
+Sparse_matrix_vom directedList(int n){
     assert(0 < n);
-    Sparse_matrix_2 res(n, n);
+    Sparse_matrix_vom res(n, n);
     for(int i = 1; i<= n; i++){
         res.setIndex(i+1,i, 1);
     }
@@ -54,9 +54,9 @@ Sparse_matrix_2 directedList(int n){
 }
 
 
-Sparse_matrix_2 completeColumnAndZeros(int n) {
+Sparse_matrix_vom completeColumnAndZeros(int n) {
     assert(0 < n);
-    Sparse_matrix_2 res(n, n);
+    Sparse_matrix_vom res(n, n);
     for (int j = 1; j <= n; j++) {
          res.setIndex(j, 1, 1);
     }
@@ -68,9 +68,9 @@ Sparse_matrix_2 completeColumnAndZeros(int n) {
 
 
 
-Sparse_matrix_2 completeColumnAndOneBack(int n){
+Sparse_matrix_vom completeColumnAndOneBack(int n){
     assert(0 < n);
-    Sparse_matrix_2 res(n, n);
+    Sparse_matrix_vom res(n, n);
     for (int j = 1; j <= n; j++) {
         res.setIndex(j, 1, 1);
     }
@@ -84,10 +84,10 @@ Sparse_matrix_2 completeColumnAndOneBack(int n){
 }
 
 
-Sparse_matrix_2 chainAndCompleteGraph(int n, int chainSize){
+Sparse_matrix_vom chainAndCompleteGraph(int n, int chainSize){
     assert(chainSize >= 2); //n must be 5 or higher
     assert( n - chainSize >= 3); //requirement in order to have a complete graph that isn't a chain.
-    Sparse_matrix_2 res(n, n);
+    Sparse_matrix_vom res(n, n);
     for (int i = 1; i+1 <= chainSize; i++){
         res.setIndex(i+1,i, 1);
     }
