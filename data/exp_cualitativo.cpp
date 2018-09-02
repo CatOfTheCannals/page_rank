@@ -39,12 +39,12 @@ bool pairCompare( const pair<int, double>& x, const pair<int, double>& y ){
 std::ostream& operator<<(std::ostream& o, const pair< vector<pair<int, double>> , int > & p){
 	vector<pair<int, double>> v = p.first;
 	int max_dim = p.second;
-	for(int j = 0 ; j< max_dim; j++){
+	for(int j = 1 ; j <= max_dim; j++){
 			o << '\t' ;
 	}
 	o << "Rank:"<<endl;
-    for(int i = 0 ; i< v.size(); i++){
-		for(int j = 0 ; j< max_dim; j++){
+    for(int i = 1 ; i<= v.size(); i++){
+		for(int j = 1 ; j<= max_dim; j++){
 			o << '\t' ;
 		}
 		o << v[i].first <<  '\t' << v[i].second << endl;

@@ -20,10 +20,10 @@ void randomMatrixExp(double p, int step, int n, int repetitions) {
     for(int k = 0; k < repetitions; k++ ) {
 
         int i = 1;
-        int j = 0;
-        while(i < n) {
+        int j = 1;
+        while(i <= n) {
 
-            j = 0;
+            j = 1;
             while(j < i * (i - 1)) {
 
                 Sparse_matrix_vom W = sparseRandomMatrix(i, j);

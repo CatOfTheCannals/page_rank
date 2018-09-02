@@ -4,6 +4,7 @@
 #include "chrono"
 #include "../src/page_rank.h"
 #include "randomMatrix.h"
+#include "exp_cualitativo.cpp"
 
 #define GET_TIME std::chrono::high_resolution_clock::now()
 #define GET_TIME_DELTA(begin, end) \
@@ -18,9 +19,9 @@ void randomMatrixExp(double p, int step, int n, int repetitions) {
     file.open(filename.str());
 
     int i = 1;
-    int j = 0;
+    int j = 1;
 
-    while(i < n) {
+    while(i <= n) {
         while(j < i * (i - 1)) {
 
             for(int k = 0; k < repetitions; k++ ) {
@@ -56,7 +57,7 @@ void randomChainMatrixExp(double p, int step, int n, int repetitions) {
     file.open(filename.str());
 
     int i = 1;
-    int j = 0;
+    int j = 1;
 
     while(i < n) {
         while(j < i * i - 2*i) {
