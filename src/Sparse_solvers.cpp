@@ -8,6 +8,7 @@ std::tuple<Sparse_matrix_vom, Sparse_matrix_vom> s_gauss_elimination(const Spars
     Sparse_matrix_vom l(a.rows(), a.cols());
 
     for (int i = 1; i < a.cols(); i++) { //n veces
+
         //find max coeff
         /*
         Sparse_matrix_vom current_col = u.subMatrix(i , a.rows(), i , i); // vector of size i
@@ -35,24 +36,49 @@ std::tuple<Sparse_matrix_vom, Sparse_matrix_vom> s_gauss_elimination(const Spars
     return std::make_tuple(l, u);
 }
 
-Sparse_matrix_vom gauss_elimination_write_and_u(const Sparse_matrix_vom& a, Sparse_matrix_vom& e) {
+Sparse_matrix_vom gauss_elimination_write_and_u(Sparse_matrix_vom& a, Sparse_matrix_vom& e) {
     assert(a.cols() == a.rows());
-    auto u = a;
 
     //Sparse_matrix_vom l(a.rows(), a.cols());
-    for (int i = 1; i < a.cols(); i++) { //n veces
-        for (int r = i + 1; r <= a.rows(); r++) { //n - i
-            if (u(r,i) != 0) {
-                double rowMultiplicator = u(r,i) / u(i, i);
-                for (int c = i; c <= a.cols(); c++) { // O(n)
-                    u.setIndex(r, c, u(r, c) - (u(i, c) * rowMultiplicator));
-                    double w = e(i)*rowMultiplicator;
-                    e.write_vector(i, e(i) - w);
-                }
-            }
+
+    for (int i = 1; i < a.rows(); i++) { //n veces
+        auto begin = GET_TIME;
+        //find max coeff
+        /*
+        Sparse_matrix_vom current_col = u.subMatrix(i , a.rows(), i , i); // vector of size i
+        int max_coeff = std::get<0>(current_col.abs().maxCoeff());
+
+        if (current_col(max_coeff) != 1) { // O(1)
+            //swap it
+            u.swapRows(i, max_coeff + i - 1);
+            l.swapRows(i, max_coeff + i - 1);
         }
+		*/
+        double diag = a(i, i);
+        for (int r = i + 1; r <= a.rows(); r++) { //n - i
+            double num = a(r,i);
+
+            if ( a.is_significant(num) ) {
+                double rowMultiplicator = num / diag;
+                //l.setIndex(r, i, rowMultiplicator);
+                for (int c = i; c <= a.cols(); c++) { // O(n)
+                    a.substract(r, c, a(i, c) * rowMultiplicator);
+                }
+                double w = e(i)*rowMultiplicator;
+                e.substract_vector(r, w);
+            }
+
+			}
+        if(i%100 ==0){
+        auto end = GET_TIME;
+        cout << "'row_time': " << GET_TIME_DELTA(begin, end) << endl;
+        cout << "i: "<< i <<endl;}
+
     }
-    return u;
+
+    //Sparse_matrix_vom id = Sparse_matrix_vom::identity(a.rows());
+    //l = l + id;
+    return a;
 }
 
 Sparse_matrix_vom backward_sub(const Sparse_matrix_vom& a, const Sparse_matrix_vom& y) {
