@@ -7,7 +7,7 @@ def generateMatrix(dim, qty, name, g = lambda x, y : x != y ):
     pairs = [(i,j) for i in range(1,dim+1) for j in range(1,dim+1) if g(i,j)]
     used_pairs = random.sample(pairs, qty)
     for p,q in used_pairs:
-	s+= str(p)+" "+str(q)+"\n"
+	s+= str(p+1)+" "+str(q+1)+"\n"
     with open(name, 'w') as f:
 	    f.write(s)
 

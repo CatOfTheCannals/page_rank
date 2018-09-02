@@ -1,3 +1,6 @@
+import matplotlib.pyplot as plt
+import math
+
 with open('resultados pokemon atacando','r') as atk:
 	atk_str = atk.read()
 with open('resultados pokemon defensor','r') as defn:
@@ -30,5 +33,15 @@ for k, v in def_items:
 print('--- top attackers ---')
 atk_items = list(atk_d.items())
 atk_items.sort(key = lambda x : x[1])
-for k, v in def_items:
+for k, v in atk_items:
 	print("%s: %.3f" % (k,v))
+
+
+def do_plot(D):
+    values = D.items()
+    values.sort(key = lambda x: x[1])
+    plt.bar(range(len(D) ), [y for _,y in values], align='center')
+    plt.xticks(range(len(D)), list([x for x,_ in values]))
+#do_plot(def_d)
+do_plot(atk_d)
+plt.show()

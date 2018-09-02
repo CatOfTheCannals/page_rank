@@ -64,6 +64,7 @@ int main(int argc, char** argv){
 	while( getline(f_test, line) ){ //asumo que el archivo de entrada no termina con salto de linea (en ese caso se vuelve a cargar en W y se suma uno de más a C )
 		istringstream lineStream(line);
 		lineStream >> i >> j;
+        cout << i <<" "<<j<<endl;
 		W.setIndex(i, j, 1);
 	}
 	f_test.close();

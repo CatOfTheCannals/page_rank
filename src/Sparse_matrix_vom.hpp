@@ -34,8 +34,8 @@ public:
     Sparse_matrix_vom(int rows, int cols, s_matrix matrix) {
         _rows = rows;
         _cols = cols;
-		map<int,double> col;
-        _matrix = vector<map<int,double> >(rows, col);
+		
+        _matrix = matrix;
     }
 
     Sparse_matrix_vom(const Sparse_matrix_vom & other) = default;
