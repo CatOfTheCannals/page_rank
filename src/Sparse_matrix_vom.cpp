@@ -21,7 +21,7 @@ double Sparse_matrix_vom::operator()(int row_idx, int col_idx) const {
     
 }
 
-bool Sparse_matrix_vom::is_significant(double value){
+bool Sparse_matrix_vom::is_significant(double const value) const {
     if(value < 0){
         return value < _epsilon;
     }
@@ -45,8 +45,11 @@ Sparse_matrix_vom Sparse_matrix_vom::operator+(const Sparse_matrix_vom& m) const
     Sparse_matrix_vom res = Sparse_matrix_vom(this->_rows, this->_cols);
     for(int i = 1 ; i<= this->_rows ; i++) {
         for(int j = 1 ; j <= this->_cols ; j++) {
+            
             double value = (*this)(i,j) + m(i,j);
+            if(is_significant(value)){
             res.setIndex(i, j, value);
+            }
         }
     }
     return res;
@@ -57,7 +60,10 @@ Sparse_matrix_vom Sparse_matrix_vom::operator*(const double& scalar) const{
     for(int i = 1; i <= _matrix.size(); i++) {
         for(auto const &it_2 : _matrix[i-1]) {
             int j = it_2.first;
-            res.setIndex(i, j, (*this)(i, j) * scalar);
+            double v = (*this)(i, j);
+            if(is_significant(v)){
+                res.setIndex(i, j, v * scalar);
+            }
         }
     }
     return res;
@@ -73,11 +79,11 @@ void Sparse_matrix_vom::substract_vector(int i, double v) {
     assert(i <= std::max(this->_rows, this->_cols));
 	//si tengo una sola fila, idx es el indice columna
     if(is_significant(v)){
-    if (this->_rows == 1){ _matrix[1][i] -= v;
+    if (this->_rows == 1){ _matrix[0][i] -= v;
 	}
 
     //si tengo una sola columna, idx es el indice fila
-    else{_matrix[i][1] -= v;}
+    else{_matrix[i-1][1] -= v;}
     }
 }
                     
@@ -160,12 +166,8 @@ Sparse_matrix_vom Sparse_matrix_vom::multiply(const Sparse_matrix_vom& b) const{
         return res;
     }
 
-    auto begin = GET_TIME;
-    Sparse_matrix_vom bt = b.transpose(); //esto me sirve para tener las columnas de b almazenadas en las filas de bt
-    auto end = GET_TIME;
-    // std::cout << "'transpose_time': " << GET_TIME_DELTA(begin, end) << std::endl;
-
-    begin = GET_TIME;
+    Sparse_matrix_vom bt = b.transpose(); //esto me sirve para tener las columnas de b almacenadas en las filas de bt
+    
     double val;
     for (int i = 1; i <= res.rows(); ++i) {
         for (int j = 1; j <= res.cols(); ++j) {
@@ -177,8 +179,6 @@ Sparse_matrix_vom Sparse_matrix_vom::multiply(const Sparse_matrix_vom& b) const{
             res.setIndex(i, j, val);
         }
     }
-    end = GET_TIME;
-    // std::cout << "'mult_time': " << GET_TIME_DELTA(begin, end) << std::endl;
 
 
     return res;

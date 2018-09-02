@@ -68,7 +68,7 @@ public:
     std::tuple<int, int> maxCoeff();
     Sparse_matrix_vom abs();
     bool isApproximate(const Sparse_matrix_vom& b) const;
-    bool is_significant(double value);
+    bool is_significant(const double value) const;
     void write_vector(int idx, double value);
     static Sparse_matrix_vom random_matrix(int height, int width);
 	void substract(int r, int c, double v);

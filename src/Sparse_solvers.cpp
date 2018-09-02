@@ -61,12 +61,11 @@ Sparse_matrix_vom gauss_elimination_write_and_u(Sparse_matrix_vom& a, Sparse_mat
         for (int r = i + 1; r <= a.rows(); r++) { //n - i 
             double num = a(r,i);
  			
-            if (num != 0) {
+            if ( a.is_significant(num) ) {
                 double rowMultiplicator = num / diag;    
                 //l.setIndex(r, i, rowMultiplicator);
                 for (int c = i; c <= a.cols(); c++) { // O(n)
                     a.substract(r, c, a(i, c) * rowMultiplicator);
-                    
                 }
 
                 double w = e(i)*rowMultiplicator;
