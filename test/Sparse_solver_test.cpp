@@ -109,10 +109,6 @@ TEST_F (sMockGaussInput, forwardSub){
 
 TEST_F (sMockGaussInput, findX){
 
-    Sparse_matrix_vom p = Sparse_matrix_vom::identity(3);
-    p.swapRows(1, 3);
-    p.swapRows(1, 2);
-
     Sparse_matrix_vom l(fourByFour.rows(), fourByFour.cols());
     Sparse_matrix_vom u(fourByFour.rows(), fourByFour.cols());
     std::tie(l, u) = s_gauss_elimination(fourByFour);
@@ -121,6 +117,17 @@ TEST_F (sMockGaussInput, findX){
 
 
 ASSERT_TRUE(fourByFour.multiply(x).isApproximate(r));
+
+}
+
+TEST_F (sMockGaussInput, newFindX){
+
+    Sparse_matrix_vom u(fourByFour.rows(), 1);
+    u = s_gauss_elimination_write_and_u(fourByFour);
+    auto x = backward_sub(u, q);
+
+
+    ASSERT_TRUE(fourByFour.multiply(x).isApproximate(r));
 
 }
 
