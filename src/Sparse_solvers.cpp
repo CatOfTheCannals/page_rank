@@ -38,7 +38,7 @@ std::tuple<Sparse_matrix_vom, Sparse_matrix_vom> s_gauss_elimination(const Spars
     return std::make_tuple(l, u);
 }
 
-Sparse_matrix_vom gauss_elimination_write_and_u(const Sparse_matrix_vom& a, vector<double>& e) {
+Sparse_matrix_vom gauss_elimination_write_and_u(const Sparse_matrix_vom& a, Sparse_matrix_vom& e) {
     assert(a.cols() == a.rows());
     auto u = a;
 
@@ -62,7 +62,8 @@ Sparse_matrix_vom gauss_elimination_write_and_u(const Sparse_matrix_vom& a, vect
                 //l.setIndex(r, i, rowMultiplicator);
                 for (int c = i; c <= a.cols(); c++) { // O(n)
                     u.setIndex(r, c, u(r, c) - (u(i, c) * rowMultiplicator));
-                    e[c]-= e[i]*rowMultiplicator;
+                    double w = e(i)*rowMultiplicator;
+                    e.write_vector(i, e(i) - w);
                 }
             }
         }

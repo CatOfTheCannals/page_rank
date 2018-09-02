@@ -37,9 +37,9 @@ Sparse_matrix_vom page_rank(Sparse_matrix_vom &W, Sparse_matrix_vom &C, double p
     end = GET_TIME;
     std::cout << "'matadd_time': " << GET_TIME_DELTA(begin, end) << std::endl;
 
-    Sparse_matrix_vom L(W.rows(), W.cols());
+    //Sparse_matrix_vom L(W.rows(), W.cols());
     Sparse_matrix_vom U(W.rows(), W.cols());
-
+    /*
     begin = GET_TIME;
     std::tie(L, U) = s_gauss_elimination(A);
     end = GET_TIME;
@@ -49,9 +49,10 @@ Sparse_matrix_vom page_rank(Sparse_matrix_vom &W, Sparse_matrix_vom &C, double p
     Sparse_matrix_vom y = forward_sub(L, e);
     end = GET_TIME;
     std::cout << "'forward_sub_time': " << GET_TIME_DELTA(begin, end) << std::endl;
-
+    */
+    U = gauss_elimination_write_and_u(A, e);
     begin = GET_TIME;
-    Sparse_matrix_vom x = backward_sub(U, y);
+    Sparse_matrix_vom x = backward_sub(U, e);
     end = GET_TIME;
     std::cout << "'backward_back_time': " << GET_TIME_DELTA(begin, end) << std::endl;
 

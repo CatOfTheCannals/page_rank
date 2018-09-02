@@ -235,6 +235,16 @@ double Sparse_matrix_vom::operator()(int idx) const {//solo si mi matriz es un v
     //si tengo una sola columna, idx es el indice fila
     else{return (*this)(idx,1);}
 }
+void Sparse_matrix_vom::write_vector(int idx, double value) {//solo si mi matriz es un vector fila o columna
+    assert(this->_rows == 1 || this->_cols == 1);
+    assert(idx <= std::max(this->_rows, this->_cols));
+
+	//si tengo una sola fila, idx es el indice columna
+    if (this->_rows == 1 ){ setIndex(1,idx,value);}
+
+    //si tengo una sola columna, idx es el indice fila
+    else{setIndex(idx,1,value);}
+}
 
 bool Sparse_matrix_vom::isApproximate(const Sparse_matrix_vom &b) const {
     Sparse_matrix_vom a_copy = (*this);

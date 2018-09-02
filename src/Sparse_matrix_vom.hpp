@@ -27,7 +27,7 @@ public:
     Sparse_matrix_vom(int rows, int cols) {
         _rows = rows;
         _cols = cols;
-		map<int,double> col;
+		map<int,double> col = map<int,double>();
         _matrix = vector<map<int,double> >(rows, col);
     }
 
@@ -37,7 +37,16 @@ public:
 		
         _matrix = matrix;
     }
-
+    Sparse_matrix_vom(vector<double> v) {
+        _rows = v.size();
+        _cols = 1;
+		map<int,double> col = map<int,double>();
+        _matrix = vector<map<int,double> >(_rows, col);
+       for(int i = 0; i < _rows; i++){
+           setIndex(i,1,v[i]);
+       }
+        
+    }
     Sparse_matrix_vom(const Sparse_matrix_vom & other) = default;
 
     int rows() const;
@@ -60,7 +69,7 @@ public:
     Sparse_matrix_vom abs();
     bool isApproximate(const Sparse_matrix_vom& b) const;
     bool is_significant(double value);
-    
+    void write_vector(int idx, double value);
     static Sparse_matrix_vom random_matrix(int height, int width);
 
     /*
