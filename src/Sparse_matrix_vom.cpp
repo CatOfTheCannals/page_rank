@@ -18,19 +18,7 @@ double Sparse_matrix_vom::operator()(int row_idx, int col_idx) const {
     } else {
         return 0;
     }
-    /*
-    row_idx = row_idx - 1;
-    auto row = _matrix[row_idx];
-    if (row.size() == 0){
-        return 0;
-    } else {
-        auto vec_it = row.find(col_idx);
-        if (vec_it == row.end()){
-            return 0;
-        } else {
-            return vec_it->second;
-        }
-    } */
+    
 }
 
 bool Sparse_matrix_vom::is_significant(double value){
@@ -267,9 +255,8 @@ Sparse_matrix_vom Sparse_matrix_vom::random_matrix(int height, int width){
     for(int i = 1; i <= random_matrix.rows(); i++){
         for(int j = 1; j <= random_matrix.cols(); j++){
             if(i != j && !(rand() % 9)) {
-                random_matrix.setIndex(i, j, 1); //matrix density of %90
+                random_matrix.setIndex(i, j, 1); //matrix density of %11
             }
-
         }
     }
     return random_matrix;
