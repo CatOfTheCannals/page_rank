@@ -43,7 +43,7 @@ public:
 		map<int,double> col = map<int,double>();
         _matrix = vector<map<int,double> >(_rows, col);
        for(int i = 0; i < _rows; i++){
-           setIndex(i,1,v[i]);
+           setIndex(i+1,1,v[i]);
        }
         
     }
@@ -71,7 +71,8 @@ public:
     bool is_significant(double value);
     void write_vector(int idx, double value);
     static Sparse_matrix_vom random_matrix(int height, int width);
-
+	void substract(int r, int c, double v);
+    void substract_vector(int i, double v);
     /*
     std::tuple<int, int> shape() const;
     Sparse_matrix_vom multiply(const Sparse_matrix_vom b);

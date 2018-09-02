@@ -62,6 +62,25 @@ Sparse_matrix_vom Sparse_matrix_vom::operator*(const double& scalar) const{
     }
     return res;
 }
+void Sparse_matrix_vom::substract(int r, int c, double v) {
+    if (is_significant(v)){
+		    _matrix[r-1][c] -= v;
+		} 
+   //a.setIndex(r, c, a(r, c) - (a(i, c) * rowMultiplicator));
+}
+void Sparse_matrix_vom::substract_vector(int i, double v) {
+	assert(this->_rows == 1 || this->_cols == 1);
+    assert(i <= std::max(this->_rows, this->_cols));
+	//si tengo una sola fila, idx es el indice columna
+    if(is_significant(v)){
+    if (this->_rows == 1){ _matrix[1][i] -= v;
+	}
+
+    //si tengo una sola columna, idx es el indice fila
+    else{_matrix[i][1] -= v;}
+    }
+}
+                    
 
 bool Sparse_matrix_vom::operator==(const Sparse_matrix_vom& other) const {
     if (this->_rows != other.rows() || this->_cols != other.cols()) {
