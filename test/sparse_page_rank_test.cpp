@@ -57,10 +57,11 @@ TEST_F (pageRankTest, ciclicSparse_matrix_vom){
     double p = 0.85;
 
     Sparse_matrix_vom C = colSumDiag(ciclic);
+    auto ciclic_scores = page_rank(ciclic, C, p);
 
-    std::cout << "ciclic: " << std::endl << ciclic << std::endl;
-
-    std::cout << page_rank(ciclic, C, p) << std::endl;
+    for(int i = 1; i <= ciclic.rows(); i++) {
+    ASSERT_EQ(ciclic_scores((i % 5) + 1) , ciclic_scores(((i + 1) % 5) + 1));
+    }
 }
 
 /*
@@ -113,7 +114,7 @@ TEST_F (pageRankTest, random_gen_test){
     end = GET_TIME;
     std::cout << "'set_index_time': " << GET_TIME_DELTA(begin, end) << std::endl;
 
-}*/
+}
 
 TEST_F (pageRankTest, test_15_segs_sparse){
     cout << "Starting benchmark." << endl; 
@@ -124,13 +125,13 @@ TEST_F (pageRankTest, test_15_segs_sparse){
     if ( f_test.is_open() ){ f_test >> pagecount >> links;} 
     else { cout << "--- \n Unable to open file. \n---" << endl; }
 	
-	/**/ // leo config, no afecta matriz
+	// leo config, no afecta matriz
 	getline(f_test, line);	
 	istringstream lineStream(line);
 	lineStream >> i >> j;
-	/**/ // fin basura
+	// fin basura
 	
-	//********* levanto W (POR COLUMNAS) y armo C al mismo tiempo ***********
+	// levanto W (POR COLUMNAS) y armo C al mismo tiempo
 	auto begin = GET_TIME;
 
 	Sparse_matrix_vom W = Sparse_matrix_vom(pagecount, pagecount);
@@ -145,10 +146,11 @@ TEST_F (pageRankTest, test_15_segs_sparse){
 
 	auto end = GET_TIME;
 	std::cout << "load time: " << GET_TIME_DELTA(begin, end) << std::endl;
-	//***********fin levantar W************
+	// fin levantar W
 
 	begin = GET_TIME;
 	auto output_rank = page_rank(W, C, 0.9);
 	end = GET_TIME;
 	std::cout << "page rank time: " << GET_TIME_DELTA(begin, end) << std::endl;
 }
+*/

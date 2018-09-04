@@ -1,8 +1,11 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
+#include <string>
 #include <stdlib.h>
 #include "gtest/gtest.h"
 #include "../src/Sparse_solvers.hpp"
+#include "../src/sparse_page_rank.h"
 
 
 // --------- SET UP --------------
@@ -120,14 +123,44 @@ ASSERT_TRUE(fourByFour.multiply(x).isApproximate(r));
 
 }
 
-TEST_F (sMockGaussInput, newFindX){
+TEST_F (sMockGaussInput, optimizedGauss){
+    string line;
+    int pagecount, links, i, j;
+    ifstream f_test("pokematrix_attacking.txt");
 
-    Sparse_matrix_vom u(fourByFour.rows(), 1);
-    u = s_gauss_elimination_write_and_u(fourByFour);
-    auto x = backward_sub(u, q);
+    if ( f_test.is_open() ){ f_test >> pagecount >> links;}
+    else { std::cout << "--- \n Unable to open file. \n---" << std::endl; }
 
+    // leo config, no afecta matriz
+    getline(f_test, line);
+    istringstream lineStream(line);
+    lineStream >> i >> j;
+    // fin basura
 
-    ASSERT_TRUE(fourByFour.multiply(x).isApproximate(r));
+    // levanto W (POR COLUMNAS) y armo C al mismo tiempo
+
+    Sparse_matrix_vom W = Sparse_matrix_vom(pagecount, pagecount);
+    while( getline(f_test, line) ){
+    //asumo que el archivo de entrada no termina con salto de linea (en ese caso se vuelve a cargar en W y se suma uno de más a C )
+    istringstream lineStream(line);
+    lineStream >> i >> j;
+    W.setIndex(i, j, 1);
+    }
+    f_test.close();
+    auto C = colSumDiag(W);
+
+    // fin levantar W
+
+    double p = 0.85;
+    Sparse_matrix_vom e = onesVec(W.rows()); // O(n)
+    Sparse_matrix_vom id = Sparse_matrix_vom::identity(W.rows()); // O(n)
+    Sparse_matrix_vom W_mult_Cp = W.multiply(C * (-p));
+    Sparse_matrix_vom A = id + W_mult_Cp;
+
+    gauss_elimination_write_and_u(A, e);
+    Sparse_matrix_vom x = backward_sub(A, e);
+
+    ASSERT_TRUE(A.multiply(x).isApproximate(e));
 
 }
 
