@@ -109,7 +109,6 @@ double normalization_coeff(Sparse_matrix_vom &column) {
     return 1 / sum;
 }
 
-
 Sparse_matrix_vom colSumDiag(const Sparse_matrix_vom &W){ //O(n^2)
     Sparse_matrix_vom C(W.rows(), W.cols());
     for(int j = 1; j <= W.cols(); j ++){

@@ -26,20 +26,22 @@ int main(int argc, char** argv){
 		cout << "	Three parameters are expected:    program_name.exe  in_file.txt  p_number" << endl;
 		return 1;
 	}
-	
+
 	// leo el archivo de test -->la entrada i,j indica un 1 en la posicion [j][i]
 
-	std::cout << "argv[0]: " << argv[0] << std::endl;
-	std::cout << "argv[1]: " << argv[1] << std::endl;
-	std::cout << "argv[2]: " << argv[2] << std::endl;
+	cout << "argv[0]: " << argv[0] << endl;
+	cout << "argv[1]: " << argv[1] << endl;
+	cout << "argv[2]: " << argv[2] << endl;
 
 	string inFile(argv[1]);
-	string outFile(argv[1]);
-	outFile += ".out";
+	string outFilePath(argv[1]);
+	outFilePath += ".out";
 	double p = std::atof(argv[2]);
 
-	std::cout << "outFile: " << outFile << std::endl;
-	std::cout << "p: " << p << std::endl;
+
+
+	cout << "outFilePath: " << outFilePath << endl;
+	cout << "p: " << p << endl;
 
 	string line;
 	int pagecount, links, i, j;
@@ -63,25 +65,27 @@ int main(int argc, char** argv){
 	Sparse_matrix_vom W = Sparse_matrix_vom(pagecount, pagecount);
 	while( getline(f_test, line) ){ //asumo que el archivo de entrada no termina con salto de linea (en ese caso se vuelve a cargar en W y se suma uno de más a C )
 		istringstream lineStream(line);
-		lineStream >> i >> j;
-        cout << i <<" "<<j<<endl;
-		W.setIndex(i, j, 1);
+		lineStream >> j >> i;
+        W.setIndex(i, j, 1);
 	}
 	f_test.close();
 	auto C = colSumDiag(W);
 
 	auto end = GET_TIME;
-	std::cout << "load time: " << GET_TIME_DELTA(begin, end) << std::endl;
+	cout << "'load_time': " << GET_TIME_DELTA(begin, end) << endl;
 	//***********fin levantar W************
 
 	begin = GET_TIME;
 	auto output_rank = page_rank(W, C, p);
 	end = GET_TIME;
-	std::cout << "page rank time: " << GET_TIME_DELTA(begin, end) << std::endl;
+	cout << "'page_rank_time': " << GET_TIME_DELTA(begin, end) << endl;
 
-	
-	std::cout << output_rank << std::endl;
-  
-  return 0;
+    ofstream outFile;
+    outFile.open(outFilePath);
+    outFile << p << endl;
+    outFile << output_rank;
+	outFile.close();
+
+    return 0;
 }
 

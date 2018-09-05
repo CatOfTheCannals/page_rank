@@ -67,13 +67,7 @@ Sparse_matrix_vom gauss_elimination_write_and_u(Sparse_matrix_vom& a, Sparse_mat
                 double w = e(i)*rowMultiplicator;
                 e.substract_vector(r, w);
             }
-
-			}
-        if(i%100 ==0){
-        auto end = GET_TIME;
-        cout << "'row_time': " << GET_TIME_DELTA(begin, end) << endl;
-        cout << "i: "<< i <<endl;}
-
+        }
     }
 
     //Sparse_matrix_vom id = Sparse_matrix_vom::identity(a.rows());

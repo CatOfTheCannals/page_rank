@@ -13,8 +13,6 @@
 
 std::tuple<Sparse_matrix_vom, Sparse_matrix_vom> s_gauss_elimination(const Sparse_matrix_vom& a);
 
-Sparse_matrix_vom s_gauss_elimination_write_and_u(const Sparse_matrix_vom& a, vector<double>& e);
-
 Sparse_matrix_vom backward_sub(const Sparse_matrix_vom& a, const Sparse_matrix_vom& y);
 
 Sparse_matrix_vom forward_sub(const Sparse_matrix_vom& a, const Sparse_matrix_vom& y);

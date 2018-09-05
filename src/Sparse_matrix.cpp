@@ -72,7 +72,6 @@ Sparse_matrix Sparse_matrix::identity(int n){
     assert(0 < n);
     Sparse_matrix res= Sparse_matrix(n, n);
     for(int i = 1; i <= n; i++){
-        std::cout << "identity" << std::endl;
         res.setIndex(i, i, 1);
     }
     return res;
@@ -110,7 +109,6 @@ void Sparse_matrix::multColByScalar(std::size_t j, double scalar){
             this->setIndex( it_row.first, it_col->first, new_val);
         }
     } // si j no esta definida, es cero y quiero que siga así
-    //cout<<*this<<endl <<endl<<endl;
 }
 
 

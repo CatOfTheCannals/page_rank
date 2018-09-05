@@ -14,7 +14,7 @@ double Sparse_matrix_vom::operator()(int row_idx, int col_idx) const {
     int j = col_idx;
     i--;
     if (_matrix[i].find(j) != _matrix[i].end()){
-        return (*_matrix[i].find(j)).second;
+        return (_matrix[i].find(j))->second;
     } else {
         return 0;
     }
@@ -68,22 +68,44 @@ Sparse_matrix_vom Sparse_matrix_vom::operator*(const double& scalar) const{
     }
     return res;
 }
+
 void Sparse_matrix_vom::substract(int r, int c, double v) {
     if (is_significant(v)){
-		    _matrix[r-1][c] -= v;
-		} 
-   //a.setIndex(r, c, a(r, c) - (a(i, c) * rowMultiplicator));
+        it_s_vec it = _matrix[r-1].find(c);
+        if(is_significant(it->second - v)) {
+            _matrix[r-1][c] -= v;
+        } else {
+            _matrix[r-1].erase(it);
+		}
+    }
 }
+
 void Sparse_matrix_vom::substract_vector(int i, double v) {
 	assert(this->_rows == 1 || this->_cols == 1);
     assert(i <= std::max(this->_rows, this->_cols));
 	//si tengo una sola fila, idx es el indice columna
     if(is_significant(v)){
-    if (this->_rows == 1){ _matrix[0][i] -= v;
+    if (this->_rows == 1){
+        if (is_significant(v)){
+            auto it = _matrix[0].find(i);
+            if(!is_significant(it->second - v)) {
+                _matrix[0].erase(it);
+            } else {
+                _matrix[0][i] -= v;
+            }
+        }
 	}
-
     //si tengo una sola columna, idx es el indice fila
     else{_matrix[i-1][1] -= v;}
+    }
+
+    if (is_significant(v)){
+        auto it = _matrix[i-1].find(1);
+        if(!is_significant(it->second - v)) {
+            _matrix[i-1].erase(it);
+        } else {
+            _matrix[i-1][1] -= v;
+        }
     }
 }
                     
@@ -156,7 +178,6 @@ std::ostream& operator<<(std::ostream& o, const Sparse_matrix_vom& a) {
         }
         o<<endl;
     }
-    o<<endl;
     return o;
 }
 
