@@ -1,21 +1,20 @@
 # page_rank_tp1_metodos
-Link del informe en OverLeaf:
+Link to report:
 https://www.overleaf.com/17618777pywgphbhcbds#/66872127/
-## para compilar con cmake desde la terminal:
+## Compiling with cmake from root dir:
 
-`cmake .` en la carpeta principal del repo. esto crea los "Makefiles" (necesarios para poder usar `make`)
+`mkdir build`
+`cd build/`
+`cmake ..`
+`make`
 
-si tira error, correr `./scripts/cmake_clean.sh` (o mirarlo y borrar los archivos que figuran ahí a mano)
+### running main from build dir:
 
-### para compilar nuestro programa
+`./main ../cuantitative_tests/test_aleatorio.txt 0.85`
 
-tirar `make` en la carpeta principal del repo
+### running tests from build dir:
 
-se va a crear el ejecutable "main", correrlo: `./main`
+`cd test/`
+`./correrTests`
 
-### para compilar los tests
-
-ir a la carpeta "test": `cd test`
-
-tirar `make`, se crea "correrTests", correrlo: `./correrTests`
 
