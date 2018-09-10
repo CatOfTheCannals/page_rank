@@ -4,8 +4,11 @@ https://www.overleaf.com/17618777pywgphbhcbds#/66872127/
 ## Compiling with cmake from root dir:
 
 `mkdir build`
+
 `cd build/`
+
 `cmake ..`
+
 `make`
 
 ### running main from build dir:
@@ -15,6 +18,7 @@ https://www.overleaf.com/17618777pywgphbhcbds#/66872127/
 ### running tests from build dir:
 
 `cd test/`
+
 `./correrTests`
 
 
