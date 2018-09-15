@@ -15,7 +15,7 @@ https://www.overleaf.com/17618777pywgphbhcbds#/66872127/
 
 `./main ../cuantitative_tests/test_aleatorio.txt 0.85`
 
-### running tests from build dir:
+### running google-tests from build dir:
 
 `cd test/`
 
