@@ -4,13 +4,7 @@ project(tp1_metodos CXX)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wno-long-long -pedantic -Wno-variadic-macros")
 
 set(SOURCE_FILES
-        src/empy_file.cpp
-        src/Matrix.cpp
-        src/Solvers.cpp
-        src/page_rank.cpp
-        src/Sparse_matrix.cpp
         src/Sparse_solvers.cpp
-        src/Sparse_matrix_2.cpp
         src/Sparse_matrix_vom.cpp
         src/sparse_page_rank.cpp)
 

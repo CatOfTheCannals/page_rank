@@ -24,7 +24,7 @@ Sparse_matrix_vom randomChainMatrix(int n, int numberOfConnections){
     assert(numberOfConnections <= (n*n)-2*n);
     Sparse_matrix_vom res(n, n);
     std::random_device rd;     // only used once to initialise (seed) engine
-    for(int i = 1; i <= n; i++){
+    for(int i = 1; i < n; i++){
         res.setIndex(i+1,i, 1);
     }
     if(n>1) {
@@ -69,7 +69,7 @@ Sparse_matrix_vom completeColumnAndZeros(int n) {
 
 
 Sparse_matrix_vom completeColumnAndOneBack(int n){
-    assert(0 < n);
+    assert(1 < n);
     Sparse_matrix_vom res(n, n);
     for (int j = 1; j <= n; j++) {
         res.setIndex(j, 1, 1);
@@ -77,10 +77,8 @@ Sparse_matrix_vom completeColumnAndOneBack(int n){
     for (int j = 1; j <= n; j++) {
          res.setIndex(j, j, 0);
     }
-    if(n>1) {
-        res.setIndex(1, 2, 1);
-        return res;
-    }
+    res.setIndex(1, 2, 1);
+    return res;
 }
 
 
