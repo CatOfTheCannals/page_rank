@@ -1,0 +1,2 @@
+el primer dato es p, el resto es el puntage de las páginas en el pagerank
+

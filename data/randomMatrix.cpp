@@ -47,7 +47,7 @@ Sparse_matrix_vom randomChainMatrix(int n, int numberOfConnections){
 Sparse_matrix_vom directedList(int n){
     assert(0 < n);
     Sparse_matrix_vom res(n, n);
-    for(int i = 1; i<= n; i++){
+    for(int i = 1; i < n; i++){
         res.setIndex(i+1,i, 1);
     }
     return res;
@@ -57,7 +57,7 @@ Sparse_matrix_vom directedList(int n){
 Sparse_matrix_vom completeColumnAndZeros(int n) {
     assert(0 < n);
     Sparse_matrix_vom res(n, n);
-    for (int j = 1; j <= n; j++) {
+    for (int j = 2; j <= n; j++) {
          res.setIndex(j, 1, 1);
     }
     for (int j = 1; j <= n; j++) {
@@ -71,7 +71,7 @@ Sparse_matrix_vom completeColumnAndZeros(int n) {
 Sparse_matrix_vom completeColumnAndOneBack(int n){
     assert(1 < n);
     Sparse_matrix_vom res(n, n);
-    for (int j = 1; j <= n; j++) {
+    for (int j = 2; j <= n; j++) {
         res.setIndex(j, 1, 1);
     }
     for (int j = 1; j <= n; j++) {
@@ -86,12 +86,13 @@ Sparse_matrix_vom chainAndCompleteGraph(int n, int chainSize){
     assert(chainSize >= 2); //n must be 5 or higher
     assert( n - chainSize >= 3); //requirement in order to have a complete graph that isn't a chain.
     Sparse_matrix_vom res(n, n);
-    for (int i = 1; i+1 <= chainSize; i++){
+    for (int i = 1; i < chainSize; i++){
         res.setIndex(i+1,i, 1);
     }
-    res.setIndex(1, chainSize - 1, 1);
-    for (int i = chainSize; i <=n ; i++){
-        for (int j = chainSize; j <= n; j++){
+    res.setIndex(1, chainSize, 1);
+
+    for (int i = chainSize + 1; i <=n ; i++){
+        for (int j = chainSize + 1; j <= n; j++){
             if(j != i){
                 res.setIndex(i,j, 1);
             }
@@ -103,6 +104,20 @@ Sparse_matrix_vom chainAndCompleteGraph(int n, int chainSize){
     return res;
 }
 
+Sparse_matrix_vom completeGraph(int n){
+    Sparse_matrix_vom res(n, n);
+    for (int i = 1; i <=n ; i++){
+        for (int j = 1; j <= n; j++){
+            if(j != i){
+                res.setIndex(i,j, 1);
+            }
+        }
+    }
+    for (int j = 1; j <= n; j++) {
+        res.setIndex(j, j, 0);
+    }
+    return res;
+}
 
 //diagonal + random. Diagonal + todos con la misma cantidad de links por fila, idem+ columna, misma cantidad de links por fila, por col
 //otra matriz, le das el tamaño y m->cantidad de enlaces que quiero distribuidos aleatoriamente

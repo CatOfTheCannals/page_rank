@@ -43,8 +43,10 @@ int main(int argc, char** argv){
             W = completeColumnAndZeros(n);
         } else if (tipoMatriz == 5) {
             W = completeColumnAndOneBack(n);
+        } else if (tipoMatriz == 7) {
+            W = completeGraph(n);
         } else {
-            int numberOfConnections = std::atoi(argv[4]);
+            int numberOfConnections = std::atoi(argv[5]);
             if (tipoMatriz == 1) {
                 W = randomMatrix(n, numberOfConnections);
             } else if (tipoMatriz == 2) {

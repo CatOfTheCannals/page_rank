@@ -8,5 +8,6 @@ Sparse_matrix_vom directedList(int n);
 Sparse_matrix_vom completeColumnAndZeros(int n);
 Sparse_matrix_vom completeColumnAndOneBack(int n);
 Sparse_matrix_vom chainAndCompleteGraph(int n, int chainSize);
+Sparse_matrix_vom completeGraph(int n);
 
 #endif //TP1_METODOS_RANDOMMATRIX_H
