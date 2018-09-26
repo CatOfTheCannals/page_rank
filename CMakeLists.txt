@@ -7,7 +7,6 @@ set(SOURCE_FILES
         src/empy_file.cpp
         src/Matrix.cpp
         src/Solvers.cpp
-        src/page_rank.cpp
         src/Sparse_matrix.cpp
         src/Sparse_solvers.cpp
         src/Sparse_matrix_2.cpp
