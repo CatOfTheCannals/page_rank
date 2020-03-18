@@ -1,6 +1,4 @@
-# page_rank_tp1_metodos
-Link to report:
-https://www.overleaf.com/17618777pywgphbhcbds#/66872127/
+# page_rank
 ## Compiling with cmake from root dir:
 
 `mkdir build`
